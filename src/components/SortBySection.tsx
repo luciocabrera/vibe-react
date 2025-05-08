@@ -19,6 +19,7 @@ export const SortBySection: React.FC<SortBySectionProps> = ({
   onChange,
 }) => {
   const [selected, setSelected] = useState('');
+  const [dragColIdx, setDragColIdx] = useState<number | null>(null);
 
   const addColumn = () => {
     if (selected && !sortState.find(s => s.key === selected)) {
@@ -40,16 +41,30 @@ export const SortBySection: React.FC<SortBySectionProps> = ({
     onChange(arr);
   };
 
-  const handleDrag = (from: number, to: number) => {
-    move(from, to);
-  };
+  function handleColDragStart(idx: number) {
+    setDragColIdx(idx);
+  }
+
+  function handleColDragOver(_idx: number, e: React.DragEvent) {
+    e.preventDefault();
+  }
+
+  function handleColDrop(idx: number) {
+    if (dragColIdx === null || dragColIdx === idx) return;
+    const newOrder = [...sortState];
+    const [removed] = newOrder.splice(dragColIdx, 1);
+    newOrder.splice(idx, 0, removed);
+    onChange(newOrder);
+    setDragColIdx(null);
+  }
 
   return (
     <div className='sort-section'>
-      <label>
+      <label htmlFor="sort-column-select">
         <b>Sort by:</b>
       </label>
       <select
+        id="sort-column-select"
         value={selected}
         onChange={e => setSelected(e.target.value)}
         style={{ minWidth: 180, marginLeft: 8 }}
@@ -68,62 +83,115 @@ export const SortBySection: React.FC<SortBySectionProps> = ({
       <button type='button' onClick={addColumn} style={{ padding: '6px 16px' }}>
         Add
       </button>
-      <div className='sort-list'>
+      
+      <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
         {sortState.map((col, idx) => (
-          <div
+          <li
             key={col.key}
-            className='sort-item'
             draggable
-            onDragStart={e =>
-              e.dataTransfer.setData('text/plain', idx.toString())
-            }
-            onDragOver={e => e.preventDefault()}
-            onDrop={e => {
-              const from = Number(e.dataTransfer.getData('text/plain'));
-              handleDrag(from, idx);
+            onDragStart={() => handleColDragStart(idx)}
+            onDragOver={e => handleColDragOver(idx, e)}
+            onDrop={() => handleColDrop(idx)}
+            style={{
+              background: dragColIdx === idx ? '#ddeeff' : '#f7faff',
+              border: '1px solid #c7d6f7',
+              borderRadius: 6,
+              marginBottom: 6,
+              padding: '8px 14px',
+              cursor: 'grab',
+              fontWeight: 500,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 10,
+              boxShadow: dragColIdx === idx ? '0 2px 8px #1976d244' : undefined,
+              opacity: dragColIdx === idx ? 0.7 : 1,
+              transition: 'background 0.2s, box-shadow 0.2s, opacity 0.2s',
+              justifyContent: 'space-between',
             }}
           >
-            <span style={{ marginRight: 8, cursor: 'grab' }}>≡</span>
-            <span style={{ marginRight: 8 }}>{col.label}</span>
-            <button
-              type='button'
-              onClick={() =>
-                onChange(
-                  sortState.map((s, i) =>
-                    i === idx
-                      ? { ...s, dir: s.dir === 'asc' ? 'desc' : 'asc' }
-                      : s
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <span style={{ color: '#1976d2', fontSize: '1.2em' }}>≡</span>
+              <span>{col.label}</span>
+            </div>
+            
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <button
+                type='button'
+                onClick={() =>
+                  onChange(
+                    sortState.map((s, i) =>
+                      i === idx
+                        ? { ...s, dir: s.dir === 'asc' ? 'desc' : 'asc' }
+                        : s
+                    )
                   )
-                )
-              }
-              style={{ marginRight: 8 }}
-            >
-              {col.dir === 'asc' ? '▲' : '▼'}
-            </button>
-            <button
-              type='button'
-              onClick={() => move(idx, idx - 1)}
-              disabled={idx === 0}
-            >
-              ↑
-            </button>
-            <button
-              type='button'
-              onClick={() => move(idx, idx + 1)}
-              disabled={idx === sortState.length - 1}
-            >
-              ↓
-            </button>
-            <button
-              type='button'
-              onClick={() => onChange(sortState.filter((_, i) => i !== idx))}
-              style={{ marginLeft: 8 }}
-            >
-              ✕
-            </button>
-          </div>
+                }
+                style={{ 
+                  background: 'transparent',
+                  border: 'none',
+                  cursor: 'pointer',
+                  color: '#1976d2',
+                  fontSize: '1.1em',
+                  padding: '4px 8px'
+                }}
+              >
+                {col.dir === 'asc' ? '▲' : '▼'}
+              </button>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                <button
+                  type='button'
+                  onClick={() => move(idx, idx - 1)}
+                  disabled={idx === 0}
+                  style={{
+                    background: 'transparent',
+                    border: 'none',
+                    cursor: idx === 0 ? 'default' : 'pointer',
+                    color: idx === 0 ? '#ccc' : '#1976d2',
+                    fontSize: '0.9em',
+                    padding: '2px 4px',
+                    lineHeight: '1'
+                  }}
+                >
+                  ↑
+                </button>
+                <button
+                  type='button'
+                  onClick={() => move(idx, idx + 1)}
+                  disabled={idx === sortState.length - 1}
+                  style={{
+                    background: 'transparent',
+                    border: 'none',
+                    cursor: idx === sortState.length - 1 ? 'default' : 'pointer',
+                    color: idx === sortState.length - 1 ? '#ccc' : '#1976d2',
+                    fontSize: '0.9em',
+                    padding: '2px 4px',
+                    lineHeight: '1'
+                  }}
+                >
+                  ↓
+                </button>
+              </div>
+              
+              <button
+                type='button'
+                onClick={() => onChange(sortState.filter((_, i) => i !== idx))}
+                style={{
+                  background: 'transparent',
+                  border: 'none',
+                  cursor: 'pointer',
+                  color: '#ff4444',
+                  fontSize: '1.1em',
+                  marginLeft: 8,
+                  padding: '4px 8px'
+                }}
+              >
+                ✕
+              </button>
+            </div>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 };
