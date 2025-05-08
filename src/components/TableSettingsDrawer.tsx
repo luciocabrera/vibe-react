@@ -1,5 +1,5 @@
 import React from 'react';
-import { FiltersSection } from './FiltersSection';
+import { FiltersSection } from './filters';
 import { SortBySection } from './SortBySection';
 import { ColumnOrderSection } from './ColumnOrderSection';
 import type { ColumnDef } from '../App';

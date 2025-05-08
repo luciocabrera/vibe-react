@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FiltersSection } from './components/FiltersSection';
+import { FiltersSection } from './components/filters';
 import { SortBySection } from './components/SortBySection';
 import type { SortCol } from './components/SortBySection';
 import { ResultsTable } from './components/ResultsTable';
