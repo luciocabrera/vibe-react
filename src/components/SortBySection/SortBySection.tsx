@@ -1,23 +1,11 @@
 import React, { useState } from 'react';
-import type { ColumnDef } from '../App';
+import type { SortBySectionProps } from './SortBySection.types';
 
-export type SortCol = {
-  key: string;
-  label: string;
-  dir: 'asc' | 'desc';
-};
-
-export type SortBySectionProps = {
-  allColumns: ColumnDef[];
-  sortState: SortCol[];
-  onChange: (newSort: SortCol[]) => void;
-};
-
-export const SortBySection: React.FC<SortBySectionProps> = ({
+const SortBySection = ({
   allColumns,
   sortState,
   onChange,
-}) => {
+}: SortBySectionProps) => {
   const [selected, setSelected] = useState('');
   const [dragColIdx, setDragColIdx] = useState<number | null>(null);
 
@@ -196,4 +184,6 @@ export const SortBySection: React.FC<SortBySectionProps> = ({
     </div>
   );
 };
+
+export default SortBySection;
 

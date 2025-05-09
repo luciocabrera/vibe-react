@@ -1,12 +1,6 @@
-import React from 'react';
+import type { BadgeProps } from './Badge.types';
 
-export type BadgeProps = {
-  value: string;
-  onRemove?: (val: string) => void;
-  isMore?: boolean;
-};
-
-export const Badge: React.FC<BadgeProps> = ({ value, onRemove, isMore }) => (
+const Badge = ({ value, onRemove, isMore }: BadgeProps) => (
   <span className={`selected-badge${isMore ? ' more' : ''}`}>
     {value}
     {onRemove && !isMore && (

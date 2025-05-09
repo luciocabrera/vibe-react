@@ -1,22 +1,14 @@
-import React from 'react';
-import type { ColumnDef } from '../App';
+import { useState } from 'react';
+import type { ColumnOrderSectionProps } from './ColumnOrderSection.types';
 
-type ColumnOrderSectionProps = {
-  columns: ColumnDef[];
-  columnOrder: string[];
-  setColumnOrder: (order: string[]) => void;
-  visibleColumns?: Set<string>;
-  setVisibleColumns?: (columns: Set<string>) => void;
-};
-
-export const ColumnOrderSection: React.FC<ColumnOrderSectionProps> = ({
+const ColumnOrderSection = ({
   columns,
   columnOrder,
   setColumnOrder,
   visibleColumns = new Set(columnOrder),
   setVisibleColumns = () => {},
-}) => {
-  const [dragColIdx, setDragColIdx] = React.useState<number | null>(null);
+}: ColumnOrderSectionProps) => {
+  const [dragColIdx, setDragColIdx] = useState<number | null>(null);
   const orderedColumns = columnOrder
     .map(key => columns.find(col => col.key === key)!)
     .filter(Boolean);
@@ -132,4 +124,6 @@ export const ColumnOrderSection: React.FC<ColumnOrderSectionProps> = ({
     </div>
   );
 };
+
+export default ColumnOrderSection;
 
