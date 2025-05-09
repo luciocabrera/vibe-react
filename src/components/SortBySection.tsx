@@ -7,11 +7,11 @@ export type SortCol = {
   dir: 'asc' | 'desc';
 };
 
-export interface SortBySectionProps {
+export type SortBySectionProps = {
   allColumns: ColumnDef[];
   sortState: SortCol[];
   onChange: (newSort: SortCol[]) => void;
-}
+};
 
 export const SortBySection: React.FC<SortBySectionProps> = ({
   allColumns,
@@ -60,11 +60,11 @@ export const SortBySection: React.FC<SortBySectionProps> = ({
 
   return (
     <div className='sort-section'>
-      <label htmlFor="sort-column-select">
+      <label htmlFor='sort-column-select'>
         <b>Sort by:</b>
       </label>
       <select
-        id="sort-column-select"
+        id='sort-column-select'
         value={selected}
         onChange={e => setSelected(e.target.value)}
         style={{ minWidth: 180, marginLeft: 8 }}
@@ -83,7 +83,7 @@ export const SortBySection: React.FC<SortBySectionProps> = ({
       <button type='button' onClick={addColumn} style={{ padding: '6px 16px' }}>
         Add
       </button>
-      
+
       <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
         {sortState.map((col, idx) => (
           <li
@@ -113,7 +113,7 @@ export const SortBySection: React.FC<SortBySectionProps> = ({
               <span style={{ color: '#1976d2', fontSize: '1.2em' }}>≡</span>
               <span>{col.label}</span>
             </div>
-            
+
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <button
                 type='button'
@@ -126,18 +126,18 @@ export const SortBySection: React.FC<SortBySectionProps> = ({
                     )
                   )
                 }
-                style={{ 
+                style={{
                   background: 'transparent',
                   border: 'none',
                   cursor: 'pointer',
                   color: '#1976d2',
                   fontSize: '1.1em',
-                  padding: '4px 8px'
+                  padding: '4px 8px',
                 }}
               >
                 {col.dir === 'asc' ? '▲' : '▼'}
               </button>
-              
+
               <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 <button
                   type='button'
@@ -150,7 +150,7 @@ export const SortBySection: React.FC<SortBySectionProps> = ({
                     color: idx === 0 ? '#ccc' : '#1976d2',
                     fontSize: '0.9em',
                     padding: '2px 4px',
-                    lineHeight: '1'
+                    lineHeight: '1',
                   }}
                 >
                   ↑
@@ -162,17 +162,18 @@ export const SortBySection: React.FC<SortBySectionProps> = ({
                   style={{
                     background: 'transparent',
                     border: 'none',
-                    cursor: idx === sortState.length - 1 ? 'default' : 'pointer',
+                    cursor:
+                      idx === sortState.length - 1 ? 'default' : 'pointer',
                     color: idx === sortState.length - 1 ? '#ccc' : '#1976d2',
                     fontSize: '0.9em',
                     padding: '2px 4px',
-                    lineHeight: '1'
+                    lineHeight: '1',
                   }}
                 >
                   ↓
                 </button>
               </div>
-              
+
               <button
                 type='button'
                 onClick={() => onChange(sortState.filter((_, i) => i !== idx))}
@@ -183,7 +184,7 @@ export const SortBySection: React.FC<SortBySectionProps> = ({
                   color: '#ff4444',
                   fontSize: '1.1em',
                   marginLeft: 8,
-                  padding: '4px 8px'
+                  padding: '4px 8px',
                 }}
               >
                 ✕

@@ -6,7 +6,7 @@ import type { ColumnDef } from '../App';
 import type { SortCol } from './SortBySection';
 import './TableSettingsDrawer.css';
 
-interface TableSettingsDrawerProps {
+type TableSettingsDrawerProps = {
   open: boolean;
   onClose: () => void;
   tab: 'filters' | 'sorting' | 'columns';
@@ -29,7 +29,7 @@ interface TableSettingsDrawerProps {
   setVisibleColumns?: React.Dispatch<React.SetStateAction<Set<string>>>;
   isPinned?: boolean;
   onPinChange?: (isPinned: boolean) => void;
-}
+};
 
 export const TableSettingsDrawer: React.FC<TableSettingsDrawerProps> = ({
   open,
