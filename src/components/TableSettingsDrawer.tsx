@@ -84,7 +84,11 @@ export const TableSettingsDrawer: React.FC<TableSettingsDrawerProps> = ({
             >
               {isPinned ? '📌' : '📍'}
             </button>
-            <button className='drawer-close-btn' onClick={onClose} title='Close'>
+            <button
+              className='drawer-close-btn'
+              onClick={onClose}
+              title='Close'
+            >
               ×
             </button>
           </div>

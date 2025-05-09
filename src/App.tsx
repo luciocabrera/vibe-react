@@ -244,30 +244,16 @@ const App: React.FC = () => {
     .filter(Boolean)
     .filter(col => visibleColumns.has(col.key)); // Filter by visibility
 
-  const [dragColIdx, setDragColIdx] = useState<number | null>(null);
-  function handleColDragStart(idx: number) {
-    setDragColIdx(idx);
-  }
-  function handleColDragOver(idx: number, e: React.DragEvent) {
-    e.preventDefault();
-  }
-  function handleColDrop(idx: number) {
-    if (dragColIdx === null || dragColIdx === idx) return;
-    const newOrder = [...columnOrder];
-    const [removed] = newOrder.splice(dragColIdx, 1);
-    newOrder.splice(idx, 0, removed);
-    setColumnOrder(newOrder);
-    setDragColIdx(null);
-  }
-
   return (
-    <div 
-      className={isPinned ? 'with-pinned-drawer' : ''} 
-      style={isPinned ? undefined : { maxWidth: 1200, margin: '0 auto', padding: 24 }}
+    <div
+      className={isPinned ? 'with-pinned-drawer' : ''}
+      style={
+        isPinned ? undefined : { maxWidth: 1200, margin: '0 auto', padding: 24 }
+      }
     >
       {isPinned ? (
         // Main content when drawer is pinned
-        <div className="main-content">
+        <div className='main-content'>
           <h1>API Benchmark Multi-Results Viewer (React)</h1>
           <div style={{ marginBottom: 18 }}>
             <label>
@@ -315,7 +301,11 @@ const App: React.FC = () => {
             title='Table Settings'
             aria-label='Table Settings'
           >
-            <img src='/vite.svg' alt='settings' style={{ width: 28, height: 28 }} />
+            <img
+              src='/vite.svg'
+              alt='settings'
+              style={{ width: 28, height: 28 }}
+            />
           </button>
           <h1>API Benchmark Multi-Results Viewer (React)</h1>
           <div style={{ marginBottom: 18 }}>
@@ -373,8 +363,10 @@ const App: React.FC = () => {
                       newFilterState[col.key] = opts;
                     });
                   setFilterState(newFilterState);
-                  const newRangeState: Record<string, [number | '', number | '']> =
-                    {};
+                  const newRangeState: Record<
+                    string,
+                    [number | '', number | '']
+                  > = {};
                   columns
                     .filter(col => col.rangeFilter)
                     .forEach(col => {
