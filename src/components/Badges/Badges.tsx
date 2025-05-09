@@ -1,20 +1,10 @@
-import React from 'react';
-import Badge from './Badge';
+import type { BadgesProps } from './Badges.types';
+import { Badge } from '../Badge';
 
 // Constants
 const MAX_BADGES = 10;
 
-export type BadgesProps = {
-  selected: string[];
-  options: string[];
-  onRemove?: (val: string) => void;
-};
-
-export const Badges: React.FC<BadgesProps> = ({
-  selected,
-  options,
-  onRemove,
-}) => {
+const Badges = ({ selected, options, onRemove }: BadgesProps) => {
   if (selected.length === 0) return null;
   if (selected.length === options.length && options.length > 5) {
     return <Badge value='All' />;

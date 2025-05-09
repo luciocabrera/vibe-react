@@ -1,37 +1,11 @@
-import React from 'react';
-import { FiltersSection } from './filters';
-import { SortBySection } from './SortBySection';
-import { ColumnOrderSection } from './ColumnOrderSection';
-import type { ColumnDef } from '../App';
-import type { SortCol } from './SortBySection';
+import { SortBySection } from '../SortBySection';
+
 import './TableSettingsDrawer.css';
+import { ColumnOrderSection } from '../ColumnOrderSection';
+import type { TableSettingsDrawerProps } from './TableSettingsDrawer.types';
+import { FiltersSection } from '../FiltersSection';
 
-type TableSettingsDrawerProps = {
-  open: boolean;
-  onClose: () => void;
-  tab: 'filters' | 'sorting' | 'columns';
-  setTab: (tab: 'filters' | 'sorting' | 'columns') => void;
-  columns: ColumnDef[];
-  data: Record<string, any>[];
-  filterState: Record<string, string[]>;
-  setFilterState: React.Dispatch<
-    React.SetStateAction<Record<string, string[]>>
-  >;
-  rangeState: Record<string, [number | '', number | '']>;
-  setRangeState: React.Dispatch<
-    React.SetStateAction<Record<string, [number | '', number | '']>>
-  >;
-  sortState: SortCol[];
-  setSortState: React.Dispatch<React.SetStateAction<SortCol[]>>;
-  columnOrder: string[];
-  setColumnOrder: React.Dispatch<React.SetStateAction<string[]>>;
-  visibleColumns?: Set<string>;
-  setVisibleColumns?: React.Dispatch<React.SetStateAction<Set<string>>>;
-  isPinned?: boolean;
-  onPinChange?: (isPinned: boolean) => void;
-};
-
-export const TableSettingsDrawer: React.FC<TableSettingsDrawerProps> = ({
+const TableSettingsDrawer = ({
   open,
   onClose,
   tab,
@@ -50,7 +24,7 @@ export const TableSettingsDrawer: React.FC<TableSettingsDrawerProps> = ({
   setVisibleColumns,
   isPinned = false,
   onPinChange,
-}) => {
+}: TableSettingsDrawerProps) => {
   if (!open) return null;
 
   const handlePinClick = () => {
@@ -178,4 +152,6 @@ export const TableSettingsDrawer: React.FC<TableSettingsDrawerProps> = ({
     </>
   );
 };
+
+export default TableSettingsDrawer;
 

@@ -1,18 +1,11 @@
-import React from 'react';
+import type { RangeInputProps } from './RangeInput.types';
 
-export type RangeInputProps = {
-  label: string;
-  value: [number | '', number | ''];
-  onChange: (min: number | '', max: number | '') => void;
-  onReset: () => void;
-};
-
-export const RangeInput: React.FC<RangeInputProps> = ({
+export const RangeInput = ({
   label,
   value,
   onChange,
   onReset,
-}) => (
+}: RangeInputProps) => (
   <div style={{ display: 'inline-block', marginRight: 18 }}>
     <label>{label}:</label>
     <input

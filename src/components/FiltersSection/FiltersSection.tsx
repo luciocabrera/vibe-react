@@ -1,28 +1,10 @@
-import React from 'react';
-import type { ColumnDef } from '../../App';
-import Badges from './Badges';
-import MultiSelectDropdown from './MultiSelectDropdown';
-import RangeInput from './RangeInput';
+import { Badges } from '../Badges';
+import { Fragment } from 'react';
+import type { FiltersSectionProps } from './FiltersSection.types';
+import { MultiSelectDropdown } from '../MultiSelectDropdown';
+import { RangeInput } from '../RangeInput';
 
-// Generic type for the data records to avoid using 'any'
-export type DataRecord = Record<
-  string,
-  string | number | boolean | null | undefined
->;
-
-export type FiltersSectionProps = {
-  columns: ColumnDef[];
-  data: DataRecord[];
-  filterState: Record<string, string[]>;
-  onFilterChange: (key: string, values: string[]) => void;
-  rangeState: Record<string, [number | '', number | '']>;
-  onRangeChange: (key: string, min: number | '', max: number | '') => void;
-  onReset: () => void;
-  onResetFilter: (key: string) => void;
-  onResetRange: (key: string) => void;
-};
-
-export const FiltersSection: React.FC<FiltersSectionProps> = ({
+export const FiltersSection = ({
   columns,
   data,
   filterState,
@@ -32,7 +14,7 @@ export const FiltersSection: React.FC<FiltersSectionProps> = ({
   onReset,
   onResetFilter,
   onResetRange,
-}) => (
+}: FiltersSectionProps) => (
   <div style={{ marginBottom: 16 }}>
     {columns
       .filter(col => col.filterable)
@@ -41,7 +23,7 @@ export const FiltersSection: React.FC<FiltersSectionProps> = ({
           new Set((data || []).map(row => String(row[col.key])).filter(Boolean))
         );
         return (
-          <React.Fragment key={col.key}>
+          <Fragment key={col.key}>
             <MultiSelectDropdown
               label={col.label}
               options={options}
@@ -61,7 +43,7 @@ export const FiltersSection: React.FC<FiltersSectionProps> = ({
                 }
               />
             </div>
-          </React.Fragment>
+          </Fragment>
         );
       })}
     <button

@@ -1,20 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import type { MultiSelectDropdownProps } from './MultiSelectDropdown.types';
 
-export type MultiSelectDropdownProps = {
-  label: string;
-  options: string[];
-  selected: string[];
-  onChange: (sel: string[]) => void;
-  onReset: () => void;
-};
-
-export const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
+const MultiSelectDropdown = ({
   label,
   options,
   selected,
   onChange,
   onReset,
-}) => {
+}: MultiSelectDropdownProps) => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 

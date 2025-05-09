@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { FiltersSection } from './components/filters';
-import { SortBySection } from './components/SortBySection';
-import type { SortCol } from './components/SortBySection';
+import { useEffect, useState } from 'react';
+
 import { ResultsTable } from './components/ResultsTable';
 import { TableSettingsDrawer } from './components/TableSettingsDrawer';
-
+import { FiltersSection } from './components/FiltersSection';
+import { SortBySection } from './components/SortBySection';
+import type { SortCol } from './components/SortBySection/SortBySection.types';
 // Dummy data loader (replace with real file input logic as needed)
 const initialData: Record<string, any>[] = [];
 
@@ -110,7 +110,7 @@ const App: React.FC = () => {
   const [isPinned, setIsPinned] = useState(false);
 
   // On data load/update, update filter options
-  React.useEffect(() => {
+  useEffect(() => {
     const newFilterState: Record<string, string[]> = {};
     columns
       .filter(col => col.filterable)
