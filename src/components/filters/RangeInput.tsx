@@ -1,11 +1,11 @@
 import React from 'react';
 
-export interface RangeInputProps {
+export type RangeInputProps = {
   label: string;
   value: [number | '', number | ''];
   onChange: (min: number | '', max: number | '') => void;
   onReset: () => void;
-}
+};
 
 export const RangeInput: React.FC<RangeInputProps> = ({
   label,
@@ -41,3 +41,4 @@ export const RangeInput: React.FC<RangeInputProps> = ({
 );
 
 export default RangeInput;
+

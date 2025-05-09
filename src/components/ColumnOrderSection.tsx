@@ -1,13 +1,13 @@
 import React from 'react';
 import type { ColumnDef } from '../App';
 
-interface ColumnOrderSectionProps {
+type ColumnOrderSectionProps = {
   columns: ColumnDef[];
   columnOrder: string[];
   setColumnOrder: (order: string[]) => void;
   visibleColumns?: Set<string>;
   setVisibleColumns?: (columns: Set<string>) => void;
-}
+};
 
 export const ColumnOrderSection: React.FC<ColumnOrderSectionProps> = ({
   columns,

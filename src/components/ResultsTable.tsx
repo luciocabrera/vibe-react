@@ -1,12 +1,12 @@
 import React from 'react';
 import type { ColumnDef } from '../App';
 
-export interface ResultsTableProps {
+export type ResultsTableProps = {
   data: Record<string, any>[];
   columns: ColumnDef[];
   groupByUrl: boolean;
   groupByMethod: boolean;
-}
+};
 
 export const ResultsTable: React.FC<ResultsTableProps> = ({
   data,

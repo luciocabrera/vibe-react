@@ -4,13 +4,17 @@ import Badge from './Badge';
 // Constants
 const MAX_BADGES = 10;
 
-export interface BadgesProps {
+export type BadgesProps = {
   selected: string[];
   options: string[];
   onRemove?: (val: string) => void;
-}
+};
 
-export const Badges: React.FC<BadgesProps> = ({ selected, options, onRemove }) => {
+export const Badges: React.FC<BadgesProps> = ({
+  selected,
+  options,
+  onRemove,
+}) => {
   if (selected.length === 0) return null;
   if (selected.length === options.length && options.length > 5) {
     return <Badge value='All' />;
@@ -36,3 +40,4 @@ export const Badges: React.FC<BadgesProps> = ({ selected, options, onRemove }) =
 };
 
 export default Badges;
+

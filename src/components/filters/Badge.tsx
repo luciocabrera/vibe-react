@@ -1,10 +1,10 @@
 import React from 'react';
 
-export interface BadgeProps {
+export type BadgeProps = {
   value: string;
   onRemove?: (val: string) => void;
   isMore?: boolean;
-}
+};
 
 export const Badge: React.FC<BadgeProps> = ({ value, onRemove, isMore }) => (
   <span className={`selected-badge${isMore ? ' more' : ''}`}>
@@ -23,3 +23,4 @@ export const Badge: React.FC<BadgeProps> = ({ value, onRemove, isMore }) => (
 );
 
 export default Badge;
+

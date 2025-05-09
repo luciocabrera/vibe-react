@@ -5,9 +5,12 @@ import MultiSelectDropdown from './MultiSelectDropdown';
 import RangeInput from './RangeInput';
 
 // Generic type for the data records to avoid using 'any'
-export type DataRecord = Record<string, string | number | boolean | null | undefined>;
+export type DataRecord = Record<
+  string,
+  string | number | boolean | null | undefined
+>;
 
-export interface FiltersSectionProps {
+export type FiltersSectionProps = {
   columns: ColumnDef[];
   data: DataRecord[];
   filterState: Record<string, string[]>;
@@ -17,7 +20,7 @@ export interface FiltersSectionProps {
   onReset: () => void;
   onResetFilter: (key: string) => void;
   onResetRange: (key: string) => void;
-}
+};
 
 export const FiltersSection: React.FC<FiltersSectionProps> = ({
   columns,
@@ -35,9 +38,7 @@ export const FiltersSection: React.FC<FiltersSectionProps> = ({
       .filter(col => col.filterable)
       .map(col => {
         const options = Array.from(
-          new Set((data || [])
-            .map(row => String(row[col.key]))
-            .filter(Boolean))
+          new Set((data || []).map(row => String(row[col.key])).filter(Boolean))
         );
         return (
           <React.Fragment key={col.key}>
@@ -87,3 +88,4 @@ export const FiltersSection: React.FC<FiltersSectionProps> = ({
 );
 
 export default FiltersSection;
+

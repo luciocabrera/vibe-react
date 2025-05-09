@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-export interface MultiSelectDropdownProps {
+export type MultiSelectDropdownProps = {
   label: string;
   options: string[];
   selected: string[];
   onChange: (sel: string[]) => void;
   onReset: () => void;
-}
+};
 
 export const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
   label,
@@ -17,7 +17,7 @@ export const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
 }) => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  
+
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node))
@@ -26,10 +26,10 @@ export const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
   }, []);
-  
+
   const allSelected = selected.length === options.length;
   const someSelected = selected.length > 0 && !allSelected;
-  
+
   return (
     <div
       ref={ref}
@@ -119,3 +119,4 @@ export const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
 };
 
 export default MultiSelectDropdown;
+
