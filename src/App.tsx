@@ -401,7 +401,12 @@ const App: React.FC = () => {
       )}
       <TableSettingsDrawer
         open={drawerOpen || isPinned}
-        onClose={() => setDrawerOpen(false)}
+        onClose={() => {
+          setDrawerOpen(false);
+          if (isPinned) {
+            setIsPinned(false);
+          }
+        }}
         tab={drawerTab}
         setTab={setDrawerTab}
         columns={columns}
