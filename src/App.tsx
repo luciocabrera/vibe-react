@@ -106,6 +106,8 @@ const App: React.FC = () => {
   const [drawerTab, setDrawerTab] = useState<'filters' | 'sorting' | 'columns'>(
     'filters'
   );
+  // Drawer pin state
+  const [isPinned, setIsPinned] = useState(false);
 
   // On data load/update, update filter options
   React.useEffect(() => {
@@ -242,35 +244,169 @@ const App: React.FC = () => {
     .filter(Boolean)
     .filter(col => visibleColumns.has(col.key)); // Filter by visibility
 
-  const [dragColIdx, setDragColIdx] = useState<number | null>(null);
-  function handleColDragStart(idx: number) {
-    setDragColIdx(idx);
-  }
-  function handleColDragOver(idx: number, e: React.DragEvent) {
-    e.preventDefault();
-  }
-  function handleColDrop(idx: number) {
-    if (dragColIdx === null || dragColIdx === idx) return;
-    const newOrder = [...columnOrder];
-    const [removed] = newOrder.splice(dragColIdx, 1);
-    newOrder.splice(idx, 0, removed);
-    setColumnOrder(newOrder);
-    setDragColIdx(null);
-  }
-
   return (
-    <div style={{ maxWidth: 1200, margin: '0 auto', padding: 24 }}>
-      <button
-        className='settings-btn'
-        onClick={() => setDrawerOpen(true)}
-        title='Table Settings'
-        aria-label='Table Settings'
-      >
-        <img src='/vite.svg' alt='settings' style={{ width: 28, height: 28 }} />
-      </button>
+    <div
+      className={isPinned ? 'with-pinned-drawer' : ''}
+      style={
+        isPinned ? undefined : { maxWidth: 1200, margin: '0 auto', padding: 24 }
+      }
+    >
+      {isPinned ? (
+        // Main content when drawer is pinned
+        <div className='main-content'>
+          <h1>API Benchmark Multi-Results Viewer (React)</h1>
+          <div style={{ marginBottom: 18 }}>
+            <label>
+              <b>Select multiple results JSON files:</b>
+              <input
+                type='file'
+                accept='application/json'
+                multiple
+                onChange={handleFileInput}
+                style={{ marginLeft: 12 }}
+              />
+            </label>
+          </div>
+          <div style={{ marginBottom: 12 }}>
+            <label>
+              <input
+                type='checkbox'
+                checked={groupByUrl}
+                onChange={e => setGroupByUrl(e.target.checked)}
+              />{' '}
+              Group by URL
+            </label>
+            <label style={{ marginLeft: 16 }}>
+              <input
+                type='checkbox'
+                checked={groupByMethod}
+                onChange={e => setGroupByMethod(e.target.checked)}
+              />{' '}
+              Group by Method
+            </label>
+          </div>
+          <ResultsTable
+            data={filtered}
+            columns={orderedColumns}
+            groupByUrl={groupByUrl}
+            groupByMethod={groupByMethod}
+          />
+        </div>
+      ) : (
+        // Original layout when drawer is not pinned
+        <>
+          <button
+            className='settings-btn'
+            onClick={() => setDrawerOpen(true)}
+            title='Table Settings'
+            aria-label='Table Settings'
+          >
+            <img
+              src='/vite.svg'
+              alt='settings'
+              style={{ width: 28, height: 28 }}
+            />
+          </button>
+          <h1>API Benchmark Multi-Results Viewer (React)</h1>
+          <div style={{ marginBottom: 18 }}>
+            <label>
+              <b>Select multiple results JSON files:</b>
+              <input
+                type='file'
+                accept='application/json'
+                multiple
+                onChange={handleFileInput}
+                style={{ marginLeft: 12 }}
+              />
+            </label>
+          </div>
+          <div style={{ marginBottom: 12 }}>
+            <label>
+              <input
+                type='checkbox'
+                checked={groupByUrl}
+                onChange={e => setGroupByUrl(e.target.checked)}
+              />{' '}
+              Group by URL
+            </label>
+            <label style={{ marginLeft: 16 }}>
+              <input
+                type='checkbox'
+                checked={groupByMethod}
+                onChange={e => setGroupByMethod(e.target.checked)}
+              />{' '}
+              Group by Method
+            </label>
+          </div>
+          {/* Hide inline filters/sorting when drawer is open */}
+          {!drawerOpen && (
+            <>
+              <FiltersSection
+                columns={columns}
+                data={data}
+                filterState={filterState}
+                onFilterChange={(key, vals) =>
+                  setFilterState(fs => ({ ...fs, [key]: vals }))
+                }
+                rangeState={rangeState}
+                onRangeChange={(key, min, max) =>
+                  setRangeState(rs => ({ ...rs, [key]: [min, max] }))
+                }
+                onReset={() => {
+                  const newFilterState: Record<string, string[]> = {};
+                  columns
+                    .filter(col => col.filterable)
+                    .forEach(col => {
+                      const opts = Array.from(
+                        new Set(data.map(d => d[col.key]).filter(Boolean))
+                      );
+                      newFilterState[col.key] = opts;
+                    });
+                  setFilterState(newFilterState);
+                  const newRangeState: Record<
+                    string,
+                    [number | '', number | '']
+                  > = {};
+                  columns
+                    .filter(col => col.rangeFilter)
+                    .forEach(col => {
+                      newRangeState[col.key] = ['', ''];
+                    });
+                  setRangeState(newRangeState);
+                }}
+                onResetFilter={key => {
+                  const opts = Array.from(
+                    new Set(data.map(d => d[key]).filter(Boolean))
+                  );
+                  setFilterState(fs => ({ ...fs, [key]: opts }));
+                }}
+                onResetRange={key =>
+                  setRangeState(rs => ({ ...rs, [key]: ['', ''] }))
+                }
+              />
+              <SortBySection
+                allColumns={columns}
+                sortState={sortState}
+                onChange={setSortState}
+              />
+            </>
+          )}
+          <ResultsTable
+            data={filtered}
+            columns={orderedColumns}
+            groupByUrl={groupByUrl}
+            groupByMethod={groupByMethod}
+          />
+        </>
+      )}
       <TableSettingsDrawer
-        open={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
+        open={drawerOpen || isPinned}
+        onClose={() => {
+          setDrawerOpen(false);
+          if (isPinned) {
+            setIsPinned(false);
+          }
+        }}
         tab={drawerTab}
         setTab={setDrawerTab}
         columns={columns}
@@ -285,94 +421,8 @@ const App: React.FC = () => {
         setColumnOrder={setColumnOrder}
         visibleColumns={visibleColumns}
         setVisibleColumns={setVisibleColumns}
-      />
-      <h1>API Benchmark Multi-Results Viewer (React)</h1>
-      <div style={{ marginBottom: 18 }}>
-        <label>
-          <b>Select multiple results JSON files:</b>
-          <input
-            type='file'
-            accept='application/json'
-            multiple
-            onChange={handleFileInput}
-            style={{ marginLeft: 12 }}
-          />
-        </label>
-      </div>
-      <div style={{ marginBottom: 12 }}>
-        <label>
-          <input
-            type='checkbox'
-            checked={groupByUrl}
-            onChange={e => setGroupByUrl(e.target.checked)}
-          />{' '}
-          Group by URL
-        </label>
-        <label style={{ marginLeft: 16 }}>
-          <input
-            type='checkbox'
-            checked={groupByMethod}
-            onChange={e => setGroupByMethod(e.target.checked)}
-          />{' '}
-          Group by Method
-        </label>
-      </div>
-      {/* Hide inline filters/sorting when drawer is open */}
-      {!drawerOpen && (
-        <>
-          <FiltersSection
-            columns={columns}
-            data={data}
-            filterState={filterState}
-            onFilterChange={(key, vals) =>
-              setFilterState(fs => ({ ...fs, [key]: vals }))
-            }
-            rangeState={rangeState}
-            onRangeChange={(key, min, max) =>
-              setRangeState(rs => ({ ...rs, [key]: [min, max] }))
-            }
-            onReset={() => {
-              const newFilterState: Record<string, string[]> = {};
-              columns
-                .filter(col => col.filterable)
-                .forEach(col => {
-                  const opts = Array.from(
-                    new Set(data.map(d => d[col.key]).filter(Boolean))
-                  );
-                  newFilterState[col.key] = opts;
-                });
-              setFilterState(newFilterState);
-              const newRangeState: Record<string, [number | '', number | '']> =
-                {};
-              columns
-                .filter(col => col.rangeFilter)
-                .forEach(col => {
-                  newRangeState[col.key] = ['', ''];
-                });
-              setRangeState(newRangeState);
-            }}
-            onResetFilter={key => {
-              const opts = Array.from(
-                new Set(data.map(d => d[key]).filter(Boolean))
-              );
-              setFilterState(fs => ({ ...fs, [key]: opts }));
-            }}
-            onResetRange={key =>
-              setRangeState(rs => ({ ...rs, [key]: ['', ''] }))
-            }
-          />
-          <SortBySection
-            allColumns={columns}
-            sortState={sortState}
-            onChange={setSortState}
-          />
-        </>
-      )}
-      <ResultsTable
-        data={filtered}
-        columns={orderedColumns}
-        groupByUrl={groupByUrl}
-        groupByMethod={groupByMethod}
+        isPinned={isPinned}
+        onPinChange={setIsPinned}
       />
     </div>
   );

@@ -4,6 +4,7 @@ import { SortBySection } from './SortBySection';
 import { ColumnOrderSection } from './ColumnOrderSection';
 import type { ColumnDef } from '../App';
 import type { SortCol } from './SortBySection';
+import './TableSettingsDrawer.css';
 
 interface TableSettingsDrawerProps {
   open: boolean;
@@ -26,6 +27,8 @@ interface TableSettingsDrawerProps {
   setColumnOrder: React.Dispatch<React.SetStateAction<string[]>>;
   visibleColumns?: Set<string>;
   setVisibleColumns?: React.Dispatch<React.SetStateAction<Set<string>>>;
+  isPinned?: boolean;
+  onPinChange?: (isPinned: boolean) => void;
 }
 
 export const TableSettingsDrawer: React.FC<TableSettingsDrawerProps> = ({
@@ -45,26 +48,50 @@ export const TableSettingsDrawer: React.FC<TableSettingsDrawerProps> = ({
   setColumnOrder,
   visibleColumns,
   setVisibleColumns,
+  isPinned = false,
+  onPinChange,
 }) => {
   if (!open) return null;
+
+  const handlePinClick = () => {
+    if (onPinChange) {
+      onPinChange(!isPinned);
+    }
+  };
+
   return (
     <>
-      <div
-        className='drawer-backdrop'
-        role='button'
-        tabIndex={0}
-        aria-label='Close settings panel'
-        onClick={onClose}
-        onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && onClose()}
-      />
-      <aside className='drawer'>
+      {!isPinned && (
+        <div
+          className='drawer-backdrop'
+          role='button'
+          tabIndex={0}
+          aria-label='Close settings panel'
+          onClick={onClose}
+          onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && onClose()}
+        />
+      )}
+      <aside className={`drawer${isPinned ? ' pinned' : ''}`}>
         <div className='drawer-header'>
           <span style={{ fontWeight: 600, fontSize: '1.2em' }}>
             Table Settings
           </span>
-          <button className='drawer-close-btn' onClick={onClose} title='Close'>
-            ×
-          </button>
+          <div>
+            <button
+              className='drawer-pin-btn'
+              onClick={handlePinClick}
+              title={isPinned ? 'Unpin drawer' : 'Pin drawer'}
+            >
+              {isPinned ? '📌' : '📍'}
+            </button>
+            <button
+              className='drawer-close-btn'
+              onClick={onClose}
+              title='Close'
+            >
+              ×
+            </button>
+          </div>
         </div>
         <div className='drawer-tabs'>
           <button
