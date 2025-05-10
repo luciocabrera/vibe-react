@@ -1,10 +1,10 @@
 import type { ColumnDef } from '../../App';
 
-export type ColumnOrderSectionProps = {
-  columns: ColumnDef[];
+export type TColumnOrderSectionProps = {
   columnOrder: string[];
+  columns: ColumnDef[];
   setColumnOrder: (order: string[]) => void;
-  visibleColumns?: Set<string>;
   setVisibleColumns?: (columns: Set<string>) => void;
+  visibleColumns?: Set<string>;
 };
 

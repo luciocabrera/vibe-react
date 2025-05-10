@@ -1,29 +1,30 @@
+import { ColumnOrderSection } from '../ColumnOrderSection';
+import { FiltersSection } from '../FiltersSection';
 import { SortBySection } from '../SortBySection';
 
-import './TableSettingsDrawer.css';
-import { ColumnOrderSection } from '../ColumnOrderSection';
 import type { TableSettingsDrawerProps } from './TableSettingsDrawer.types';
-import { FiltersSection } from '../FiltersSection';
+
+import './TableSettingsDrawer.css';
 
 const TableSettingsDrawer = ({
-  open,
-  onClose,
-  tab,
-  setTab,
+  columnOrder,
   columns,
   data,
   filterState,
-  setFilterState,
-  rangeState,
-  setRangeState,
-  sortState,
-  setSortState,
-  columnOrder,
-  setColumnOrder,
-  visibleColumns,
-  setVisibleColumns,
   isPinned = false,
+  onClose,
   onPinChange,
+  open,
+  rangeState,
+  setColumnOrder,
+  setFilterState,
+  setRangeState,
+  setSortState,
+  setTab,
+  setVisibleColumns,
+  sortState,
+  tab,
+  visibleColumns,
 }: TableSettingsDrawerProps) => {
   if (!open) return null;
 
@@ -37,31 +38,31 @@ const TableSettingsDrawer = ({
     <>
       {!isPinned && (
         <div
+          aria-label='Close settings panel'
           className='drawer-backdrop'
           role='button'
           tabIndex={0}
-          aria-label='Close settings panel'
           onClick={onClose}
           onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && onClose()}
         />
       )}
       <aside className={`drawer${isPinned ? ' pinned' : ''}`}>
         <div className='drawer-header'>
-          <span style={{ fontWeight: 600, fontSize: '1.2em' }}>
+          <span style={{ fontSize: '1.2em', fontWeight: 600 }}>
             Table Settings
           </span>
           <div>
             <button
               className='drawer-pin-btn'
-              onClick={handlePinClick}
               title={isPinned ? 'Unpin drawer' : 'Pin drawer'}
+              onClick={handlePinClick}
             >
               {isPinned ? '📌' : '📍'}
             </button>
             <button
               className='drawer-close-btn'
-              onClick={onClose}
               title='Close'
+              onClick={onClose}
             >
               ×
             </button>
@@ -93,10 +94,10 @@ const TableSettingsDrawer = ({
               columns={columns}
               data={data}
               filterState={filterState}
+              rangeState={rangeState}
               onFilterChange={(key, vals) =>
                 setFilterState(fs => ({ ...fs, [key]: vals }))
               }
-              rangeState={rangeState}
               onRangeChange={(key, min, max) =>
                 setRangeState(rs => ({ ...rs, [key]: [min, max] }))
               }
@@ -140,11 +141,11 @@ const TableSettingsDrawer = ({
             />
           ) : (
             <ColumnOrderSection
-              columns={columns}
               columnOrder={columnOrder}
+              columns={columns}
               setColumnOrder={setColumnOrder}
-              visibleColumns={visibleColumns}
               setVisibleColumns={setVisibleColumns}
+              visibleColumns={visibleColumns}
             />
           )}
         </div>

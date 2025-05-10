@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
-import type { SortBySectionProps } from './SortBySection.types';
+import { useCallback,useMemo, useState } from 'react';
+
+import { DraggableList } from '../DraggableList';
+import type { TDraggableItemType } from '../DraggableList/DraggableList.types';
+
+import type { TSortBySectionProps, TSortCol } from './SortBySection.types';
+import { SortItemControls } from './SortControls';
 
 const SortBySection = ({
   allColumns,
-  sortState,
   onChange,
-}: SortBySectionProps) => {
+  sortState,
+}: TSortBySectionProps) => {
   const [selected, setSelected] = useState('');
-  const [dragColIdx, setDragColIdx] = useState<number | null>(null);
 
   const addColumn = () => {
     if (selected && !sortState.find(s => s.key === selected)) {
@@ -15,36 +19,76 @@ const SortBySection = ({
       if (col)
         onChange([
           ...sortState,
-          { key: col.key, label: col.label, dir: 'asc' },
+          { dir: 'asc', key: col.key, label: col.label },
         ]);
       setSelected('');
     }
   };
 
-  const move = (from: number, to: number) => {
-    if (to < 0 || to >= sortState.length) return;
-    const arr = [...sortState];
-    const [item] = arr.splice(from, 1);
-    arr.splice(to, 0, item);
-    onChange(arr);
-  };
+  const toggleDirection = useCallback(
+    (idx: number) => {
+      onChange(
+        sortState.map((s, i) =>
+          i === idx ? { ...s, dir: s.dir === 'asc' ? 'desc' : 'asc' } : s
+        )
+      );
+    },
+    [sortState, onChange]
+  );
 
-  function handleColDragStart(idx: number) {
-    setDragColIdx(idx);
-  }
+  const removeItem = useCallback(
+    (idx: number) => {
+      onChange(sortState.filter((_, i) => i !== idx));
+    },
+    [sortState, onChange]
+  );
 
-  function handleColDragOver(_idx: number, e: React.DragEvent) {
-    e.preventDefault();
-  }
+  const draggableItems = useMemo(
+    () =>
+      sortState.map((col, idx) => ({
+        child: (
+          <div
+            style={{
+              alignItems: 'center',
+              display: 'flex',
+              justifyContent: 'space-between',
+              width: '100%',
+            }}
+          >
+            <div style={{ alignItems: 'center', display: 'flex', gap: 10 }}>
+              <span>{col.label}</span>
+            </div>
+            <SortItemControls
+              direction={col.dir}
+              onDelete={() => removeItem(idx)}
+              onToggleDirection={() => toggleDirection(idx)}
+            />
+          </div>
+        ),
+        id: `${col.key}-${idx}`,
+      })),
+    [sortState, toggleDirection, removeItem]
+  );
 
-  function handleColDrop(idx: number) {
-    if (dragColIdx === null || dragColIdx === idx) return;
-    const newOrder = [...sortState];
-    const [removed] = newOrder.splice(dragColIdx, 1);
-    newOrder.splice(idx, 0, removed);
-    onChange(newOrder);
-    setDragColIdx(null);
-  }
+  const handleOrderChange = useCallback(
+    (items: TDraggableItemType[]) => {
+      // Create a new array based on the original order but rearranged
+      const newSortItems: TSortCol[] = [];
+
+      // Map each draggable item back to its original sort item
+      items.forEach(item => {
+        const idParts = item.id.toString().split('-');
+        const key = idParts[0];
+        const originalItem = sortState.find(s => s.key === key);
+        if (originalItem) {
+          newSortItems.push(originalItem);
+        }
+      });
+
+      onChange(newSortItems);
+    },
+    [sortState, onChange]
+  );
 
   return (
     <div className='sort-section'>
@@ -53,9 +97,9 @@ const SortBySection = ({
       </label>
       <select
         id='sort-column-select'
+        style={{ marginLeft: 8, minWidth: 180 }}
         value={selected}
         onChange={e => setSelected(e.target.value)}
-        style={{ minWidth: 180, marginLeft: 8 }}
       >
         <option value=''>Select column</option>
         {allColumns
@@ -68,119 +112,16 @@ const SortBySection = ({
             </option>
           ))}
       </select>
-      <button type='button' onClick={addColumn} style={{ padding: '6px 16px' }}>
+      <button style={{ padding: '6px 16px' }} type='button' onClick={addColumn}>
         Add
       </button>
 
-      <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-        {sortState.map((col, idx) => (
-          <li
-            key={col.key}
-            draggable
-            onDragStart={() => handleColDragStart(idx)}
-            onDragOver={e => handleColDragOver(idx, e)}
-            onDrop={() => handleColDrop(idx)}
-            style={{
-              background: dragColIdx === idx ? '#ddeeff' : '#f7faff',
-              border: '1px solid #c7d6f7',
-              borderRadius: 6,
-              marginBottom: 6,
-              padding: '8px 14px',
-              cursor: 'grab',
-              fontWeight: 500,
-              display: 'flex',
-              alignItems: 'center',
-              gap: 10,
-              boxShadow: dragColIdx === idx ? '0 2px 8px #1976d244' : undefined,
-              opacity: dragColIdx === idx ? 0.7 : 1,
-              transition: 'background 0.2s, box-shadow 0.2s, opacity 0.2s',
-              justifyContent: 'space-between',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <span style={{ color: '#1976d2', fontSize: '1.2em' }}>≡</span>
-              <span>{col.label}</span>
-            </div>
-
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <button
-                type='button'
-                onClick={() =>
-                  onChange(
-                    sortState.map((s, i) =>
-                      i === idx
-                        ? { ...s, dir: s.dir === 'asc' ? 'desc' : 'asc' }
-                        : s
-                    )
-                  )
-                }
-                style={{
-                  background: 'transparent',
-                  border: 'none',
-                  cursor: 'pointer',
-                  color: '#1976d2',
-                  fontSize: '1.1em',
-                  padding: '4px 8px',
-                }}
-              >
-                {col.dir === 'asc' ? '▲' : '▼'}
-              </button>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                <button
-                  type='button'
-                  onClick={() => move(idx, idx - 1)}
-                  disabled={idx === 0}
-                  style={{
-                    background: 'transparent',
-                    border: 'none',
-                    cursor: idx === 0 ? 'default' : 'pointer',
-                    color: idx === 0 ? '#ccc' : '#1976d2',
-                    fontSize: '0.9em',
-                    padding: '2px 4px',
-                    lineHeight: '1',
-                  }}
-                >
-                  ↑
-                </button>
-                <button
-                  type='button'
-                  onClick={() => move(idx, idx + 1)}
-                  disabled={idx === sortState.length - 1}
-                  style={{
-                    background: 'transparent',
-                    border: 'none',
-                    cursor:
-                      idx === sortState.length - 1 ? 'default' : 'pointer',
-                    color: idx === sortState.length - 1 ? '#ccc' : '#1976d2',
-                    fontSize: '0.9em',
-                    padding: '2px 4px',
-                    lineHeight: '1',
-                  }}
-                >
-                  ↓
-                </button>
-              </div>
-
-              <button
-                type='button'
-                onClick={() => onChange(sortState.filter((_, i) => i !== idx))}
-                style={{
-                  background: 'transparent',
-                  border: 'none',
-                  cursor: 'pointer',
-                  color: '#ff4444',
-                  fontSize: '1.1em',
-                  marginLeft: 8,
-                  padding: '4px 8px',
-                }}
-              >
-                ✕
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
+      {draggableItems.length > 0 && (
+        <DraggableList
+          items={draggableItems}
+          onOrderChange={handleOrderChange}
+        />
+      )}
     </div>
   );
 };

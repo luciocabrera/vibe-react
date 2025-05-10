@@ -1,14 +1,14 @@
 import type { ColumnDef } from '../../App';
 
-export type SortCol = {
+export type TSortCol = {
+  dir: 'asc' | 'desc';
   key: string;
   label: string;
-  dir: 'asc' | 'desc';
 };
 
-export type SortBySectionProps = {
+export type TSortBySectionProps = {
   allColumns: ColumnDef[];
-  sortState: SortCol[];
-  onChange: (newSort: SortCol[]) => void;
+  onChange: (newSort: TSortCol[]) => void;
+  sortState: TSortCol[];
 };
 

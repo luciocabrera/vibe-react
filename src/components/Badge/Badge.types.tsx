@@ -1,6 +1,6 @@
-export type BadgeProps = {
-  value: string;
-  onRemove?: (val: string) => void;
+export type TBadgeProps = {
   isMore?: boolean;
+  onRemove?: (val: string) => void;
+  value: string;
 };
 

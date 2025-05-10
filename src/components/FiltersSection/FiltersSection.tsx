@@ -1,19 +1,21 @@
-import { Badges } from '../Badges';
 import { Fragment } from 'react';
-import type { FiltersSectionProps } from './FiltersSection.types';
+
+import { Badges } from '../Badges';
 import { MultiSelectDropdown } from '../MultiSelectDropdown';
 import { RangeInput } from '../RangeInput';
+
+import type { FiltersSectionProps } from './FiltersSection.types';
 
 export const FiltersSection = ({
   columns,
   data,
   filterState,
   onFilterChange,
-  rangeState,
   onRangeChange,
   onReset,
   onResetFilter,
   onResetRange,
+  rangeState,
 }: FiltersSectionProps) => (
   <div style={{ marginBottom: 16 }}>
     {columns
@@ -31,10 +33,10 @@ export const FiltersSection = ({
               onChange={vals => onFilterChange(col.key, vals)}
               onReset={() => onResetFilter(col.key)}
             />
-            <div style={{ marginTop: 4, marginBottom: 12 }}>
+            <div style={{ marginBottom: 12, marginTop: 4 }}>
               <Badges
-                selected={filterState[col.key] || []}
                 options={options}
+                selected={filterState[col.key] || []}
                 onRemove={val =>
                   onFilterChange(
                     col.key,
@@ -47,9 +49,9 @@ export const FiltersSection = ({
         );
       })}
     <button
+      style={{ marginLeft: 12, padding: '6px 16px' }}
       type='button'
       onClick={onReset}
-      style={{ marginLeft: 12, padding: '6px 16px' }}
     >
       Reset All Filters
     </button>
