@@ -1,7 +1,6 @@
-import type { ReactNode } from 'react';
+import type { ComponentProps, ReactNode } from 'react';
 
-export type TAccordionItemProps = {
-  children: ReactNode;
+export type TAccordionItemProps = ComponentProps<"details"> & {
   name: string;
   title: ReactNode;
 };
