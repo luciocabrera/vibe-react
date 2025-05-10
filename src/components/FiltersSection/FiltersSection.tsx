@@ -8,6 +8,8 @@ import { RangeInput } from '../RangeInput';
 
 import { styles } from './FiltersSection.stylex';
 import type { FiltersSectionProps } from './FiltersSection.types';
+import { AccordionItem } from '../AccordionItem';
+import { Accordion } from '../Accordion';
 
 export const FiltersSection = ({
   columns,
@@ -45,29 +47,31 @@ export const FiltersSection = ({
 
   return (
     <div {...stylex.props(styles.container)}>
-      {columns
-        .filter(col => col.filterable)
-        .map(col => {
-          const options = Array.from(
-            new Set(data.map(row => String(row[col.key])).filter(Boolean))
-          );
-          return (
-            <FormFieldBase key={col.key} accessor={col.key} label={col.label}>
-              <MultiSelectDropdown
-                label={col.label}
-                options={options}
-                selected={filterState[col.key]}
-                onChange={vals => handleFilterChange(col.key, vals)}
-                onReset={() => handleResetFilter(col.key)}
-              />
-              <Badges
-                options={options}
-                selected={filterState[col.key]}
-                onRemove={val => handleRemoveBadge(col.key, val)}
-              />
-            </FormFieldBase>
-          );
-        })}
+      <Accordion>
+        {columns
+          .filter(col => col.filterable)
+          .map(col => {
+            const options = Array.from(
+              new Set(data.map(row => String(row[col.key])).filter(Boolean))
+            );
+            return (
+              <AccordionItem key={col.key} name={col.key} title={col.label}>
+                <MultiSelectDropdown
+                  label={col.label}
+                  options={options}
+                  selected={filterState[col.key]}
+                  onChange={vals => handleFilterChange(col.key, vals)}
+                  onReset={() => handleResetFilter(col.key)}
+                />
+                {/* <Badges
+                  options={options}
+                  selected={filterState[col.key]}
+                  onRemove={val => handleRemoveBadge(col.key, val)}
+                /> */}
+              </AccordionItem>
+            );
+          })}
+      </Accordion>
 
       <div {...stylex.props(styles.filtersContainer)}>
         {columns

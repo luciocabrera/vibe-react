@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
 import type { MultiSelectDropdownProps } from './MultiSelectDropdown.types';
-
 const MultiSelectDropdown = ({
   onChange,
   onReset,
@@ -37,38 +36,56 @@ const MultiSelectDropdown = ({
     <div
       ref={ref}
       style={{
-        display: 'inline-flex',
-        paddingLeft: '1rem',
-        paddingTop: '0.5rem',
+        display: 'block',
+        paddingInline: '1rem',
+        paddingBottom: '1rem',
         width: '100%',
+        maxWidth: '400px', // Optional: constrain width
+        position: 'relative',
+        overflow: 'hidden',
+        boxSizing: 'border-box', // Ensure sizing is reliable
       }}
     >
-      {/* <label>{label}:</label> */}
       <button
         style={{
           background: '#fff',
           border: '1px solid #ccc',
           borderRadius: 4,
           cursor: 'pointer',
-
-          minWidth: 120,
           padding: '6px 10px',
           textAlign: 'left',
           width: '100%',
+          boxSizing: 'border-box',
         }}
         type='button'
         onClick={handleDropdownClick}
       >
-        {(() => {
-          if (allSelected) return 'All';
-          if (selected.length === 0) return 'None';
-          if (selected.length === 1) return selected[0];
-          return `${selected[0]}, +${selected.length - 1} more`;
-        })()}
+        <span
+          style={{
+            display: 'block',
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
+            width: '100%',
+          }}
+        >
+          {(() => {
+            if (allSelected) return 'All';
+            if (selected.length === 0) return 'None';
+            if (selected.length === 1) return selected[0];
+            return `${selected[0]}, +${selected.length - 1} more`;
+          })()}
+        </span>
       </button>
-      <button style={{ marginLeft: 4 }} type='button' onClick={handleReset}>
+
+      <button
+        type='button'
+        onClick={handleReset}
+        style={{ marginLeft: '0.5rem' }}
+      >
         ⟳
       </button>
+
       {open && (
         <div
           style={{
@@ -78,10 +95,13 @@ const MultiSelectDropdown = ({
             boxShadow: '0 2px 8px #0002',
             marginTop: 2,
             maxHeight: 220,
-            minWidth: 180,
+            width: '100%', // Ensure it doesn't overflow
             overflowY: 'auto',
             position: 'absolute',
             zIndex: 10,
+            left: 0,
+            right: 0,
+            boxSizing: 'border-box',
           }}
         >
           <label
@@ -91,6 +111,9 @@ const MultiSelectDropdown = ({
               fontWeight: 'bold',
               marginBottom: 4,
               padding: '4px 10px',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
             }}
           >
             <input
@@ -104,7 +127,16 @@ const MultiSelectDropdown = ({
             Select All
           </label>
           {options.map(opt => (
-            <label key={opt} style={{ display: 'block', padding: '4px 10px' }}>
+            <label
+              key={opt}
+              style={{
+                display: 'block',
+                padding: '4px 10px',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+            >
               <input
                 checked={selected.includes(opt)}
                 type='checkbox'
@@ -120,4 +152,3 @@ const MultiSelectDropdown = ({
 };
 
 export default MultiSelectDropdown;
-
