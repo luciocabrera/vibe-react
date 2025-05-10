@@ -1,90 +1,90 @@
 import { useEffect, useState } from 'react';
 
-import { ResultsTable } from './components/ResultsTable';
-import { TableSettingsDrawer } from './components/TableSettingsDrawer';
 import { FiltersSection } from './components/FiltersSection';
+import { ResultsTable } from './components/ResultsTable';
 import { SortBySection } from './components/SortBySection';
-import type { SortCol } from './components/SortBySection/SortBySection.types';
+import { TableSettingsDrawer } from './components/TableSettingsDrawer';
+
 // Dummy data loader (replace with real file input logic as needed)
 const initialData: Record<string, any>[] = [];
 
 // Define a dynamic schema for columns
 export type ColumnDef = {
+  filterable?: boolean;
   key: string;
   label: string;
-  type: 'string' | 'number';
-  filterable?: boolean;
-  sortable?: boolean;
   rangeFilter?: boolean;
+  sortable?: boolean;
+  type: 'number' | 'string';
 };
 
 const columns: ColumnDef[] = [
   {
+    filterable: true,
     key: 'fileName',
     label: 'File Name',
-    type: 'string',
-    filterable: true,
     sortable: true,
+    type: 'string',
   },
   {
+    filterable: true,
     key: 'url',
     label: 'URL',
-    type: 'string',
-    filterable: true,
     sortable: true,
+    type: 'string',
   },
   {
+    filterable: true,
     key: 'method',
     label: 'Method',
-    type: 'string',
-    filterable: true,
     sortable: true,
+    type: 'string',
   },
   {
+    filterable: false,
     key: 'num_requests',
     label: 'num_requests',
-    type: 'number',
-    filterable: false,
     sortable: true,
+    type: 'number',
   },
   {
+    filterable: false,
     key: 'concurrency',
     label: 'concurrency',
-    type: 'number',
-    filterable: false,
     sortable: true,
+    type: 'number',
   },
   {
+    filterable: false,
     key: 'avgTime',
     label: 'Avg Time (ms)',
-    type: 'number',
-    filterable: false,
-    sortable: true,
     rangeFilter: true,
+    sortable: true,
+    type: 'number',
   },
   {
+    filterable: false,
     key: 'minTime',
     label: 'Min Time (ms)',
-    type: 'number',
-    filterable: false,
-    sortable: true,
     rangeFilter: true,
+    sortable: true,
+    type: 'number',
   },
   {
+    filterable: false,
     key: 'maxTime',
     label: 'Max Time (ms)',
-    type: 'number',
-    filterable: false,
-    sortable: true,
     rangeFilter: true,
+    sortable: true,
+    type: 'number',
   },
   {
+    filterable: false,
     key: 'avgSize',
     label: 'Avg Size (bytes)',
-    type: 'number',
-    filterable: false,
-    sortable: true,
     rangeFilter: true,
+    sortable: true,
+    type: 'number',
   },
 ];
 
@@ -103,7 +103,7 @@ const App: React.FC = () => {
   const [sortState, setSortState] = useState<SortCol[]>([]);
   // Drawer state
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [drawerTab, setDrawerTab] = useState<'filters' | 'sorting' | 'columns'>(
+  const [drawerTab, setDrawerTab] = useState<'columns' | 'filters' | 'sorting'>(
     'filters'
   );
   // Drawer pin state
@@ -141,12 +141,12 @@ const App: React.FC = () => {
           filterState[col.key]?.includes(row[col.key])
       )
   );
-  function inRange(val: number | '-', min: number | '', max: number | '') {
+  const inRange = (val: number | '-', min: number | '', max: number | '') => {
     if (val === '-' || isNaN(Number(val))) return false;
     if (min !== '' && Number(val) < min) return false;
     if (max !== '' && Number(val) > max) return false;
     return true;
-  }
+  };
   filtered = filtered.filter(row =>
     columns
       .filter(col => col.rangeFilter)
@@ -178,7 +178,7 @@ const App: React.FC = () => {
   }
 
   // File upload handler (for demo, not production)
-  function handleFileInput(e: React.ChangeEvent<HTMLInputElement>) {
+  const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
     const promises = Array.from(files).map(file =>
@@ -212,15 +212,15 @@ const App: React.FC = () => {
             ? sizes.reduce((a: number, b: number) => a + b, 0) / sizes.length
             : '-';
           return {
-            fileName: file.name,
-            url: metadata.url ?? '-',
-            method: metadata.method ?? '-',
-            num_requests: metadata.num_requests ?? '-',
-            concurrency: metadata.concurrency ?? '-',
-            avgTime,
-            minTime,
-            maxTime,
             avgSize,
+            avgTime,
+            concurrency: metadata.concurrency ?? '-',
+            fileName: file.name,
+            maxTime,
+            method: metadata.method ?? '-',
+            minTime,
+            num_requests: metadata.num_requests ?? '-',
+            url: metadata.url ?? '-',
           } as Record<string, any>;
         } catch {
           return null;
@@ -230,7 +230,7 @@ const App: React.FC = () => {
     Promise.all(promises).then(rows => {
       setData(rows.filter(Boolean) as Record<string, any>[]);
     });
-  }
+  };
 
   // Column order state and drag-and-drop logic
   const [columnOrder, setColumnOrder] = useState(columns.map(col => col.key));
@@ -248,7 +248,7 @@ const App: React.FC = () => {
     <div
       className={isPinned ? 'with-pinned-drawer' : ''}
       style={
-        isPinned ? undefined : { maxWidth: 1200, margin: '0 auto', padding: 24 }
+        isPinned ? undefined : { margin: '0 auto', maxWidth: 1200, padding: 24 }
       }
     >
       {isPinned ? (
@@ -259,52 +259,52 @@ const App: React.FC = () => {
             <label>
               <b>Select multiple results JSON files:</b>
               <input
-                type='file'
-                accept='application/json'
                 multiple
-                onChange={handleFileInput}
+                accept='application/json'
                 style={{ marginLeft: 12 }}
+                type='file'
+                onChange={handleFileInput}
               />
             </label>
           </div>
           <div style={{ marginBottom: 12 }}>
             <label>
               <input
-                type='checkbox'
                 checked={groupByUrl}
+                type='checkbox'
                 onChange={e => setGroupByUrl(e.target.checked)}
               />{' '}
               Group by URL
             </label>
             <label style={{ marginLeft: 16 }}>
               <input
-                type='checkbox'
                 checked={groupByMethod}
+                type='checkbox'
                 onChange={e => setGroupByMethod(e.target.checked)}
               />{' '}
               Group by Method
             </label>
           </div>
           <ResultsTable
-            data={filtered}
             columns={orderedColumns}
-            groupByUrl={groupByUrl}
+            data={filtered}
             groupByMethod={groupByMethod}
+            groupByUrl={groupByUrl}
           />
         </div>
       ) : (
         // Original layout when drawer is not pinned
         <>
           <button
-            className='settings-btn'
-            onClick={() => setDrawerOpen(true)}
-            title='Table Settings'
             aria-label='Table Settings'
+            className='settings-btn'
+            title='Table Settings'
+            onClick={() => setDrawerOpen(true)}
           >
             <img
-              src='/vite.svg'
               alt='settings'
-              style={{ width: 28, height: 28 }}
+              src='/vite.svg'
+              style={{ height: 28, width: 28 }}
             />
           </button>
           <h1>API Benchmark Multi-Results Viewer (React)</h1>
@@ -312,27 +312,27 @@ const App: React.FC = () => {
             <label>
               <b>Select multiple results JSON files:</b>
               <input
-                type='file'
-                accept='application/json'
                 multiple
-                onChange={handleFileInput}
+                accept='application/json'
                 style={{ marginLeft: 12 }}
+                type='file'
+                onChange={handleFileInput}
               />
             </label>
           </div>
           <div style={{ marginBottom: 12 }}>
             <label>
               <input
-                type='checkbox'
                 checked={groupByUrl}
+                type='checkbox'
                 onChange={e => setGroupByUrl(e.target.checked)}
               />{' '}
               Group by URL
             </label>
             <label style={{ marginLeft: 16 }}>
               <input
-                type='checkbox'
                 checked={groupByMethod}
+                type='checkbox'
                 onChange={e => setGroupByMethod(e.target.checked)}
               />{' '}
               Group by Method
@@ -345,10 +345,10 @@ const App: React.FC = () => {
                 columns={columns}
                 data={data}
                 filterState={filterState}
+                rangeState={rangeState}
                 onFilterChange={(key, vals) =>
                   setFilterState(fs => ({ ...fs, [key]: vals }))
                 }
-                rangeState={rangeState}
                 onRangeChange={(key, min, max) =>
                   setRangeState(rs => ({ ...rs, [key]: [min, max] }))
                 }
@@ -392,36 +392,36 @@ const App: React.FC = () => {
             </>
           )}
           <ResultsTable
-            data={filtered}
             columns={orderedColumns}
-            groupByUrl={groupByUrl}
+            data={filtered}
             groupByMethod={groupByMethod}
+            groupByUrl={groupByUrl}
           />
         </>
       )}
       <TableSettingsDrawer
+        columnOrder={columnOrder}
+        columns={columns}
+        data={data}
+        filterState={filterState}
+        isPinned={isPinned}
         open={drawerOpen || isPinned}
+        rangeState={rangeState}
+        setColumnOrder={setColumnOrder}
+        setFilterState={setFilterState}
+        setRangeState={setRangeState}
+        setSortState={setSortState}
+        setTab={setDrawerTab}
+        setVisibleColumns={setVisibleColumns}
+        sortState={sortState}
+        tab={drawerTab}
+        visibleColumns={visibleColumns}
         onClose={() => {
           setDrawerOpen(false);
           if (isPinned) {
             setIsPinned(false);
           }
         }}
-        tab={drawerTab}
-        setTab={setDrawerTab}
-        columns={columns}
-        data={data}
-        filterState={filterState}
-        setFilterState={setFilterState}
-        rangeState={rangeState}
-        setRangeState={setRangeState}
-        sortState={sortState}
-        setSortState={setSortState}
-        columnOrder={columnOrder}
-        setColumnOrder={setColumnOrder}
-        visibleColumns={visibleColumns}
-        setVisibleColumns={setVisibleColumns}
-        isPinned={isPinned}
         onPinChange={setIsPinned}
       />
     </div>

@@ -1,10 +1,11 @@
-import type { BadgesProps } from './Badges.types';
 import { Badge } from '../Badge';
+
+import type { TBadgesProps } from './Badges.types';
 
 // Constants
 const MAX_BADGES = 10;
 
-const Badges = ({ selected, options, onRemove }: BadgesProps) => {
+const Badges = ({ onRemove, options, selected }: TBadgesProps) => {
   if (selected.length === 0) return null;
   if (selected.length === options.length && options.length > 5) {
     return <Badge value='All' />;
@@ -24,7 +25,7 @@ const Badges = ({ selected, options, onRemove }: BadgesProps) => {
       {selected.slice(0, MAX_BADGES).map(val => (
         <Badge key={val} value={val} onRemove={onRemove} />
       ))}
-      <Badge value={`+${selected.length - MAX_BADGES} more`} isMore />
+      <Badge isMore value={`+${selected.length - MAX_BADGES} more`} />
     </span>
   );
 };

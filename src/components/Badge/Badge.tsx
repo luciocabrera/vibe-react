@@ -1,14 +1,14 @@
-import type { BadgeProps } from './Badge.types';
+import type { TBadgeProps } from './Badge.types';
 
-const Badge = ({ value, onRemove, isMore }: BadgeProps) => (
+const Badge = ({ isMore, onRemove, value }: TBadgeProps) => (
   <span className={`selected-badge${isMore ? ' more' : ''}`}>
     {value}
     {onRemove && !isMore && (
       <button
         className='remove-badge'
+        title='Remove'
         type='button'
         onClick={() => onRemove(value)}
-        title='Remove'
       >
         &times;
       </button>

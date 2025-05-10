@@ -1,21 +1,22 @@
 import React from 'react';
+
 import type { ColumnDef } from '../App';
 
 export type ResultsTableProps = {
-  data: Record<string, any>[];
   columns: ColumnDef[];
-  groupByUrl: boolean;
+  data: Record<string, any>[];
   groupByMethod: boolean;
+  groupByUrl: boolean;
 };
 
 export const ResultsTable: React.FC<ResultsTableProps> = ({
-  data,
   columns,
-  groupByUrl,
+  data,
   groupByMethod,
+  groupByUrl,
 }) => {
   // Grouping logic
-  let grouped: Record<string, Record<string, any>[]> = {};
+  const grouped: Record<string, Record<string, any>[]> = {};
   if (groupByUrl || groupByMethod) {
     data.forEach(row => {
       let groupKey = '';
@@ -30,7 +31,7 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
   }
 
   // Highlight best/worst for numeric columns (per group)
-  function getHighlights(rows: Record<string, any>[]) {
+  const getHighlights = (rows: Record<string, any>[]) => {
     const highlights: Record<string, { best: number; worst: number }> = {};
     if (!Array.isArray(columns)) return highlights;
     columns
@@ -51,10 +52,10 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
   return (
     <table
       style={{
-        width: '100%',
         background: '#fff',
         borderCollapse: 'collapse',
         marginTop: 20,
+        width: '100%',
       }}
     >
       <thead>

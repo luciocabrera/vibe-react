@@ -2,27 +2,27 @@ import type { ColumnDef } from '../../App';
 import type { SortCol } from '../SortBySection/SortBySection.types';
 
 export type TableSettingsDrawerProps = {
-  open: boolean;
-  onClose: () => void;
-  tab: 'filters' | 'sorting' | 'columns';
-  setTab: (tab: 'filters' | 'sorting' | 'columns') => void;
+  columnOrder: string[];
   columns: ColumnDef[];
   data: Record<string, any>[];
   filterState: Record<string, string[]>;
+  isPinned?: boolean;
+  onClose: () => void;
+  onPinChange?: (isPinned: boolean) => void;
+  open: boolean;
+  rangeState: Record<string, [number | '', number | '']>;
+  setColumnOrder: React.Dispatch<React.SetStateAction<string[]>>;
   setFilterState: React.Dispatch<
     React.SetStateAction<Record<string, string[]>>
   >;
-  rangeState: Record<string, [number | '', number | '']>;
   setRangeState: React.Dispatch<
     React.SetStateAction<Record<string, [number | '', number | '']>>
   >;
-  sortState: SortCol[];
   setSortState: React.Dispatch<React.SetStateAction<SortCol[]>>;
-  columnOrder: string[];
-  setColumnOrder: React.Dispatch<React.SetStateAction<string[]>>;
-  visibleColumns?: Set<string>;
+  setTab: (tab: 'columns' | 'filters' | 'sorting') => void;
   setVisibleColumns?: React.Dispatch<React.SetStateAction<Set<string>>>;
-  isPinned?: boolean;
-  onPinChange?: (isPinned: boolean) => void;
+  sortState: SortCol[];
+  tab: 'columns' | 'filters' | 'sorting';
+  visibleColumns?: Set<string>;
 };
 
