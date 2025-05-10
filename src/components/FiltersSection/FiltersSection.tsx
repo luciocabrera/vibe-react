@@ -55,10 +55,16 @@ export const FiltersSection = ({
               new Set(data.map((row) => String(row[col.key])).filter(Boolean))
             );
             return (
-              <AccordionItem key={col.key} id={col.key} name={col.key} title={col.label}>
+              <AccordionItem
+                key={`accordion-item--${col.key}`}
+                id={`accordion-item--${col.key}`}
+                name={col.key}
+                title={col.label}
+              >
                 <MultiSelectDropdown
                   label={col.label}
                   options={options}
+                  parentId={`accordion-item--${col.key}`}
                   selected={filterState[col.key]}
                   onChange={(vals) => handleFilterChange(col.key, vals)}
                   onReset={() => handleResetFilter(col.key)}

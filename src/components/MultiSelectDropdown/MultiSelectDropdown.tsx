@@ -5,6 +5,7 @@ const MultiSelectDropdown = ({
   onChange,
   onReset,
   options = [],
+  parentId,
   selected = [],
 }: MultiSelectDropdownProps) => {
   const [open, setOpen] = useState(false);
@@ -16,27 +17,27 @@ const MultiSelectDropdown = ({
   // Store the accordion width for proper sizing
   const [accordionWidth, setAccordionWidth] = useState<number | null>(null);
 
-  // Get the accordion width on mount and when window resizes
+  // Get the parent width on mount and when window resizes
   useEffect(() => {
-    const calculateAccordionWidth = () => {
-      if (containerRef.current) {
-        // Find the proper accordion parent (details tag)
-        const accordionItem = containerRef.current.closest('[data-test-id="accordion-item"]');
-        if (accordionItem) {
-          const width = accordionItem.getBoundingClientRect().width;
+    const calculateParentWidth = () => {
+      if (containerRef.current && parentId) {
+        // Find the parent element by ID
+        const parentElement = document.getElementById(parentId);
+        if (parentElement) {
+          const width = parentElement.getBoundingClientRect().width;
           setAccordionWidth(width);
         }
       }
     };
     
     // Calculate immediately and on resize
-    calculateAccordionWidth();
-    window.addEventListener('resize', calculateAccordionWidth);
+    calculateParentWidth();
+    window.addEventListener('resize', calculateParentWidth);
     
     return () => {
-      window.removeEventListener('resize', calculateAccordionWidth);
+      window.removeEventListener('resize', calculateParentWidth);
     };
-  }, []);
+  }, [parentId]);
 
   useEffect(() => {
     // Window resize handler to reposition dropdown if open
@@ -90,15 +91,15 @@ const MultiSelectDropdown = ({
   }, [open]);
 
   useEffect(() => {
-    // Recalculate accordion width when dropdown opens
-    if (open) {
-      const accordionItem = containerRef.current?.closest('[data-test-id="accordion-item"]');
-      if (accordionItem) {
-        const width = accordionItem.getBoundingClientRect().width;
+    // Recalculate parent width when dropdown opens
+    if (open && parentId) {
+      const parentElement = document.getElementById(parentId);
+      if (parentElement) {
+        const width = parentElement.getBoundingClientRect().width;
         setAccordionWidth(width);
       }
     }
-  }, [open]);
+  }, [open, parentId]);
 
   // Check if all options are selected
   const allSelected = selected.length === options.length;
@@ -133,10 +134,14 @@ const MultiSelectDropdown = ({
     e.stopPropagation(); // Prevent event bubbling
     e.preventDefault(); // Prevent any default action
     
-    // If we're inside an accordion, prevent the accordion toggle
-    const accordionItem = (e.target as HTMLElement).closest('[data-test-id="accordion-item"]');
-    if (accordionItem) {
-      e.nativeEvent.stopImmediatePropagation(); // Stop event completely
+    // If we're inside a parent element that might be clickable (like an accordion),
+    // prevent the parent's click event
+    if (parentId) {
+      const parentElement = document.getElementById(parentId);
+      const clickTarget = e.target as HTMLElement;
+      if (parentElement && (parentElement.contains(clickTarget) || parentElement === clickTarget)) {
+        e.nativeEvent.stopImmediatePropagation(); // Stop event completely
+      }
     }
     
     setOpen((prev) => !prev); // Toggle dropdown state
@@ -161,16 +166,18 @@ const MultiSelectDropdown = ({
     const rect = buttonEl.getBoundingClientRect();
     const viewportHeight = window.innerHeight;
     
-    // Find parent accordion item if it exists
-    const accordionItem = containerRef.current?.closest('[data-test-id="accordion-item"]');
-    
-    // If we have an accordion parent, ensure the dropdown doesn't overlap with other accordion items
+    // Find parent element if it exists
     let minTop = 0;
-    let accordionLeft = 0;
-    if (accordionItem) {
-      const accordionRect = accordionItem.getBoundingClientRect();
-      minTop = accordionRect.top;
-      accordionLeft = accordionRect.left;
+    let parentLeft = 0;
+    let parentElement = null;
+    
+    if (parentId) {
+      parentElement = document.getElementById(parentId);
+      if (parentElement) {
+        const parentRect = parentElement.getBoundingClientRect();
+        minTop = parentRect.top;
+        parentLeft = parentRect.left;
+      }
     }
     
     // Check if dropdown would go off bottom of screen
@@ -180,17 +187,17 @@ const MultiSelectDropdown = ({
     if (spaceBelow < expectedDropdownHeight && rect.top > expectedDropdownHeight) {
       // Place dropdown above the button if there's more space above
       return {
-        left: accordionItem ? `${accordionLeft + 10}px` : `${rect.left}px`, // Use accordion left position with padding
+        left: parentElement ? `${parentLeft + 10}px` : `${rect.left}px`, // Use parent left position with padding
         top: `${rect.top - expectedDropdownHeight - 5}px`, // Position above with offset
-        width: accordionWidth ? `${accordionWidth - 30}px` : `${rect.width}px`, // Use accordion width with padding adjustment
+        width: accordionWidth ? `${accordionWidth - 30}px` : `${rect.width}px`, // Use parent width with padding adjustment
       };
     }
     
     // Default: place dropdown below the button
     return {
-      left: accordionItem ? `${accordionLeft + 10}px` : `${rect.left}px`, // Use accordion left position with padding
-      top: `${Math.max(minTop + 5, rect.bottom + 5)}px`, // Ensure it doesn't go above accordion item
-      width: accordionWidth ? `${accordionWidth - 30}px` : `${rect.width}px`, // Use accordion width with padding adjustment
+      left: parentElement ? `${parentLeft + 10}px` : `${rect.left}px`, // Use parent left position with padding
+      top: `${Math.max(minTop + 5, rect.bottom + 5)}px`, // Ensure it doesn't go above parent
+      width: accordionWidth ? `${accordionWidth - 30}px` : `${rect.width}px`, // Use parent width with padding adjustment
     };
   };
   

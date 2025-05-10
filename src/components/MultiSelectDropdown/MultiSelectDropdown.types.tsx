@@ -3,6 +3,7 @@ export type MultiSelectDropdownProps = {
   onChange: (sel: string[]) => void;
   onReset: () => void;
   options: string[];
+  parentId: string;
   selected: string[];
 };
 
