@@ -36,14 +36,17 @@ const MultiSelectDropdown = ({
     <div
       ref={ref}
       style={{
+        boxSizing: 'border-box',
         display: 'block',
-        paddingInline: '1rem',
-        paddingBottom: '1rem',
-        width: '100%',
-        maxWidth: '400px', // Optional: constrain width
-        position: 'relative',
+        maxWidth: '400px',
         overflow: 'hidden',
-        boxSizing: 'border-box', // Ensure sizing is reliable
+        paddingBottom: '1rem', 
+        paddingInline: '1rem',
+        
+// Optional: constrain width
+position: 'relative',
+        
+width: '100%', // Ensure sizing is reliable
       }}
     >
       <button
@@ -51,11 +54,11 @@ const MultiSelectDropdown = ({
           background: '#fff',
           border: '1px solid #ccc',
           borderRadius: 4,
+          boxSizing: 'border-box',
           cursor: 'pointer',
           padding: '6px 10px',
           textAlign: 'left',
           width: '100%',
-          boxSizing: 'border-box',
         }}
         type='button'
         onClick={handleDropdownClick}
@@ -64,8 +67,8 @@ const MultiSelectDropdown = ({
           style={{
             display: 'block',
             overflow: 'hidden',
-            whiteSpace: 'nowrap',
             textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
             width: '100%',
           }}
         >
@@ -79,9 +82,9 @@ const MultiSelectDropdown = ({
       </button>
 
       <button
+        style={{ marginLeft: '0.5rem' }}
         type='button'
         onClick={handleReset}
-        style={{ marginLeft: '0.5rem' }}
       >
         ⟳
       </button>
@@ -93,15 +96,18 @@ const MultiSelectDropdown = ({
             border: '1px solid #ccc',
             borderRadius: 4,
             boxShadow: '0 2px 8px #0002',
-            marginTop: 2,
-            maxHeight: 220,
-            width: '100%', // Ensure it doesn't overflow
-            overflowY: 'auto',
-            position: 'absolute',
-            zIndex: 10,
-            left: 0,
-            right: 0,
             boxSizing: 'border-box',
+            left: 0,
+            
+marginTop: 2, 
+            
+maxHeight: 220,
+            // Ensure it doesn't overflow
+overflowY: 'auto',
+            position: 'absolute',
+            right: 0,
+            width: '100%',
+            zIndex: 10,
           }}
         >
           <label
@@ -110,10 +116,10 @@ const MultiSelectDropdown = ({
               display: 'block',
               fontWeight: 'bold',
               marginBottom: 4,
-              padding: '4px 10px',
-              whiteSpace: 'nowrap',
               overflow: 'hidden',
+              padding: '4px 10px',
               textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
             }}
           >
             <input
@@ -131,10 +137,10 @@ const MultiSelectDropdown = ({
               key={opt}
               style={{
                 display: 'block',
-                padding: '4px 10px',
-                whiteSpace: 'nowrap',
                 overflow: 'hidden',
+                padding: '4px 10px',
                 textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
               }}
             >
               <input

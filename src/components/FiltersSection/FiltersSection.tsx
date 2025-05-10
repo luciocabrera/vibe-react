@@ -1,15 +1,15 @@
-import * as stylex from '@stylexjs/stylex';
+import * as stylex from "@stylexjs/stylex";
 
-import { Badges } from '../Badges';
-import { Button } from '../Button';
-import { FormFieldBase } from '../FormFieldBase';
-import { MultiSelectDropdown } from '../MultiSelectDropdown';
-import { RangeInput } from '../RangeInput';
+import { Accordion } from "../Accordion";
+import { AccordionItem } from "../AccordionItem";
+import { Badges } from "../Badges";
+import { Button } from "../Button";
+import { FormFieldBase } from "../FormFieldBase";
+import { MultiSelectDropdown } from "../MultiSelectDropdown";
+import { RangeInput } from "../RangeInput";
 
-import { styles } from './FiltersSection.stylex';
-import type { FiltersSectionProps } from './FiltersSection.types';
-import { AccordionItem } from '../AccordionItem';
-import { Accordion } from '../Accordion';
+import { styles } from "./FiltersSection.stylex";
+import type { FiltersSectionProps } from "./FiltersSection.types";
 
 export const FiltersSection = ({
   columns,
@@ -28,13 +28,13 @@ export const FiltersSection = ({
   const handleRemoveBadge = (colKey: string, val: string) => {
     onFilterChange(
       colKey,
-      filterState[colKey].filter(v => v !== val)
+      filterState[colKey].filter((v) => v !== val)
     );
   };
   const handleRangeChange = (
     key: string,
-    min: number | '',
-    max: number | ''
+    min: number | "",
+    max: number | ""
   ) => {
     onRangeChange(key, min, max);
   };
@@ -49,10 +49,10 @@ export const FiltersSection = ({
     <div {...stylex.props(styles.container)}>
       <Accordion>
         {columns
-          .filter(col => col.filterable)
-          .map(col => {
+          .filter((col) => col.filterable)
+          .map((col) => {
             const options = Array.from(
-              new Set(data.map(row => String(row[col.key])).filter(Boolean))
+              new Set(data.map((row) => String(row[col.key])).filter(Boolean))
             );
             return (
               <AccordionItem key={col.key} name={col.key} title={col.label}>
@@ -60,14 +60,14 @@ export const FiltersSection = ({
                   label={col.label}
                   options={options}
                   selected={filterState[col.key]}
-                  onChange={vals => handleFilterChange(col.key, vals)}
+                  onChange={(vals) => handleFilterChange(col.key, vals)}
                   onReset={() => handleResetFilter(col.key)}
                 />
-                {/* <Badges
+                <Badges
                   options={options}
                   selected={filterState[col.key]}
-                  onRemove={val => handleRemoveBadge(col.key, val)}
-                /> */}
+                  onRemove={(val) => handleRemoveBadge(col.key, val)}
+                />
               </AccordionItem>
             );
           })}
@@ -75,8 +75,8 @@ export const FiltersSection = ({
 
       <div {...stylex.props(styles.filtersContainer)}>
         {columns
-          .filter(col => col.rangeFilter)
-          .map(col => (
+          .filter((col) => col.rangeFilter)
+          .map((col) => (
             <FormFieldBase key={col.key} accessor={col.key} label={col.label}>
               <RangeInput
                 label={col.label}
@@ -87,7 +87,7 @@ export const FiltersSection = ({
             </FormFieldBase>
           ))}
       </div>
-      <Button size={'lg'} onClick={handleResetAll}>
+      <Button size={"lg"} onClick={handleResetAll}>
         Reset All Filters
       </Button>
     </div>
@@ -95,4 +95,3 @@ export const FiltersSection = ({
 };
 
 export default FiltersSection;
-
