@@ -10,16 +10,20 @@ const DraggableList = ({ items, onOrderChange }: TDraggableListProps) => {
   const { dragItemId, handleDragEnd, handleDragEnter, handleDragStart, list } =
     useDraggableList({ initialItems: items, onOrderChange });
 
+  const handleDragOver = (e: React.DragEvent<HTMLLIElement>) => {
+    e.preventDefault();
+  };
+
   return (
     <ul {...stylex.props(styles.ul)}>
       {list.map(item => (
         <DraggableItem
           key={item.id}
           activeId={dragItemId.current}
-          id={item.id}
+          id={String(item.id)}
           onDragEnd={handleDragEnd}
           onDragEnter={() => handleDragEnter(item.id)}
-          onDragOver={(e: React.DragEvent<HTMLLIElement>) => e.preventDefault()}
+          onDragOver={handleDragOver}
           onDragStart={() => handleDragStart(item.id)}
         >
           {item.child}

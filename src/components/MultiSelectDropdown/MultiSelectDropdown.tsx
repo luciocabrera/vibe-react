@@ -6,8 +6,8 @@ const MultiSelectDropdown = ({
   label,
   onChange,
   onReset,
-  options,
-  selected,
+  options = [],
+  selected = [],
 }: MultiSelectDropdownProps) => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -23,6 +23,16 @@ const MultiSelectDropdown = ({
 
   const allSelected = selected.length === options.length;
   const someSelected = selected.length > 0 && !allSelected;
+
+  const handleDropdownClick = () => setOpen(o => !o);
+  const handleReset = () => onReset();
+  const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange(e.target.checked ? [...options] : []);
+  };
+  const handleOptionChange = (opt: string, checked: boolean) => {
+    if (checked) onChange([...selected, opt]);
+    else onChange(selected.filter(v => v !== opt));
+  };
 
   return (
     <div
@@ -47,7 +57,7 @@ const MultiSelectDropdown = ({
           textAlign: 'left',
         }}
         type='button'
-        onClick={() => setOpen(o => !o)}
+        onClick={handleDropdownClick}
       >
         {(() => {
           if (allSelected) return 'All';
@@ -56,7 +66,7 @@ const MultiSelectDropdown = ({
           return `${selected[0]}, +${selected.length - 1} more`;
         })()}
       </button>
-      <button style={{ marginLeft: 4 }} type='button' onClick={onReset}>
+      <button style={{ marginLeft: 4 }} type='button' onClick={handleReset}>
         ⟳
       </button>
       {open && (
@@ -89,7 +99,7 @@ const MultiSelectDropdown = ({
               }}
               checked={allSelected}
               type='checkbox'
-              onChange={e => onChange(e.target.checked ? [...options] : [])}
+              onChange={handleSelectAll}
             />{' '}
             Select All
           </label>
@@ -98,10 +108,7 @@ const MultiSelectDropdown = ({
               <input
                 checked={selected.includes(opt)}
                 type='checkbox'
-                onChange={e => {
-                  if (e.target.checked) onChange([...selected, opt]);
-                  else onChange(selected.filter(v => v !== opt));
-                }}
+                onChange={e => handleOptionChange(opt, e.target.checked)}
               />{' '}
               {opt}
             </label>

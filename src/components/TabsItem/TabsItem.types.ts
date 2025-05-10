@@ -1,7 +1,7 @@
 import type { ComponentPropsWithRef, ReactNode } from 'react';
 
 export type TTabsItem = {
-  children: JSX.Element;
+  children: ReactNode;
   header: ReactNode;
   key: string;
 };
@@ -9,3 +9,4 @@ export type TTabsItem = {
 export type TTabItemProps = ComponentPropsWithRef<'button'> & {
   active?: boolean;
 };
+

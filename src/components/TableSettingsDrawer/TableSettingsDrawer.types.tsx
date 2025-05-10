@@ -1,10 +1,11 @@
 import type { ColumnDef } from '../../App';
-import type { SortCol } from '../SortBySection/SortBySection.types';
+import type { DataRecord } from '../FiltersSection/FiltersSection.types';
+import type { TSortCol } from '../SortBySection/SortBySection.types';
 
 export type TableSettingsDrawerProps = {
   columnOrder: string[];
   columns: ColumnDef[];
-  data: Record<string, any>[];
+  data: DataRecord[];
   filterState: Record<string, string[]>;
   isPinned?: boolean;
   onClose: () => void;
@@ -18,10 +19,10 @@ export type TableSettingsDrawerProps = {
   setRangeState: React.Dispatch<
     React.SetStateAction<Record<string, [number | '', number | '']>>
   >;
-  setSortState: React.Dispatch<React.SetStateAction<SortCol[]>>;
+  setSortState: React.Dispatch<React.SetStateAction<TSortCol[]>>;
   setTab: (tab: 'columns' | 'filters' | 'sorting') => void;
   setVisibleColumns?: React.Dispatch<React.SetStateAction<Set<string>>>;
-  sortState: SortCol[];
+  sortState: TSortCol[];
   tab: 'columns' | 'filters' | 'sorting';
   visibleColumns?: Set<string>;
 };

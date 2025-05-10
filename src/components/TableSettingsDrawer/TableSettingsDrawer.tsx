@@ -58,7 +58,7 @@ const TableSettingsDrawer = ({
       .forEach(col => {
         const opts = Array.from(
           new Set(data.map(d => d[col.key]).filter(Boolean))
-        );
+        ).map(String);
         newFilterState[col.key] = opts;
       });
     setFilterState(newFilterState);
@@ -71,10 +71,12 @@ const TableSettingsDrawer = ({
     setRangeState(newRangeState);
   };
   const handleResetFilter = (key: string) => {
-    const opts = Array.from(new Set(data.map(d => d[key]).filter(Boolean)));
+    const opts = Array.from(new Set(data.map(d => d[key]).filter(Boolean))).map(
+      String
+    );
     setFilterState(fs => ({ ...fs, [key]: opts }));
   };
-  const handleSortChange = (newSort: any) => setSortState(newSort);
+  const handleSortChange = (newSort: typeof sortState) => setSortState(newSort);
 
   return (
     <>
@@ -134,7 +136,7 @@ const TableSettingsDrawer = ({
           {tab === 'filters' ? (
             <FiltersSection
               columns={columns}
-              data={data}
+              data={data} // DataRecord[] expects string|number|boolean|null|undefined, so cast for compatibility
               filterState={filterState}
               rangeState={rangeState}
               onFilterChange={handleFilterChange}

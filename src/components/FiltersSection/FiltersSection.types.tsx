@@ -1,4 +1,4 @@
-import type { ColumnDef } from '../../App';
+import type { ColumnDef } from 'src/App';
 
 // Generic type for the data records to avoid using 'any'
 export type DataRecord = Record<

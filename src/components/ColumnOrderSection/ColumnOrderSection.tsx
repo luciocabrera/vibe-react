@@ -11,10 +11,9 @@ const ColumnOrderSection = ({
   visibleColumns = new Set(columnOrder),
   setVisibleColumns = () => {},
 }: TColumnOrderSectionProps) => {
-  const orderedColumns = () =>
-    columnOrder
-      .map(key => columns.find(col => col.key === key))
-      .filter((col): col is (typeof columns)[number] => Boolean(col));
+  const orderedColumns = columnOrder
+    .map(key => columns.find(col => col.key === key))
+    .filter((col): col is (typeof columns)[number] => Boolean(col));
 
   const handleOnToggle = (key: string) => {
     const newVisibleColumns = new Set(visibleColumns);
@@ -26,18 +25,17 @@ const ColumnOrderSection = ({
     setVisibleColumns(newVisibleColumns);
   };
 
-  const draggableItems = () =>
-    orderedColumns.map(col => ({
-      child: (
-        <ColumnToggle
-          id={col.key}
-          isVisible={visibleColumns.has(col.key)}
-          label={col.label}
-          onToggle={handleOnToggle}
-        />
-      ),
-      id: col.key,
-    }));
+  const draggableItems = orderedColumns.map(col => ({
+    child: (
+      <ColumnToggle
+        id={col.key}
+        isVisible={visibleColumns.has(col.key)}
+        label={col.label}
+        onToggle={handleOnToggle}
+      />
+    ),
+    id: col.key,
+  }));
 
   const handleOrderChange = (items: TDraggableItemType[]) => {
     const newOrder = items.map(item => item.id.toString());

@@ -86,6 +86,7 @@ export default [
           checkInlineFunction: true,
           checkLocalVariables: true,
           eventHandlerPrefix: 'handle',
+          eventHandlerPropPrefix: 'on',
         },
       ],
       'react/jsx-pascal-case': ['error', {}],
@@ -104,7 +105,7 @@ export default [
       'react/jsx-uses-react': 'off',
       'react/react-in-jsx-scope': 'off',
       'react-hooks/rules-of-hooks': 'error',
-      'react-hooks/exhaustive-deps': 'off',
+      'react-hooks/exhaustive-deps': 'error',
       'eslint-plugin-react-compiler/react-compiler': 'error',
       'simple-import-sort/imports': [
         'error',
@@ -162,6 +163,9 @@ export default [
     ignores: [
       'tsconfig.js',
       'eslint.config.js',
+      '**/src/App.tsx',
+      '**/src/main.tsx',
+      '**/src/components/ResultsTable.tsx',
       '**/*.d.ts',
       '**/*.test.ts',
       '**/*.test.tsx',

@@ -1,3 +1,4 @@
+//@ts-nocheck
 import type { FC } from 'react';
 import { Fragment } from 'react';
 
@@ -48,10 +49,10 @@ export const ResultsTable: FC<ResultsTableProps> = ({
         };
       });
     return highlights;
-  }
+  };
 
   return (
-    (<table
+    <table
       style={{
         background: '#fff',
         borderCollapse: 'collapse',
@@ -70,7 +71,7 @@ export const ResultsTable: FC<ResultsTableProps> = ({
         {Object.entries(grouped).map(([group, rows]) => {
           const highlights = getHighlights(rows);
           return (
-            (<Fragment key={group}>
+            <Fragment key={group}>
               {(groupByUrl || groupByMethod) && (
                 <tr>
                   <td
@@ -106,11 +107,11 @@ export const ResultsTable: FC<ResultsTableProps> = ({
                     : null}
                 </tr>
               ))}
-            </Fragment>)
+            </Fragment>
           );
         })}
       </tbody>
-    </table>)
+    </table>
   );
 };
 

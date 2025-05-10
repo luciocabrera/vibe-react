@@ -3,14 +3,14 @@ import stylex from '@stylexjs/stylex';
 import { styles } from './TabsItem.stylex';
 import type { TTabItemProps } from './TabsItem.types';
 
-import { styles as stylesMainHeader } from '~/components/MainHeader/MainHeader.stylex';
+// import { styles as stylesMainHeader } from '~/components/MainHeader/MainHeader.stylex';
 
 const TabsItem = ({ active, children, ref, ...props }: TTabItemProps) => (
   <button
     ref={ref}
     type='button'
     {...stylex.props(
-      stylesMainHeader.titleContainer,
+      // stylesMainHeader.titleContainer,
       styles.button,
       active && styles.active
     )}
@@ -21,3 +21,4 @@ const TabsItem = ({ active, children, ref, ...props }: TTabItemProps) => (
 );
 
 export default TabsItem;
+
