@@ -63,11 +63,11 @@ export const FiltersSection = ({
                   onChange={(vals) => handleFilterChange(col.key, vals)}
                   onReset={() => handleResetFilter(col.key)}
                 />
-                <Badges
+                {/* <Badges
                   options={options}
                   selected={filterState[col.key]}
                   onRemove={(val) => handleRemoveBadge(col.key, val)}
-                />
+                /> */}
               </AccordionItem>
             );
           })}
