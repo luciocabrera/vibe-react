@@ -1,5 +1,8 @@
+import * as stylex from '@stylexjs/stylex';
+
 import ToggleSwitch from '../ToggleSwitch/ToggleSwitch';
 
+import { styles } from './ColumnToggle.stylex';
 import type { TColumnToggleProps } from './ColumnToggle.types';
 
 const ColumnToggle = ({
@@ -11,14 +14,7 @@ const ColumnToggle = ({
   const handleToggle = () => onToggle(id);
 
   return (
-    <div
-      style={{
-        alignItems: 'center',
-        display: 'flex',
-        justifyContent: 'space-between',
-        width: '100%',
-      }}
-    >
+    <div {...stylex.props(styles.container)}>
       <span>{label}</span>
       <ToggleSwitch
         isActive={isVisible}

@@ -1,11 +1,18 @@
 {
-	"folders": [
-		{
-			"path": "."
-		},
-		{
-			"path": "../../analyzer-tool"
-		}
-	],
-	"settings": {}
+  "folders": [
+    {
+      "path": ".",
+    },
+    {
+      "path": "../../analyzer-tool",
+    },
+    {
+      "path": "../../control-business-ui-rr7",
+    },
+    {
+      "path": "../../datablender/umd-ui-remix",
+    },
+  ],
+  "settings": {},
 }
+

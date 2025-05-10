@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from 'react';
 import type { MultiSelectDropdownProps } from './MultiSelectDropdown.types';
 
 const MultiSelectDropdown = ({
-  label,
   onChange,
   onReset,
   options = [],
@@ -38,23 +37,24 @@ const MultiSelectDropdown = ({
     <div
       ref={ref}
       style={{
-        display: 'inline-block',
-        marginRight: 16,
-        minWidth: 160,
-        position: 'relative',
+        display: 'inline-flex',
+        paddingLeft: '1rem',
+        paddingTop: '0.5rem',
+        width: '100%',
       }}
     >
-      <label>{label}:</label>
+      {/* <label>{label}:</label> */}
       <button
         style={{
           background: '#fff',
           border: '1px solid #ccc',
           borderRadius: 4,
           cursor: 'pointer',
-          marginLeft: 6,
+
           minWidth: 120,
           padding: '6px 10px',
           textAlign: 'left',
+          width: '100%',
         }}
         type='button'
         onClick={handleDropdownClick}

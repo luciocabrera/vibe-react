@@ -9,15 +9,15 @@ export const styles = stylex.create({
     display: 'inline-flex',
     fontSize: '12px',
     fontWeight: 500,
-    margin: '0 4px 4px 0',
-    padding: '4px 8px',
+    gap: '0.5rem',
+    padding: '4px 1rem 4px 1rem',
   },
   more: {
     backgroundColor: '#e0e0e0',
   },
   removeButton: {
     ':hover': {
-      color: '#333',
+      color: 'red',
     },
     background: 'transparent',
     border: 'none',

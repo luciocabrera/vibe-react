@@ -1,12 +1,11 @@
 import * as stylex from '@stylexjs/stylex';
 
 export const styles = stylex.create({
-  badgesContainer: {
+  container: {
     alignItems: 'center',
     display: 'flex',
-    flexWrap: 'wrap',
-    gap: '0.5rem',
-    padding: '1rem',
+    justifyContent: 'space-between',
+    width: '100%',
   },
 });
 

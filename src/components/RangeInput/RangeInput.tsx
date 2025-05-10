@@ -1,7 +1,6 @@
 import type { RangeInputProps } from './RangeInput.types';
 
 export const RangeInput = ({
-  label,
   onChange,
   onReset: handleReset,
   value = ['', ''],
@@ -15,7 +14,7 @@ export const RangeInput = ({
 
   return (
     <div style={{ display: 'inline-block', marginRight: 18 }}>
-      <label>{label}:</label>
+      {/* <label>{label}:</label> */}
       <input
         placeholder='Min'
         style={{ marginLeft: 6, width: 70 }}

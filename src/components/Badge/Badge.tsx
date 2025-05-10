@@ -1,14 +1,17 @@
+import * as stylex from '@stylexjs/stylex';
+
+import { styles } from './Badge.stylex';
 import type { TBadgeProps } from './Badge.types';
 
 const Badge = ({ isMore, onRemove, value }: TBadgeProps) => {
   const handleRemoveClick = () => onRemove?.(value);
 
   return (
-    <span className={`selected-badge${isMore ? ' more' : ''}`}>
+    <span {...stylex.props(styles.badge, isMore && styles.more)}>
       {value}
       {onRemove && !isMore && (
         <button
-          className='remove-badge'
+          {...stylex.props(styles.removeButton)}
           title='Remove'
           type='button'
           onClick={handleRemoveClick}

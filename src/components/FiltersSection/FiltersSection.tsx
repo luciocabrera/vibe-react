@@ -1,9 +1,12 @@
-import { Fragment } from 'react';
+import * as stylex from '@stylexjs/stylex';
 
 import { Badges } from '../Badges';
+import { Button } from '../Button';
+import { FormFieldBase } from '../FormFieldBase';
 import { MultiSelectDropdown } from '../MultiSelectDropdown';
 import { RangeInput } from '../RangeInput';
 
+import { styles } from './FiltersSection.stylex';
 import type { FiltersSectionProps } from './FiltersSection.types';
 
 export const FiltersSection = ({
@@ -41,7 +44,7 @@ export const FiltersSection = ({
   };
 
   return (
-    <div style={{ marginBottom: 16 }}>
+    <div {...stylex.props(styles.container)}>
       {columns
         .filter(col => col.filterable)
         .map(col => {
@@ -49,7 +52,7 @@ export const FiltersSection = ({
             new Set(data.map(row => String(row[col.key])).filter(Boolean))
           );
           return (
-            <Fragment key={col.key}>
+            <FormFieldBase key={col.key} accessor={col.key} label={col.label}>
               <MultiSelectDropdown
                 label={col.label}
                 options={options}
@@ -57,36 +60,32 @@ export const FiltersSection = ({
                 onChange={vals => handleFilterChange(col.key, vals)}
                 onReset={() => handleResetFilter(col.key)}
               />
-              <div style={{ marginBottom: 12, marginTop: 4 }}>
-                <Badges
-                  options={options}
-                  selected={filterState[col.key]}
-                  onRemove={val => handleRemoveBadge(col.key, val)}
-                />
-              </div>
-            </Fragment>
+              <Badges
+                options={options}
+                selected={filterState[col.key]}
+                onRemove={val => handleRemoveBadge(col.key, val)}
+              />
+            </FormFieldBase>
           );
         })}
-      <button
-        style={{ marginLeft: 12, padding: '6px 16px' }}
-        type='button'
-        onClick={handleResetAll}
-      >
-        Reset All Filters
-      </button>
-      <div style={{ marginTop: 10 }}>
+
+      <div {...stylex.props(styles.filtersContainer)}>
         {columns
           .filter(col => col.rangeFilter)
           .map(col => (
-            <RangeInput
-              key={col.key}
-              label={col.label}
-              value={rangeState[col.key]}
-              onChange={(min, max) => handleRangeChange(col.key, min, max)}
-              onReset={() => handleResetRange(col.key)}
-            />
+            <FormFieldBase key={col.key} accessor={col.key} label={col.label}>
+              <RangeInput
+                label={col.label}
+                value={rangeState[col.key]}
+                onChange={(min, max) => handleRangeChange(col.key, min, max)}
+                onReset={() => handleResetRange(col.key)}
+              />
+            </FormFieldBase>
           ))}
       </div>
+      <Button size={'lg'} onClick={handleResetAll}>
+        Reset All Filters
+      </Button>
     </div>
   );
 };
