@@ -5,9 +5,9 @@ export const styles = stylex.create({
     padding: '6px 16px',
   },
   columnItem: {
+    alignItems: 'center',
     background: '#f7faff',
     border: '1px solid #c7d6f7',
-    alignItems: 'center',
     borderRadius: 6,
     cursor: 'grab',
     display: 'flex',

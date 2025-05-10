@@ -1,4 +1,4 @@
-import { useCallback,useState } from 'react';
+import { useState } from 'react';
 
 type TUseOrderedListProps<T> = {
   getItemId: (item: T) => number | string;
@@ -13,31 +13,28 @@ export const useOrderedList = <T>({
 }: TUseOrderedListProps<T>) => {
   const [dragItemId, setDragItemId] = useState<number | string | null>(null);
 
-  const handleDragStart = useCallback((id: number | string) => {
+  const handleDragStart = (id: number | string) => {
     setDragItemId(id);
-  }, []);
+  };
 
-  const handleDragEnd = useCallback(() => {
+  const handleDragEnd = () => {
     setDragItemId(null);
-  }, []);
+  };
 
-  const handleDragEnter = useCallback(
-    (id: number | string) => {
-      if (!dragItemId || dragItemId === id) return;
+  const handleDragEnter = (id: number | string) => {
+    if (!dragItemId || dragItemId === id) return;
 
-      const fromIndex = items.findIndex(item => getItemId(item) === dragItemId);
-      const toIndex = items.findIndex(item => getItemId(item) === id);
+    const fromIndex = items.findIndex(item => getItemId(item) === dragItemId);
+    const toIndex = items.findIndex(item => getItemId(item) === id);
 
-      if (fromIndex < 0 || toIndex < 0) return;
+    if (fromIndex < 0 || toIndex < 0) return;
 
-      const newItems = [...items];
-      const [movedItem] = newItems.splice(fromIndex, 1);
-      newItems.splice(toIndex, 0, movedItem);
+    const newItems = [...items];
+    const [movedItem] = newItems.splice(fromIndex, 1);
+    newItems.splice(toIndex, 0, movedItem);
 
-      onOrderChange(newItems);
-    },
-    [dragItemId, items, getItemId, onOrderChange]
-  );
+    onOrderChange(newItems);
+  };
 
   return {
     dragItemId,

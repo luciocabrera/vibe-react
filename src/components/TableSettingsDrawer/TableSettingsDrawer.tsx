@@ -28,11 +28,53 @@ const TableSettingsDrawer = ({
 }: TableSettingsDrawerProps) => {
   if (!open) return null;
 
-  const handlePinClick = () => {
-    if (onPinChange) {
-      onPinChange(!isPinned);
-    }
+  const handlePinClick = () => onPinChange?.(!isPinned);
+
+  const handleClose = () => onClose();
+  const handleBackdropKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Enter' || e.key === ' ') onClose();
   };
+  const handleTabFilters = () => setTab('filters');
+  const handleTabSorting = () => setTab('sorting');
+  const handleTabColumns = () => setTab('columns');
+
+  const handleFilterChange = (key: string, vals: string[]) => {
+    setFilterState(fs => ({ ...fs, [key]: vals }));
+  };
+  const handleRangeChange = (
+    key: string,
+    min: number | '',
+    max: number | ''
+  ) => {
+    setRangeState(rs => ({ ...rs, [key]: [min, max] }));
+  };
+  const handleResetRange = (key: string) => {
+    setRangeState(rs => ({ ...rs, [key]: ['', ''] }));
+  };
+  const handleReset = () => {
+    const newFilterState: Record<string, string[]> = {};
+    columns
+      .filter(col => col.filterable)
+      .forEach(col => {
+        const opts = Array.from(
+          new Set(data.map(d => d[col.key]).filter(Boolean))
+        );
+        newFilterState[col.key] = opts;
+      });
+    setFilterState(newFilterState);
+    const newRangeState: Record<string, [number | '', number | '']> = {};
+    columns
+      .filter(col => col.rangeFilter)
+      .forEach(col => {
+        newRangeState[col.key] = ['', ''];
+      });
+    setRangeState(newRangeState);
+  };
+  const handleResetFilter = (key: string) => {
+    const opts = Array.from(new Set(data.map(d => d[key]).filter(Boolean)));
+    setFilterState(fs => ({ ...fs, [key]: opts }));
+  };
+  const handleSortChange = (newSort: any) => setSortState(newSort);
 
   return (
     <>
@@ -42,8 +84,8 @@ const TableSettingsDrawer = ({
           className='drawer-backdrop'
           role='button'
           tabIndex={0}
-          onClick={onClose}
-          onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && onClose()}
+          onClick={handleClose}
+          onKeyDown={handleBackdropKeyDown}
         />
       )}
       <aside className={`drawer${isPinned ? ' pinned' : ''}`}>
@@ -62,7 +104,7 @@ const TableSettingsDrawer = ({
             <button
               className='drawer-close-btn'
               title='Close'
-              onClick={onClose}
+              onClick={handleClose}
             >
               ×
             </button>
@@ -71,19 +113,19 @@ const TableSettingsDrawer = ({
         <div className='drawer-tabs'>
           <button
             className={`drawer-tab${tab === 'filters' ? ' active' : ''}`}
-            onClick={() => setTab('filters')}
+            onClick={handleTabFilters}
           >
             Filters
           </button>
           <button
             className={`drawer-tab${tab === 'sorting' ? ' active' : ''}`}
-            onClick={() => setTab('sorting')}
+            onClick={handleTabSorting}
           >
             Sorting
           </button>
           <button
             className={`drawer-tab${tab === 'columns' ? ' active' : ''}`}
-            onClick={() => setTab('columns')}
+            onClick={handleTabColumns}
           >
             Columns
           </button>
@@ -95,49 +137,17 @@ const TableSettingsDrawer = ({
               data={data}
               filterState={filterState}
               rangeState={rangeState}
-              onFilterChange={(key, vals) =>
-                setFilterState(fs => ({ ...fs, [key]: vals }))
-              }
-              onRangeChange={(key, min, max) =>
-                setRangeState(rs => ({ ...rs, [key]: [min, max] }))
-              }
-              onReset={() => {
-                const newFilterState: Record<string, string[]> = {};
-                columns
-                  .filter(col => col.filterable)
-                  .forEach(col => {
-                    const opts = Array.from(
-                      new Set(data.map(d => d[col.key]).filter(Boolean))
-                    );
-                    newFilterState[col.key] = opts;
-                  });
-                setFilterState(newFilterState);
-                const newRangeState: Record<
-                  string,
-                  [number | '', number | '']
-                > = {};
-                columns
-                  .filter(col => col.rangeFilter)
-                  .forEach(col => {
-                    newRangeState[col.key] = ['', ''];
-                  });
-                setRangeState(newRangeState);
-              }}
-              onResetFilter={key => {
-                const opts = Array.from(
-                  new Set(data.map(d => d[key]).filter(Boolean))
-                );
-                setFilterState(fs => ({ ...fs, [key]: opts }));
-              }}
-              onResetRange={key =>
-                setRangeState(rs => ({ ...rs, [key]: ['', ''] }))
-              }
+              onFilterChange={handleFilterChange}
+              onRangeChange={handleRangeChange}
+              onReset={handleReset}
+              onResetFilter={handleResetFilter}
+              onResetRange={handleResetRange}
             />
           ) : tab === 'sorting' ? (
             <SortBySection
               allColumns={columns}
               sortState={sortState}
-              onChange={setSortState}
+              onChange={handleSortChange}
             />
           ) : (
             <ColumnOrderSection

@@ -16,13 +16,7 @@ export const styles = stylex.create({
     gap: '8px',
   },
   
-  content: {
-    overflowY: 'auto',
-    flex: 1,
-    padding: '16px',
-  },
-  
-closeButton: {
+  closeButton: {
     background: 'transparent',
     border: 'none',
     cursor: 'pointer',
@@ -30,15 +24,21 @@ closeButton: {
     padding: '0 8px',
   },
   
+content: {
+    flex: 1,
+    overflowY: 'auto',
+    padding: '16px',
+  },
+  
 drawer: {
     background: '#fff',
     boxShadow: '-2px 0 12px rgba(0, 0, 0, 0.15)',
-    maxWidth: '90vw',
     display: 'flex',
-    position: 'fixed',
     flexDirection: 'column',
-    right: 0,
     height: '100vh',
+    maxWidth: '90vw',
+    position: 'fixed',
+    right: 0,
     top: 0,
     transition: 'transform 0.3s ease',
     width: '400px',
@@ -69,14 +69,14 @@ drawerPinned: {
     padding: '4px 8px',
   },
   tab: {
-    cursor: 'pointer',
     background: '#f7faff',
-    flex: 1,
     border: 'none',
-    padding: '12px 0',
+    cursor: 'pointer',
+    flex: 1,
     fontSize: '1.1em',
-    textAlign: 'center',
     fontWeight: 500,
+    padding: '12px 0',
+    textAlign: 'center',
     transition: 'background 0.2s',
   },
   tabActive: {

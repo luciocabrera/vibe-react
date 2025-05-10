@@ -2,8 +2,8 @@ import * as stylex from '@stylexjs/stylex';
 
 export const styles = stylex.create({
   columnItem: {
-    background: '#f7faff',
     alignItems: 'center',
+    background: '#f7faff',
     border: '1px solid #c7d6f7',
     borderRadius: 6,
     cursor: 'grab',
@@ -54,10 +54,10 @@ export const styles = stylex.create({
     display: 'inline-flex',
   },
   toggleThumb: {
-    bottom: '2px',
     background: 'white',
-    content: '""',
     borderRadius: '50%',
+    bottom: '2px',
+    content: '""',
     height: '16px',
     position: 'absolute',
     transition: 'left 0.3s',

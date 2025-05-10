@@ -1,4 +1,4 @@
-import { useCallback,useMemo, useState } from 'react';
+import { useState } from 'react';
 
 import { DraggableList } from '../DraggableList';
 import type { TDraggableItemType } from '../DraggableList/DraggableList.types';
@@ -25,70 +25,58 @@ const SortBySection = ({
     }
   };
 
-  const toggleDirection = useCallback(
-    (idx: number) => {
-      onChange(
-        sortState.map((s, i) =>
-          i === idx ? { ...s, dir: s.dir === 'asc' ? 'desc' : 'asc' } : s
-        )
-      );
-    },
-    [sortState, onChange]
-  );
+  const toggleDirection = (idx: number) => {
+    onChange(
+      sortState.map((s, i) =>
+        i === idx ? { ...s, dir: s.dir === 'asc' ? 'desc' : 'asc' } : s
+      )
+    );
+  };
 
-  const removeItem = useCallback(
-    (idx: number) => {
-      onChange(sortState.filter((_, i) => i !== idx));
-    },
-    [sortState, onChange]
-  );
+  const removeItem = (idx: number) => {
+    onChange(sortState.filter((_, i) => i !== idx));
+  };
 
-  const draggableItems = useMemo(
-    () =>
-      sortState.map((col, idx) => ({
-        child: (
-          <div
-            style={{
-              alignItems: 'center',
-              display: 'flex',
-              justifyContent: 'space-between',
-              width: '100%',
-            }}
-          >
-            <div style={{ alignItems: 'center', display: 'flex', gap: 10 }}>
-              <span>{col.label}</span>
-            </div>
-            <SortItemControls
-              direction={col.dir}
-              onDelete={() => removeItem(idx)}
-              onToggleDirection={() => toggleDirection(idx)}
-            />
+  const draggableItems = () =>
+    sortState.map((col, idx) => ({
+      child: (
+        <div
+          style={{
+            alignItems: 'center',
+            display: 'flex',
+            justifyContent: 'space-between',
+            width: '100%',
+          }}
+        >
+          <div style={{ alignItems: 'center', display: 'flex', gap: 10 }}>
+            <span>{col.label}</span>
           </div>
-        ),
-        id: `${col.key}-${idx}`,
-      })),
-    [sortState, toggleDirection, removeItem]
-  );
+          <SortItemControls
+            direction={col.dir}
+            onDelete={() => removeItem(idx)}
+            onToggleDirection={() => toggleDirection(idx)}
+          />
+        </div>
+      ),
+      id: `${col.key}-${idx}`,
+    }));
 
-  const handleOrderChange = useCallback(
-    (items: TDraggableItemType[]) => {
-      // Create a new array based on the original order but rearranged
-      const newSortItems: TSortCol[] = [];
+  const handleOrderChange = (items: TDraggableItemType[]) => {
+    // Create a new array based on the original order but rearranged
+    const newSortItems: TSortCol[] = [];
 
-      // Map each draggable item back to its original sort item
-      items.forEach(item => {
-        const idParts = item.id.toString().split('-');
-        const key = idParts[0];
-        const originalItem = sortState.find(s => s.key === key);
-        if (originalItem) {
-          newSortItems.push(originalItem);
-        }
-      });
+    // Map each draggable item back to its original sort item
+    items.forEach(item => {
+      const idParts = item.id.toString().split('-');
+      const key = idParts[0];
+      const originalItem = sortState.find(s => s.key === key);
+      if (originalItem) {
+        newSortItems.push(originalItem);
+      }
+    });
 
-      onChange(newSortItems);
-    },
-    [sortState, onChange]
-  );
+    onChange(newSortItems);
+  };
 
   return (
     <div className='sort-section'>

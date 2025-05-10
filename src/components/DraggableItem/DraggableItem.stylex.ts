@@ -11,8 +11,8 @@ export const styles = stylex.create({
     gap: 10,
   },
   li: {
-    background: '#f7faff',
     alignItems: 'center',
+    background: '#f7faff',
     border: '1px solid #c7d6f7',
     borderRadius: 6,
     cursor: 'grab',

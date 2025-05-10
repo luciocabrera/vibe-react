@@ -1,34 +1,30 @@
-import { memo } from 'react';
-
 type TSortDirectionButtonProps = {
   direction: 'asc' | 'desc';
   onClick: () => void;
 };
 
-const SortDirectionButton = memo(
-  ({ direction, onClick }: TSortDirectionButtonProps) => (
-    <button
-      style={{
-        background: 'transparent',
-        border: 'none',
-        color: '#1976d2',
-        cursor: 'pointer',
-        fontSize: '1.1em',
-        padding: '4px 8px',
-      }}
-      type='button'
-      onClick={onClick}
-    >
-      {direction === 'asc' ? '▲' : '▼'}
-    </button>
-  )
+const SortDirectionButton = ({ direction, onClick }: TSortDirectionButtonProps) => (
+  <button
+    style={{
+      background: 'transparent',
+      border: 'none',
+      color: '#1976d2',
+      cursor: 'pointer',
+      fontSize: '1.1em',
+      padding: '4px 8px',
+    }}
+    type='button'
+    onClick={onClick}
+  >
+    {direction === 'asc' ? '▲' : '▼'}
+  </button>
 );
 
 type TDeleteButtonProps = {
   onClick: () => void;
 };
 
-const DeleteButton = memo(({ onClick }: TDeleteButtonProps) => (
+const DeleteButton = ({ onClick }: TDeleteButtonProps) => (
   <button
     style={{
       background: 'transparent',
@@ -44,7 +40,7 @@ const DeleteButton = memo(({ onClick }: TDeleteButtonProps) => (
   >
     ✕
   </button>
-));
+);
 
 type TSortItemControlsProps = {
   direction: 'asc' | 'desc';
@@ -52,13 +48,11 @@ type TSortItemControlsProps = {
   onToggleDirection: () => void;
 };
 
-const SortItemControls = memo(
-  ({ direction, onDelete, onToggleDirection }: TSortItemControlsProps) => (
-    <div style={{ alignItems: 'center', display: 'flex', gap: 8 }}>
-      <SortDirectionButton direction={direction} onClick={onToggleDirection} />
-      <DeleteButton onClick={onDelete} />
-    </div>
-  )
+const SortItemControls = ({ direction, onDelete, onToggleDirection }: TSortItemControlsProps) => (
+  <div style={{ alignItems: 'center', display: 'flex', gap: 8 }}>
+    <SortDirectionButton direction={direction} onClick={onToggleDirection} />
+    <DeleteButton onClick={onDelete} />
+  </div>
 );
 
 export { SortItemControls };

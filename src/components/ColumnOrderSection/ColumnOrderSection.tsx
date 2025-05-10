@@ -1,5 +1,3 @@
-import { useCallback,useMemo } from 'react';
-
 import { ColumnToggle } from '../ColumnToggle';
 import { DraggableList } from '../DraggableList';
 import type { TDraggableItemType } from '../DraggableList/DraggableList.types';
@@ -13,50 +11,38 @@ const ColumnOrderSection = ({
   visibleColumns = new Set(columnOrder),
   setVisibleColumns = () => {},
 }: TColumnOrderSectionProps) => {
-  const orderedColumns = useMemo(
-    () =>
-      columnOrder
-        .map(key => columns.find(col => col.key === key)!)
-        .filter(Boolean),
-    [columnOrder, columns]
-  );
+  const orderedColumns = () =>
+    columnOrder
+      .map(key => columns.find(col => col.key === key))
+      .filter((col): col is (typeof columns)[number] => Boolean(col));
 
-  const toggleColumnVisibility = useCallback(
-    (key: string) => {
-      const newVisibleColumns = new Set(visibleColumns);
-      if (newVisibleColumns.has(key)) {
-        newVisibleColumns.delete(key);
-      } else {
-        newVisibleColumns.add(key);
-      }
-      setVisibleColumns(newVisibleColumns);
-    },
-    [visibleColumns, setVisibleColumns]
-  );
+  const handleOnToggle = (key: string) => {
+    const newVisibleColumns = new Set(visibleColumns);
+    if (newVisibleColumns.has(key)) {
+      newVisibleColumns.delete(key);
+    } else {
+      newVisibleColumns.add(key);
+    }
+    setVisibleColumns(newVisibleColumns);
+  };
 
-  const draggableItems = useMemo(
-    () =>
-      orderedColumns.map(col => ({
-        child: (
-          <ColumnToggle
-            id={col.key}
-            isVisible={visibleColumns.has(col.key)}
-            label={col.label}
-            onToggle={toggleColumnVisibility}
-          />
-        ),
-        id: col.key,
-      })),
-    [orderedColumns, toggleColumnVisibility, visibleColumns]
-  );
+  const draggableItems = () =>
+    orderedColumns.map(col => ({
+      child: (
+        <ColumnToggle
+          id={col.key}
+          isVisible={visibleColumns.has(col.key)}
+          label={col.label}
+          onToggle={handleOnToggle}
+        />
+      ),
+      id: col.key,
+    }));
 
-  const handleOrderChange = useCallback(
-    (items: TDraggableItemType[]) => {
-      const newOrder = items.map(item => item.id.toString());
-      setColumnOrder(newOrder);
-    },
-    [setColumnOrder]
-  );
+  const handleOrderChange = (items: TDraggableItemType[]) => {
+    const newOrder = items.map(item => item.id.toString());
+    setColumnOrder(newOrder);
+  };
 
   return (
     <div>

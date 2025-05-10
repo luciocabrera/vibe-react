@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import * as stylex from '@stylexjs/stylex';
 
 import { DraggableItem } from '../DraggableItem';
@@ -7,7 +6,7 @@ import { styles } from './DraggableList.stylex';
 import type { TDraggableListProps } from './DraggableList.types';
 import { useDraggableList } from './hooks';
 
-const DraggableList = memo(({ items, onOrderChange }: TDraggableListProps) => {
+const DraggableList = ({ items, onOrderChange }: TDraggableListProps) => {
   const { dragItemId, handleDragEnd, handleDragEnter, handleDragStart, list } =
     useDraggableList({ initialItems: items, onOrderChange });
 
@@ -28,7 +27,7 @@ const DraggableList = memo(({ items, onOrderChange }: TDraggableListProps) => {
       ))}
     </ul>
   );
-});
+};
 
 export default DraggableList;
 
