@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { styles, dynamicStyles } from './MultiSelectDropdown.stylex';
 import * as stylex from '@stylexjs/stylex';
+import { getParentElement } from '../../utils/getParentElement';
 
 import type { MultiSelectDropdownProps } from "./MultiSelectDropdown.types";
 const MultiSelectDropdown = ({
@@ -18,15 +19,9 @@ const MultiSelectDropdown = ({
   // Use an instance variable to identify this specific dropdown
   const instanceId = useId();
 
-  // Helper to get parent element (now only uses parentRef)
-  const getParentElement = () => {
-    if (parentRef && parentRef.current) return parentRef.current;
-    return null;
-  };
-
   // Watch parent element for resize using ResizeObserver
   useEffect(() => {
-    const parentElement = getParentElement();
+    const parentElement = getParentElement(parentRef);
     if (!parentElement) return;
     if (typeof window.ResizeObserver !== 'function') return;
     const observer = new ResizeObserver(() => {
@@ -122,7 +117,7 @@ const MultiSelectDropdown = ({
 
     // If we're inside a parent element that might be clickable (like an accordion),
     // prevent the parent's click event
-    const parentElement = getParentElement();
+    const parentElement = getParentElement(parentRef);
     const clickTarget = e.target as HTMLElement;
     if (parentElement && (parentElement.contains(clickTarget) || parentElement === clickTarget)) {
       e.nativeEvent.stopImmediatePropagation(); // Stop event completely
@@ -152,7 +147,7 @@ const MultiSelectDropdown = ({
     // Find parent element if it exists
     let minTop = 0;
     let parentLeft = 0;
-    let parentElement = getParentElement();
+    let parentElement = getParentElement(parentRef);
     let parentWidth = 0;
 
     if (parentElement) {
@@ -192,7 +187,7 @@ const MultiSelectDropdown = ({
   const { left, top, width } = dropdownPosition;
 
   // Apply static and dynamic styles separately
-  const parentElement = getParentElement();
+  const parentElement = getParentElement(parentRef);
   let parentWidth = 0;
   if (parentElement) {
     parentWidth = parentElement.getBoundingClientRect().width;
