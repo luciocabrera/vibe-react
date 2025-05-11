@@ -6,7 +6,7 @@
 // - optionsCount: number (for height estimation)
 // Returns: { left: string, top: string, width: string }
 
-export function getDropdownPositionRelativeToParent({
+export const getPositionRelativeToParent = ({
   selector,
   ref,
   parentRef,
@@ -26,7 +26,7 @@ export function getDropdownPositionRelativeToParent({
   dropdownPadding?: number;
   parentPadding?: number;
   parentWidthOffset?: number;
-}) {
+}) => {
   const buttonEl = ref.current?.querySelector(selector) as HTMLElement | null;
   if (!buttonEl) return { left: '0', top: '100%', width: '100%' };
 

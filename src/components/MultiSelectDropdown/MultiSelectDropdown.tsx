@@ -3,7 +3,7 @@ import { styles, dynamicStyles } from './MultiSelectDropdown.stylex';
 import * as stylex from '@stylexjs/stylex';
 import { getParentElement } from '../../utils/getParentElement';
 import { getScrollableParents } from '../../utils/getScrollableParents';
-import { getDropdownPositionRelativeToParent } from '../../utils/getDropdownPosition';
+import { getPositionRelativeToParent } from '../../utils/getPositionRelativeToParent';
 
 import type { MultiSelectDropdownProps } from "./MultiSelectDropdown.types";
 const MultiSelectDropdown = ({
@@ -14,9 +14,10 @@ const MultiSelectDropdown = ({
   selected = [],
 }: MultiSelectDropdownProps) => {
   const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const labelContainerRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const triggerButtonRef = useRef<HTMLButtonElement>(null);
   const [parentResizeTick, setParentResizeTick] = useState(0);
   // Use an instance variable to identify this specific dropdown
   const instanceId = useId();
@@ -84,7 +85,7 @@ const MultiSelectDropdown = ({
     const handler = (e: MouseEvent) => {
       // Only close if the click is outside both the main component and dropdown
       const target = e.target as Node;
-      const triggerButton = ref.current?.querySelector('[data-test-id="multi-select-trigger"]');
+      const triggerButton = triggerButtonRef.current;
 
       // Don't close if clicked on the trigger button (let the onClick handler handle it)
       if (triggerButton && triggerButton.contains(target)) {
@@ -93,7 +94,7 @@ const MultiSelectDropdown = ({
 
       // Close if clicked outside both the dropdown content and trigger
       if (
-        (!ref.current || !ref.current.contains(target)) &&
+        (!labelContainerRef.current || !labelContainerRef.current.contains(target)) &&
         (!dropdownRef.current || !dropdownRef.current.contains(target))
       ) {
         setOpen(false);
@@ -128,9 +129,9 @@ const MultiSelectDropdown = ({
   };
 
   // Calculate dropdown dimensions and position when opened
-  const dropdownPosition = getDropdownPositionRelativeToParent({
+  const dropdownPosition = getPositionRelativeToParent({
     selector: `[data-instance-id="${instanceId}"]`,
-    ref: ref as React.RefObject<HTMLElement>,
+    ref: labelContainerRef as React.RefObject<HTMLElement>,
     parentRef: parentRef as React.RefObject<HTMLElement>,
     optionsCount: options.length,
   });
@@ -159,30 +160,29 @@ const MultiSelectDropdown = ({
       ref={containerRef}
       data-instance-id={instanceId}
       data-test-id="multi-select-dropdown"
-      id="multi-select-dropdown"
+      id={instanceId}
       {...stylex.props(styles.container)}
       style={containerDynamicStyles}
     >
       <div
-        ref={ref}
+        ref={labelContainerRef}
         data-instance-id={instanceId}
         data-test-id="multi-select-label"
-        id="multi-select-label"
+        id={`${instanceId}-multi-select-label`}
         {...stylex.props(styles.label)}
       >
         <button
+          ref={triggerButtonRef}
           aria-expanded={open}
           aria-haspopup="listbox"
           data-instance-id={instanceId}
-          data-test-id="multi-select-trigger"
-          id='multi-select-trigger'
           {...stylex.props(styles.triggerButton)}
           type="button"
           onClick={handleDropdownClick}
         >
           <div
             data-test-id="selected-items-display"
-            id="selected-items-display"
+            id={`${instanceId}-selected-items-display`}
             {...stylex.props(styles.selectedItemsDisplay)}
           >
             {(() => {
@@ -194,7 +194,7 @@ const MultiSelectDropdown = ({
           </div>
         </button>
         <button
-          id="multi-select-reset"
+          id={`${instanceId}-selected-items-reset`}
           {...stylex.props(styles.resetButton)}
           type="button"
           onClick={handleReset}
@@ -207,7 +207,6 @@ const MultiSelectDropdown = ({
           ref={dropdownRef}
           data-instance-id={instanceId}
           data-test-id="multi-select-dropdown-list"
-          id="multi-select-dropdown-list"
           {...stylex.props(styles.dropdownList)}
           style={dropdownDynamicStyles}
           onMouseDown={handleDropdownMouseDown}
