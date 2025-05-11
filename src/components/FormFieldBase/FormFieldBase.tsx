@@ -48,7 +48,11 @@ const FormFieldBase = <TData extends Record<string, unknown>>({
       </fieldset>
 
       {!isViewing && (
-        <span {...stylex.props(styles.errorMessage)}>
+        <span
+          {...stylex.props(styles.errorMessage)}
+          role="alert"
+          aria-live="assertive"
+        >
           {hasErrors && errorMessage}
         </span>
       )}
