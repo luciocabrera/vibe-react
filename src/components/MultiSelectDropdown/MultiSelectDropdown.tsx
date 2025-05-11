@@ -2,6 +2,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import { styles, dynamicStyles } from './MultiSelectDropdown.stylex';
 import * as stylex from '@stylexjs/stylex';
 import { getParentElement } from '../../utils/getParentElement';
+import { getScrollableParents } from '../../utils/getScrollableParents';
 
 import type { MultiSelectDropdownProps } from "./MultiSelectDropdown.types";
 const MultiSelectDropdown = ({
@@ -49,22 +50,13 @@ const MultiSelectDropdown = ({
     // Handle scrolling of parent containers to reposition dropdown
     const handleScroll = () => {
       if (open) {
-        // Force a re-render to update dropdown position
         setOpen(false);
         setTimeout(() => setOpen(true), 0);
       }
     };
 
-    // Get all possible scrollable parent elements
-    const scrollableParents: HTMLElement[] = [];
-    let parent = containerRef.current?.parentElement;
-    while (parent) {
-      const overflowY = window.getComputedStyle(parent).overflowY;
-      if (overflowY === 'auto' || overflowY === 'scroll') {
-        scrollableParents.push(parent);
-      }
-      parent = parent.parentElement;
-    }
+    // Use the new utility to get all possible scrollable parent elements
+    const scrollableParents = getScrollableParents(containerRef.current);
 
     // Add scroll event listeners to all scrollable parents
     scrollableParents.forEach(parent => {
