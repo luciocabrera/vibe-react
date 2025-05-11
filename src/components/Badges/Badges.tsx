@@ -1,4 +1,5 @@
 import * as stylex from '@stylexjs/stylex';
+import { useEffect, useRef, useState } from 'react';
 
 import { Badge } from '../Badge';
 
@@ -8,31 +9,45 @@ import type { TBadgesProps } from './Badges.types';
 // Constants
 const MAX_BADGES = 10;
 
-const Badges = ({ options, selected = [], ...props }: TBadgesProps) => {
+const Badges = ({ options, parentRef, selected = [], ...props }: TBadgesProps) => {
+  const containerRef = useRef(null);
+  const [maxWidth, setMaxWidth] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (!parentRef || !parentRef.current) return;
+    const updateWidth = () => {
+      setMaxWidth(parentRef.current ? parentRef.current.offsetWidth : null);
+    };
+    updateWidth();
+    window.addEventListener('resize', updateWidth);
+    return () => window.removeEventListener('resize', updateWidth);
+  }, [parentRef]);
+
   if (selected.length === 0) return null;
+
+  let children = null;
   if (selected.length === options.length && options.length > 5) {
-    return (
-      <span {...stylex.props(styles.badgesContainer)}>
-        <Badge value='All' />
-      </span>
-    );
-  }
-  if (selected.length <= MAX_BADGES) {
-    return (
-      <span {...stylex.props(styles.badgesContainer)}>
-        {selected.map(val => (
-          <Badge {...props} key={val} value={val} />
-        ))}
-      </span>
-    );
-  }
-  // Show MAX_BADGES badges and a "+x more" badge
-  return (
-    <span {...stylex.props(styles.badgesContainer)}>
-      {selected.slice(0, MAX_BADGES).map(val => (
+    children = <Badge value='All' />;
+  } else if (selected.length <= MAX_BADGES) {
+    children = selected.map(val => (
+      <Badge {...props} key={val} value={val} />
+    ));
+  } else {
+    children = [
+      ...selected.slice(0, MAX_BADGES).map(val => (
         <Badge key={val} value={val} {...props} />
-      ))}
-      <Badge isMore value={`+${selected.length - MAX_BADGES} more`} />
+      )),
+      <Badge isMore value={`+${selected.length - MAX_BADGES} more`} key="more-badge" />
+    ];
+  }
+
+  return (
+    <span
+      ref={containerRef}
+      {...stylex.props(styles.badgesContainer)}
+      style={maxWidth ? { maxWidth, width: '100%' } : {}}
+    >
+      {children}
     </span>
   );
 };

@@ -16,7 +16,7 @@ badge: {
   flexShrink: 1,
   flexBasis: 'auto',
   width: 'fit-content',
-  maxWidth: '150px',     // ✅ THIS is the key fix
+  maxWidth: '100%',     // ✅ THIS is the key fix
 },
 
 value: {
