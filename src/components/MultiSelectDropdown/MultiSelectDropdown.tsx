@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { styles, dynamicStyles } from './MultiSelectDropdown.stylex';
+import * as stylex from '@stylexjs/stylex';
 
 import type { MultiSelectDropdownProps } from "./MultiSelectDropdown.types";
 const MultiSelectDropdown = ({
@@ -206,70 +208,47 @@ const MultiSelectDropdown = ({
     e.stopPropagation();
   };
   
+  const dropdownPosition = getDropdownPosition();
+  const { left, top, width } = dropdownPosition;
+
+  // Apply static and dynamic styles separately
+  const containerDynamicStyles = dynamicStyles.container(accordionWidth || 0);
+  const dropdownDynamicStyles = dynamicStyles.dropdownList(
+    left.toString(),
+    top.toString(),
+    width.toString()
+  );
+
   return (
     <div
       ref={containerRef}
       data-instance-id={instanceId.current}
       data-test-id="multi-select-dropdown"
       id="multi-select-dropdown"
-      style={{
-        maxWidth: accordionWidth ? `${accordionWidth - 20}px` : "100%", // Use accordion width with padding
-        overflow: "visible", // Allow the dropdown to be visible outside
-        position: "relative", // Ensure dropdown is positioned relative to this container
-        width: accordionWidth ? `${accordionWidth - 20}px` : "100%", // Use accordion width with padding
-      }}
+      {...stylex.props(styles.container)}
+      style={containerDynamicStyles}
     >
       <div
         ref={ref}
         data-instance-id={instanceId.current}
         data-test-id="multi-select-label"
         id="multi-select-label"
-        style={{
-          boxSizing: "border-box",
-          display: "flex",
-          maxWidth: "100%", // Ensure it doesn't exceed parent width
-          position: "relative", // Added for proper child positioning
-          width: "100%", // Take full available width
-        }}
+        {...stylex.props(styles.label)}
       >
-        {/* <div style={{ flex: "1 1 auto", marginRight: "8px", minWidth: 0 }}> */}
         <button
           aria-expanded={open}
           aria-haspopup="listbox"
           data-instance-id={instanceId.current}
           data-test-id="multi-select-trigger"
           id='multi-select-trigger'
-          style={{
-            alignItems: "center",
-            background: "#fff",
-            border: "1px solid #ccc",
-            borderRadius: 4,
-            boxSizing: "border-box",
-            cursor: "pointer",
-            display: "flex",
-            flex: "1 1 auto", // Allow the button to shrink
-            marginRight: "8px",
-            maxWidth: "calc(100% - 30px)", // Leave space for the reset button
-            minWidth: 0, // Allow shrinking below content size
-            overflow: "hidden", // Added to contain child elements
-            padding: "6px 10px",
-            textAlign: "left",
-            userSelect: "none", // Prevent text selection
-            width: "100%",
-          }}
+          {...stylex.props(styles.triggerButton)}
           type="button"
           onClick={handleDropdownClick}
         >
           <div
             data-test-id="selected-items-display"
             id="selected-items-display"
-            style={{
-              maxWidth: "100%",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-              width: "100%",
-            }}
+            {...stylex.props(styles.selectedItemsDisplay)}
           >
             {(() => {
               if (allSelected) return "All";
@@ -279,11 +258,9 @@ const MultiSelectDropdown = ({
             })()}
           </div>
         </button>
-        {/* </div> */}
-
         <button
           id="multi-select-reset"
-          style={{ flex: "0 0 auto" }}
+          {...stylex.props(styles.resetButton)}
           type="button"
           onClick={handleReset}
         >
@@ -296,35 +273,11 @@ const MultiSelectDropdown = ({
           data-instance-id={instanceId.current}
           data-test-id="multi-select-dropdown-list"
           id="multi-select-dropdown-list"
-          style={{
-            background: "#fff",
-            border: "1px solid #ccc",
-            borderRadius: 4,
-            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.25)",
-            boxSizing: "border-box",
-            maxHeight: 220,
-            maxWidth: accordionWidth ? `${accordionWidth - 30}px` : "100%", // Use accordion width
-            overflowX: "hidden",
-            overflowY: "auto",
-            padding: "4px 0",
-            position: "fixed", // Fixed positioning to escape overflow constraints
-            ...getDropdownPosition(), // Apply calculated position
-            zIndex: 9999, // Higher z-index to ensure it appears above other elements
-          }}
+          {...stylex.props(styles.dropdownList)}
+          style={dropdownDynamicStyles}
           onMouseDown={handleDropdownMouseDown}
         >
-          <label
-            style={{
-              borderBottom: "1px solid #eee",
-              display: "block",
-              fontWeight: "bold",
-              marginBottom: 4,
-              overflow: "hidden",
-              padding: "4px 10px",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-            }}
-          >
+          <label {...stylex.props(styles.dropdownLabel)}>
             <input
               ref={(el) => {
                 if (el) el.indeterminate = someSelected;
@@ -338,13 +291,7 @@ const MultiSelectDropdown = ({
           {options.map((opt) => (
             <label
               key={opt}
-              style={{
-                display: "block",
-                overflow: "hidden",
-                padding: "4px 10px",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-              }}
+              {...stylex.props(styles.dropdownOption)}
             >
               <input
                 checked={selected.includes(opt)}
