@@ -8,7 +8,8 @@ const Badge = ({ isMore, onRemove, value }: TBadgeProps) => {
 
   return (
     <span {...stylex.props(styles.badge, isMore && styles.more)}>
-      {value}
+      <span {...stylex.props(styles.value)}>{value}</span>
+
       {onRemove && !isMore && (
         <button
           {...stylex.props(styles.removeButton)}

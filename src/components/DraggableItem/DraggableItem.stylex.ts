@@ -26,7 +26,7 @@ export const styles = stylex.create({
     padding: '8px 14px',
     transition: 'background 0.2s, box-shadow 0.2s, opacity 0.2s',
   },
-  liDragging: {
+  isActive: {
     background: '#ddeeff',
     boxShadow: '0 2px 8px #1976d244',
     opacity: 0.7,

@@ -4,6 +4,7 @@ import type { TDraggableItemType } from '../DraggableList/DraggableList.types';
 
 import type { TColumnOrderSectionProps } from './ColumnOrderSection.types';
 
+// TODO: Check implementation after adding the Table component
 const ColumnOrderSection = ({
   columns,
   columnOrder,

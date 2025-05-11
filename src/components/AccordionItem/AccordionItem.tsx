@@ -5,7 +5,7 @@ import type { TAccordionItemProps } from './AccordionItem.types';
 import { useRef } from 'react';
 import { injectPropsToChildren } from '../../utils/injectPropsToChildren';
 
-const AccordionItem = ({ children, name, title, ...props }: TAccordionItemProps) => {
+const AccordionItem = ({ children, title, ...props }: TAccordionItemProps) => {
   const ref = useRef<HTMLDetailsElement>(null);
 
   const enhancedChildren = injectPropsToChildren(children, { parentRef: ref });

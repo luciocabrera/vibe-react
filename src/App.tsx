@@ -11,6 +11,7 @@ import { TableSettingsDrawer } from './components/TableSettingsDrawer';
 const initialData: Record<string, any>[] = [];
 
 // Define a dynamic schema for columns
+// TODO: Use the one from tanstack table or a global type, it should moved to a shared file
 export type ColumnDef = {
   filterable?: boolean;
   key: string;

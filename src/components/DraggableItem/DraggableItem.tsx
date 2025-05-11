@@ -12,7 +12,7 @@ const DraggableItem = ({
 }: TDraggableItemProps) => (
   <li
     {...props}
-    {...stylex.props(styles.li, activeId === id && styles.liDragging)}
+    {...stylex.props(styles.li, activeId === id && styles.isActive)}
     draggable
   >
     <div {...stylex.props(styles.labelContainer)}>

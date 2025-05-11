@@ -5,7 +5,6 @@ export type MultiSelectDropdownProps = {
   onChange: (sel: string[]) => void;
   onReset: () => void;
   options: string[];
-  parentId: string;
   parentRef?: RefObject<HTMLElement>;
   selected: string[];
 };
