@@ -3,6 +3,7 @@ import { styles, dynamicStyles } from './MultiSelectDropdown.stylex';
 import * as stylex from '@stylexjs/stylex';
 import { getParentElement } from '../../utils/getParentElement';
 import { getScrollableParents } from '../../utils/getScrollableParents';
+import { getDropdownPositionRelativeToParent } from '../../utils/getDropdownPosition';
 
 import type { MultiSelectDropdownProps } from "./MultiSelectDropdown.types";
 const MultiSelectDropdown = ({
@@ -127,56 +128,18 @@ const MultiSelectDropdown = ({
   };
 
   // Calculate dropdown dimensions and position when opened
-  const getDropdownPosition = () => {
-    // Find the trigger button associated with THIS specific dropdown instance
-    // Instead of using document.querySelector which finds the first match
-    const buttonEl = ref.current?.querySelector(`[data-instance-id="${instanceId}"]`);
-
-    if (!buttonEl) return { left: 0, top: '100%', width: '100%' };
-
-    const rect = buttonEl.getBoundingClientRect();
-    const viewportHeight = window.innerHeight;
-    // Find parent element if it exists
-    let minTop = 0;
-    let parentLeft = 0;
-    let parentElement = getParentElement(parentRef);
-    let parentWidth = 0;
-
-    if (parentElement) {
-      const parentRect = parentElement.getBoundingClientRect();
-      minTop = parentRect.top;
-      parentLeft = parentRect.left;
-      parentWidth = parentRect.width;
-    }
-
-    // Check if dropdown would go off bottom of screen
-    const spaceBelow = viewportHeight - rect.bottom;
-    const expectedDropdownHeight = Math.min(220, options.length * 30 + 40); // Estimate height
-
-    if (spaceBelow < expectedDropdownHeight && rect.top > expectedDropdownHeight) {
-      // Place dropdown above the button if there's more space above
-      return {
-        left: parentElement ? `${parentLeft + 10}px` : `${rect.left}px`, // Use parent left position with padding
-        top: `${rect.top - expectedDropdownHeight - 5}px`, // Position above with offset
-        width: parentElement ? `${parentWidth - 30}px` : `${rect.width}px`, // Use parent width with padding adjustment
-      };
-    }
-
-    // Default: place dropdown below the button
-    return {
-      left: parentElement ? `${parentLeft + 10}px` : `${rect.left}px`, // Use parent left position with padding
-      top: `${Math.max(minTop + 5, rect.bottom + 5)}px`, // Ensure it doesn't go above parent
-      width: parentElement ? `${parentWidth - 30}px` : `${rect.width}px`, // Use parent width with padding adjustment
-    };
-  };
+  const dropdownPosition = getDropdownPositionRelativeToParent({
+    selector: `[data-instance-id="${instanceId}"]`,
+    ref: ref as React.RefObject<HTMLElement>,
+    parentRef: parentRef as React.RefObject<HTMLElement>,
+    optionsCount: options.length,
+  });
+  const { left, top, width } = dropdownPosition;
 
   // Handle dropdown list mouse event to prevent propagation
   const handleDropdownMouseDown = (e: React.MouseEvent) => {
     e.stopPropagation();
   };
-
-  const dropdownPosition = getDropdownPosition();
-  const { left, top, width } = dropdownPosition;
 
   // Apply static and dynamic styles separately
   const parentElement = getParentElement(parentRef);
