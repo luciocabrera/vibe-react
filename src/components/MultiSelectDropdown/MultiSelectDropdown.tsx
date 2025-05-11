@@ -1,43 +1,38 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
+import { styles, dynamicStyles } from './MultiSelectDropdown.stylex';
+import * as stylex from '@stylexjs/stylex';
+import { getParentElement } from '../../utils/getParentElement';
+import { getScrollableParents } from '../../utils/getScrollableParents';
+import { getPositionRelativeToParent } from '../../utils/getPositionRelativeToParent';
 
 import type { MultiSelectDropdownProps } from "./MultiSelectDropdown.types";
 const MultiSelectDropdown = ({
   onChange,
   onReset,
   options = [],
-  parentId,
+  parentRef,
   selected = [],
 }: MultiSelectDropdownProps) => {
   const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const labelContainerRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const triggerButtonRef = useRef<HTMLButtonElement>(null);
+  const [parentResizeTick, setParentResizeTick] = useState(0);
   // Use an instance variable to identify this specific dropdown
-  const instanceId = useRef<string>(`${Math.random().toString(36).substr(2, 9)}`);
-  // Store the accordion width for proper sizing
-  const [accordionWidth, setAccordionWidth] = useState<number | null>(null);
+  const instanceId = useId();
 
-  // Get the parent width on mount and when window resizes
+  // Watch parent element for resize using ResizeObserver
   useEffect(() => {
-    const calculateParentWidth = () => {
-      if (containerRef.current && parentId) {
-        // Find the parent element by ID
-        const parentElement = document.getElementById(parentId);
-        if (parentElement) {
-          const width = parentElement.getBoundingClientRect().width;
-          setAccordionWidth(width);
-        }
-      }
-    };
-    
-    // Calculate immediately and on resize
-    calculateParentWidth();
-    window.addEventListener('resize', calculateParentWidth);
-    
-    return () => {
-      window.removeEventListener('resize', calculateParentWidth);
-    };
-  }, [parentId]);
+    const parentElement = getParentElement(parentRef);
+    if (!parentElement) return;
+    if (typeof window.ResizeObserver !== 'function') return;
+    const observer = new ResizeObserver(() => {
+      setParentResizeTick(tick => tick + 1); // force re-render on parent resize
+    });
+    observer.observe(parentElement);
+    return () => observer.disconnect();
+  }, [parentRef]);
 
   useEffect(() => {
     // Window resize handler to reposition dropdown if open
@@ -51,81 +46,61 @@ const MultiSelectDropdown = ({
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [open]);
+  }, [open, parentResizeTick]);
 
   useEffect(() => {
     // Handle scrolling of parent containers to reposition dropdown
     const handleScroll = () => {
       if (open) {
-        // Force a re-render to update dropdown position
         setOpen(false);
         setTimeout(() => setOpen(true), 0);
       }
     };
-    
-    // Get all possible scrollable parent elements
-    const scrollableParents: HTMLElement[] = [];
-    let parent = containerRef.current?.parentElement;
-    while (parent) {
-      const overflowY = window.getComputedStyle(parent).overflowY;
-      if (overflowY === 'auto' || overflowY === 'scroll') {
-        scrollableParents.push(parent);
-      }
-      parent = parent.parentElement;
-    }
-    
+
+    // Use the new utility to get all possible scrollable parent elements
+    const scrollableParents = getScrollableParents(containerRef.current);
+
     // Add scroll event listeners to all scrollable parents
     scrollableParents.forEach(parent => {
       parent.addEventListener('scroll', handleScroll);
     });
-    
+
     // Always listen to window scroll events
     window.addEventListener("scroll", handleScroll);
-    
+
     return () => {
       scrollableParents.forEach(parent => {
         parent.removeEventListener('scroll', handleScroll);
       });
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [open]);
-
-  useEffect(() => {
-    // Recalculate parent width when dropdown opens
-    if (open && parentId) {
-      const parentElement = document.getElementById(parentId);
-      if (parentElement) {
-        const width = parentElement.getBoundingClientRect().width;
-        setAccordionWidth(width);
-      }
-    }
-  }, [open, parentId]);
+  }, [open, parentResizeTick]);
 
   // Check if all options are selected
   const allSelected = selected.length === options.length;
   const someSelected = selected.length > 0 && !allSelected;
-  
+
   // Outside click detection
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       // Only close if the click is outside both the main component and dropdown
       const target = e.target as Node;
-      const triggerButton = ref.current?.querySelector('[data-test-id="multi-select-trigger"]');
-      
+      const triggerButton = triggerButtonRef.current;
+
       // Don't close if clicked on the trigger button (let the onClick handler handle it)
       if (triggerButton && triggerButton.contains(target)) {
         return;
       }
-      
+
       // Close if clicked outside both the dropdown content and trigger
       if (
-        (!ref.current || !ref.current.contains(target)) &&
+        (!labelContainerRef.current || !labelContainerRef.current.contains(target)) &&
         (!dropdownRef.current || !dropdownRef.current.contains(target))
       ) {
         setOpen(false);
       }
     };
-    
+
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, []);
@@ -133,17 +108,15 @@ const MultiSelectDropdown = ({
   const handleDropdownClick = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent event bubbling
     e.preventDefault(); // Prevent any default action
-    
+
     // If we're inside a parent element that might be clickable (like an accordion),
     // prevent the parent's click event
-    if (parentId) {
-      const parentElement = document.getElementById(parentId);
-      const clickTarget = e.target as HTMLElement;
-      if (parentElement && (parentElement.contains(clickTarget) || parentElement === clickTarget)) {
-        e.nativeEvent.stopImmediatePropagation(); // Stop event completely
-      }
+    const parentElement = getParentElement(parentRef);
+    const clickTarget = e.target as HTMLElement;
+    if (parentElement && (parentElement.contains(clickTarget) || parentElement === clickTarget)) {
+      e.nativeEvent.stopImmediatePropagation(); // Stop event completely
     }
-    
+
     setOpen((prev) => !prev); // Toggle dropdown state
   };
   const handleReset = () => onReset();
@@ -156,120 +129,61 @@ const MultiSelectDropdown = ({
   };
 
   // Calculate dropdown dimensions and position when opened
-  const getDropdownPosition = () => {
-    // Find the trigger button associated with THIS specific dropdown instance
-    // Instead of using document.querySelector which finds the first match
-    const buttonEl = ref.current?.querySelector(`[data-instance-id="${instanceId.current}"]`);
-    
-    if (!buttonEl) return { left: 0, top: '100%', width: '100%' };
-    
-    const rect = buttonEl.getBoundingClientRect();
-    const viewportHeight = window.innerHeight;
-    
-    // Find parent element if it exists
-    let minTop = 0;
-    let parentLeft = 0;
-    let parentElement = null;
-    
-    if (parentId) {
-      parentElement = document.getElementById(parentId);
-      if (parentElement) {
-        const parentRect = parentElement.getBoundingClientRect();
-        minTop = parentRect.top;
-        parentLeft = parentRect.left;
-      }
-    }
-    
-    // Check if dropdown would go off bottom of screen
-    const spaceBelow = viewportHeight - rect.bottom;
-    const expectedDropdownHeight = Math.min(220, options.length * 30 + 40); // Estimate height
-    
-    if (spaceBelow < expectedDropdownHeight && rect.top > expectedDropdownHeight) {
-      // Place dropdown above the button if there's more space above
-      return {
-        left: parentElement ? `${parentLeft + 10}px` : `${rect.left}px`, // Use parent left position with padding
-        top: `${rect.top - expectedDropdownHeight - 5}px`, // Position above with offset
-        width: accordionWidth ? `${accordionWidth - 30}px` : `${rect.width}px`, // Use parent width with padding adjustment
-      };
-    }
-    
-    // Default: place dropdown below the button
-    return {
-      left: parentElement ? `${parentLeft + 10}px` : `${rect.left}px`, // Use parent left position with padding
-      top: `${Math.max(minTop + 5, rect.bottom + 5)}px`, // Ensure it doesn't go above parent
-      width: accordionWidth ? `${accordionWidth - 30}px` : `${rect.width}px`, // Use parent width with padding adjustment
-    };
-  };
-  
+  const dropdownPosition = getPositionRelativeToParent({
+    selector: `[data-instance-id="${instanceId}"]`,
+    ref: labelContainerRef as React.RefObject<HTMLElement>,
+    parentRef: parentRef as React.RefObject<HTMLElement>,
+    optionsCount: options.length,
+  });
+  const { left, top, width } = dropdownPosition;
+
   // Handle dropdown list mouse event to prevent propagation
   const handleDropdownMouseDown = (e: React.MouseEvent) => {
     e.stopPropagation();
   };
-  
+
+  // Apply static and dynamic styles separately
+  const parentElement = getParentElement(parentRef);
+  let parentWidth = 0;
+  if (parentElement) {
+    parentWidth = parentElement.getBoundingClientRect().width;
+  }
+  const containerDynamicStyles = dynamicStyles.container(parentWidth);
+  const dropdownDynamicStyles = dynamicStyles.dropdownList(
+    left.toString(),
+    top.toString(),
+    width.toString()
+  );
+
   return (
     <div
       ref={containerRef}
-      data-instance-id={instanceId.current}
+      data-instance-id={instanceId}
       data-test-id="multi-select-dropdown"
-      id="multi-select-dropdown"
-      style={{
-        maxWidth: accordionWidth ? `${accordionWidth - 20}px` : "100%", // Use accordion width with padding
-        overflow: "visible", // Allow the dropdown to be visible outside
-        position: "relative", // Ensure dropdown is positioned relative to this container
-        width: accordionWidth ? `${accordionWidth - 20}px` : "100%", // Use accordion width with padding
-      }}
+      id={instanceId}
+      {...stylex.props(styles.container)}
+      style={containerDynamicStyles}
     >
       <div
-        ref={ref}
-        data-instance-id={instanceId.current}
+        ref={labelContainerRef}
+        data-instance-id={instanceId}
         data-test-id="multi-select-label"
-        id="multi-select-label"
-        style={{
-          boxSizing: "border-box",
-          display: "flex",
-          maxWidth: "100%", // Ensure it doesn't exceed parent width
-          position: "relative", // Added for proper child positioning
-          width: "100%", // Take full available width
-        }}
+        id={`${instanceId}-multi-select-label`}
+        {...stylex.props(styles.label)}
       >
-        {/* <div style={{ flex: "1 1 auto", marginRight: "8px", minWidth: 0 }}> */}
         <button
+          ref={triggerButtonRef}
           aria-expanded={open}
           aria-haspopup="listbox"
-          data-instance-id={instanceId.current}
-          data-test-id="multi-select-trigger"
-          id='multi-select-trigger'
-          style={{
-            alignItems: "center",
-            background: "#fff",
-            border: "1px solid #ccc",
-            borderRadius: 4,
-            boxSizing: "border-box",
-            cursor: "pointer",
-            display: "flex",
-            flex: "1 1 auto", // Allow the button to shrink
-            marginRight: "8px",
-            maxWidth: "calc(100% - 30px)", // Leave space for the reset button
-            minWidth: 0, // Allow shrinking below content size
-            overflow: "hidden", // Added to contain child elements
-            padding: "6px 10px",
-            textAlign: "left",
-            userSelect: "none", // Prevent text selection
-            width: "100%",
-          }}
+          data-instance-id={instanceId}
+          {...stylex.props(styles.triggerButton)}
           type="button"
           onClick={handleDropdownClick}
         >
           <div
             data-test-id="selected-items-display"
-            id="selected-items-display"
-            style={{
-              maxWidth: "100%",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-              width: "100%",
-            }}
+            id={`${instanceId}-selected-items-display`}
+            {...stylex.props(styles.selectedItemsDisplay)}
           >
             {(() => {
               if (allSelected) return "All";
@@ -279,11 +193,9 @@ const MultiSelectDropdown = ({
             })()}
           </div>
         </button>
-        {/* </div> */}
-
         <button
-          id="multi-select-reset"
-          style={{ flex: "0 0 auto" }}
+          id={`${instanceId}-selected-items-reset`}
+          {...stylex.props(styles.resetButton)}
           type="button"
           onClick={handleReset}
         >
@@ -293,38 +205,13 @@ const MultiSelectDropdown = ({
       {open && (
         <div
           ref={dropdownRef}
-          data-instance-id={instanceId.current}
+          data-instance-id={instanceId}
           data-test-id="multi-select-dropdown-list"
-          id="multi-select-dropdown-list"
-          style={{
-            background: "#fff",
-            border: "1px solid #ccc",
-            borderRadius: 4,
-            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.25)",
-            boxSizing: "border-box",
-            maxHeight: 220,
-            maxWidth: accordionWidth ? `${accordionWidth - 30}px` : "100%", // Use accordion width
-            overflowX: "hidden",
-            overflowY: "auto",
-            padding: "4px 0",
-            position: "fixed", // Fixed positioning to escape overflow constraints
-            ...getDropdownPosition(), // Apply calculated position
-            zIndex: 9999, // Higher z-index to ensure it appears above other elements
-          }}
+          {...stylex.props(styles.dropdownList)}
+          style={dropdownDynamicStyles}
           onMouseDown={handleDropdownMouseDown}
         >
-          <label
-            style={{
-              borderBottom: "1px solid #eee",
-              display: "block",
-              fontWeight: "bold",
-              marginBottom: 4,
-              overflow: "hidden",
-              padding: "4px 10px",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-            }}
-          >
+          <label {...stylex.props(styles.dropdownLabel)}>
             <input
               ref={(el) => {
                 if (el) el.indeterminate = someSelected;
@@ -338,13 +225,7 @@ const MultiSelectDropdown = ({
           {options.map((opt) => (
             <label
               key={opt}
-              style={{
-                display: "block",
-                overflow: "hidden",
-                padding: "4px 10px",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-              }}
+              {...stylex.props(styles.dropdownOption)}
             >
               <input
                 checked={selected.includes(opt)}
