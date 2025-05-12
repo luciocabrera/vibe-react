@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# Husky v9+ does not require sourcing husky.sh
+
+echo '

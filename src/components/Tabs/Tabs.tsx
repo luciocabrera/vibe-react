@@ -1,6 +1,6 @@
 import type { KeyboardEvent } from 'react';
 import { useRef, useState } from 'react';
-import stylex from '@stylexjs/stylex';
+import * as stylex from '@stylexjs/stylex';
 
 import { TabsItem } from '../TabsItem';
 

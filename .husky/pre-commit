@@ -1,31 +1,24 @@
-echo '🏗️👷💅 Checking the format with Prettier...'
-#Check Prettier standards
-npm run check:format ||
-(
-    echo '💥❌🐛🐞 Prettier check has failed. 💥❌🐛🐞
-          Please check your code and make required changes and then try to commit again.';
-    false;
-)
+#!/bin/sh
 
-echo '🏗️👷 Running the linter...'
-# Check ESLint Standards
-npm run lint:fix ||
-(
-    echo '💥❌🐛🐞 ESLint check has failed. 💥❌🐛🐞
-          Please check your code and make the required changes listed above, add changes and try to commit again.'
-    false; 
-)
+# Husky v9+ does not require sourcing husky.sh
 
-echo '🏗️👷 Checking types...'
+echo 'Checking the format with Prettier...'
+npm run check:format || {
+    echo 'Prettier check has failed. Please check your code and make required changes and then try to commit again.';
+    exit 1;
+}
 
-# Check tsconfig standards
-npm run check:types ||
-(
-    echo '💥❌🐛🐞 Failed TypeScript check. 💥❌🐛🐞
-          Please check your code and make the changes required above.'
-    false;
-)
+echo 'Running the linter...'
+npm run lint:fix || {
+    echo 'ESLint check has failed. Please check your code and make the required changes listed above, add changes and try to commit again.';
+    exit 1;
+}
 
-# If everything passes... Now we can commit
-echo '✅✅✅✅ ❤️‍🔥... Everything looks good, I am comitting this now.  ❤️‍🔥 ✅✅✅✅'
+echo 'Checking types...'
+npm run check:types || {
+    echo 'Failed TypeScript check. Please check your code and make the changes required above.';
+    exit 1;
+}
+
+echo 'Everything looks good, I am committing this now.'
 
