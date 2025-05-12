@@ -27,6 +27,15 @@ export const colorVariants = stylex.create({
     borderWidth: '1px',
     color: 'var(--text-color-2)',
   },
+  secondary: {
+    backgroundColor: 'var(--background-color-4)',
+    border: 'none',
+    borderColor: 'var(--border-color-1)',
+    borderRadius: 'var(--border-radius-sm)',
+    borderStyle: 'solid',
+    borderWidth: '1px',
+    color: 'var(--text-color-3)',
+  },
 });
 
 export const sizeVariants = stylex.create({

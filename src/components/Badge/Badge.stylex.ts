@@ -3,7 +3,9 @@ import * as stylex from '@stylexjs/stylex';
 export const styles = stylex.create({
   badge: {
     alignItems: 'center',
-    backgroundColor: '#f0f0f0',
+    background: 'var(--background-color-8)',
+    border: '1px solid var(--text-color-3)',
+    // backgroundColor: '#f0f0f0',
     borderRadius: '16px',
     color: '#333',
     display: 'inline-flex',

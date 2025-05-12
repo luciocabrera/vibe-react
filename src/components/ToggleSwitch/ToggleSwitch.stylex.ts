@@ -28,7 +28,7 @@ export const styles = stylex.create({
     width: '16px',
   }),
   track: (isActive: boolean) => ({
-    background: isActive ? '#1976d2' : '#ccc',
+    background: isActive ? 'var(--background-color-1)' : '#ccc',
     borderRadius: '10px',
     cursor: 'pointer',
     display: 'inline-block',

@@ -2,7 +2,7 @@ import * as stylex from '@stylexjs/stylex';
 
 export const styles = stylex.create({
   dragIcon: {
-    color: '#1976d2',
+    color: 'var(--background-color-1)',
     fontSize: '1.2em',
   },
   isActive: {
@@ -17,8 +17,8 @@ export const styles = stylex.create({
   },
   li: {
     alignItems: 'center',
-    background: '#f7faff',
-    border: '1px solid #c7d6f7',
+    background: 'var(--background-color-8)',
+    border: '1px solid var(--text-color-3)',
     borderRadius: 6,
     cursor: 'grab',
     display: 'flex',
