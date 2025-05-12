@@ -43,8 +43,5 @@
     // Vite takes care of building everything, not tsc.
     "noEmit": true
   },
-  "exclude": [
-    "vite.config.ts"
-  ]
+  "exclude": ["vite.config.ts"]
 }
-

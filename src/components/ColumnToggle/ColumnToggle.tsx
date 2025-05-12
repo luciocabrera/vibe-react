@@ -5,7 +5,7 @@ import ToggleSwitch from '../ToggleSwitch/ToggleSwitch';
 import { styles } from './ColumnToggle.stylex';
 import type { TColumnToggleProps } from './ColumnToggle.types';
 
-// TDOO: Check if we really need the id here, the onToggle function should know what to do 
+// TDOO: Check if we really need the id here, the onToggle function should know what to do
 // in the parent component
 const ColumnToggle = ({
   id,
@@ -28,4 +28,3 @@ const ColumnToggle = ({
 };
 
 export default ColumnToggle;
-

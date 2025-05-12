@@ -9,4 +9,3 @@ export type TTabsItem = {
 export type TTabItemProps = ComponentPropsWithRef<'button'> & {
   active?: boolean;
 };
-

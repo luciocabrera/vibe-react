@@ -1,4 +1,4 @@
-import type { RefObject } from "react";
+import type { RefObject } from 'react';
 
 export type TBadgesProps = {
   onRemove?: (val: string) => void;
@@ -6,4 +6,3 @@ export type TBadgesProps = {
   parentRef?: RefObject<HTMLElement | null>;
   selected: string[];
 };
-

@@ -123,4 +123,3 @@ export type TFormFieldBaseProps<TData> = Pick<
 export const DISPLAY_ENUM = strArrayToEnum([...DISPLAY_TYPES]);
 export const FIELD_TO_RENDER_ENUM = strArrayToEnum([...FIELDS_TO_RENDER]);
 export const FIELD_TYPE_ENUM = strArrayToEnum([...FIELD_TYPES]);
-

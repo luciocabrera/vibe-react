@@ -24,8 +24,8 @@ export const useOrderedList = <T>({
   const handleDragEnter = (id: number | string) => {
     if (!dragItemId || dragItemId === id) return;
 
-    const fromIndex = items.findIndex(item => getItemId(item) === dragItemId);
-    const toIndex = items.findIndex(item => getItemId(item) === id);
+    const fromIndex = items.findIndex((item) => getItemId(item) === dragItemId);
+    const toIndex = items.findIndex((item) => getItemId(item) === id);
 
     if (fromIndex < 0 || toIndex < 0) return;
 
@@ -42,5 +42,4 @@ export const useOrderedList = <T>({
     handleDragEnter,
     handleDragStart,
   };
-}
-
+};

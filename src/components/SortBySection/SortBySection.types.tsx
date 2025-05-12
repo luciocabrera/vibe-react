@@ -11,4 +11,3 @@ export type TSortBySectionProps = {
   onChange: (newSort: TSortCol[]) => void;
   sortState: TSortCol[];
 };
-

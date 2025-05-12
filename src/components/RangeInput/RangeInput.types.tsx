@@ -4,4 +4,3 @@ export type RangeInputProps = {
   onReset: () => void;
   value: [number | '', number | ''];
 };
-

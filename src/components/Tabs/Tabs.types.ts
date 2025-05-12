@@ -8,4 +8,3 @@ export type TTabsProps = ComponentPropsWithRef<'div'> & {
   defaultSelectedTab?: string;
   tabs?: TTabsItems;
 };
-

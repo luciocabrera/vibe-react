@@ -1,6 +1,6 @@
-import type { ComponentProps } from "react";
+import type { ComponentProps } from 'react';
 
-export type TDrawerProps = ComponentProps<"aside"> & {
+export type TDrawerProps = ComponentProps<'aside'> & {
   isPinned?: boolean;
   onClose: () => void;
   onPinChange?: (isPinned: boolean) => void;

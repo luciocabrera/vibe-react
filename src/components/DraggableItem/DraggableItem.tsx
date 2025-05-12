@@ -16,7 +16,7 @@ const DraggableItem = ({
     draggable
     aria-label={typeof label === 'string' ? label : undefined}
     aria-selected={activeId === id}
-    role="option"
+    role='option'
     tabIndex={0}
   >
     <div {...stylex.props(styles.labelContainer)}>
@@ -28,4 +28,3 @@ const DraggableItem = ({
 );
 
 export default DraggableItem;
-

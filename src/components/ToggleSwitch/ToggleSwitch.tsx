@@ -20,14 +20,9 @@ const ToggleSwitch = ({ isActive, label, ...props }: TToggleSwitchProps) => {
       <span {...stylex.props(styles.track(isActive))}>
         <span {...stylex.props(styles.thumb(isActive))} />
       </span>
-      {label && (
-        <small {...stylex.props(styles.label)}>
-          {label}
-        </small>
-      )}
+      {label && <small {...stylex.props(styles.label)}>{label}</small>}
     </label>
   );
 };
 
 export default ToggleSwitch;
-

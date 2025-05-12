@@ -1,15 +1,15 @@
-import * as stylex from "@stylexjs/stylex";
+import * as stylex from '@stylexjs/stylex';
 
-import { Accordion } from "../Accordion";
-import { AccordionItem } from "../AccordionItem";
-import { Badges } from "../Badges";
-import { Button } from "../Button";
-import { FormFieldBase } from "../FormFieldBase";
-import { MultiSelectDropdown } from "../MultiSelectDropdown";
-import { RangeInput } from "../RangeInput";
+import { Accordion } from '../Accordion';
+import { AccordionItem } from '../AccordionItem';
+import { Badges } from '../Badges';
+import { Button } from '../Button';
+import { FormFieldBase } from '../FormFieldBase';
+import { MultiSelectDropdown } from '../MultiSelectDropdown';
+import { RangeInput } from '../RangeInput';
 
-import { styles } from "./FiltersSection.stylex";
-import type { FiltersSectionProps } from "./FiltersSection.types";
+import { styles } from './FiltersSection.stylex';
+import type { FiltersSectionProps } from './FiltersSection.types';
 
 export const FiltersSection = ({
   columns,
@@ -33,8 +33,8 @@ export const FiltersSection = ({
   };
   const handleRangeChange = (
     key: string,
-    min: number | "",
-    max: number | ""
+    min: number | '',
+    max: number | ''
   ) => {
     onRangeChange(key, min, max);
   };
@@ -82,7 +82,11 @@ export const FiltersSection = ({
         {columns
           .filter((col) => col.rangeFilter)
           .map((col) => (
-            <FormFieldBase key={col.key} accessor={col.key} label={col.label}>
+            <FormFieldBase
+              key={col.key}
+              accessor={col.key}
+              label={col.label}
+            >
               <RangeInput
                 label={col.label}
                 value={rangeState[col.key]}
@@ -92,7 +96,10 @@ export const FiltersSection = ({
             </FormFieldBase>
           ))}
       </div>
-      <Button size={"lg"} onClick={handleResetAll}>
+      <Button
+        size={'lg'}
+        onClick={handleResetAll}
+      >
         Reset All Filters
       </Button>
     </div>

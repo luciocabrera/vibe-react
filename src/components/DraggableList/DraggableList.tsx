@@ -16,7 +16,7 @@ const DraggableList = ({ items, onOrderChange }: TDraggableListProps) => {
 
   return (
     <ul {...stylex.props(styles.ul)}>
-      {list.map(item => (
+      {list.map((item) => (
         <DraggableItem
           key={item.id}
           activeId={dragItemId.current}
@@ -34,4 +34,3 @@ const DraggableList = ({ items, onOrderChange }: TDraggableListProps) => {
 };
 
 export default DraggableList;
-

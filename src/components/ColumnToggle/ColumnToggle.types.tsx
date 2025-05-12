@@ -4,4 +4,3 @@ export type TColumnToggleProps = {
   label: string;
   onToggle: (id: string) => void;
 };
-

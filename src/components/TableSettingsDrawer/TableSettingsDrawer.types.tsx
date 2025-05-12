@@ -26,4 +26,3 @@ export type TableSettingsDrawerProps = {
   tab: 'columns' | 'filters' | 'sorting';
   visibleColumns?: Set<string>;
 };
-

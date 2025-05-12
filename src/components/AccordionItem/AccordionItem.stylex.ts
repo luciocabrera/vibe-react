@@ -22,4 +22,3 @@ export const styles = stylex.create({
     padding: '1rem',
   },
 });
-

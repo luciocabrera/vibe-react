@@ -1,4 +1,4 @@
-import { Children, cloneElement, isValidElement, type ReactNode } from "react";
+import { Children, cloneElement, isValidElement, type ReactNode } from 'react';
 
 /**
  * Safely inject props into React children elements (ignores fragments, strings, etc.)
@@ -7,16 +7,18 @@ import { Children, cloneElement, isValidElement, type ReactNode } from "react";
  * @returns Modified children with injected props
  */
 export const injectPropsToChildren = (
-    children: ReactNode,
-    injectedProps: Record<string, unknown>
+  children: ReactNode,
+  injectedProps: Record<string, unknown>
 ): ReactNode => {
-    return Children.map(children, (child) => {
-        if (isValidElement(child)) {
-            return cloneElement(child, {
-                ...injectedProps,
-                ...(typeof child.props === "object" && child.props !== null ? child.props : {}), // child props take precedence to avoid overrides
-            });
-        }
-        return child;
-    });
-}
+  return Children.map(children, (child) => {
+    if (isValidElement(child)) {
+      return cloneElement(child, {
+        ...injectedProps,
+        ...(typeof child.props === 'object' && child.props !== null
+          ? child.props
+          : {}), // child props take precedence to avoid overrides
+      });
+    }
+    return child;
+  });
+};

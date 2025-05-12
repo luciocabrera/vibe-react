@@ -1,4 +1,4 @@
-import type { RefObject } from "react";
+import type { RefObject } from 'react';
 
 export type MultiSelectDropdownProps = {
   label: string;
@@ -8,4 +8,3 @@ export type MultiSelectDropdownProps = {
   parentRef?: RefObject<HTMLElement>;
   selected: string[];
 };
-

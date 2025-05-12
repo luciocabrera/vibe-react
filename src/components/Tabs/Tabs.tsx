@@ -10,8 +10,8 @@ import type { TTabsProps } from './Tabs.types';
 const Tabs = ({ defaultSelectedTab, ref, tabs, ...props }: TTabsProps) => {
   const [active, setActive] = useState(defaultSelectedTab ?? tabs?.[0]?.key);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const activeIndex = tabs?.findIndex(tab => tab.key === active) ?? 0;
-  const activeChildren = tabs?.find(tab => tab.key === active)?.children;
+  const activeIndex = tabs?.findIndex((tab) => tab.key === active) ?? 0;
+  const activeChildren = tabs?.find((tab) => tab.key === active)?.children;
 
   // Keyboard navigation handler
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
@@ -39,28 +39,33 @@ const Tabs = ({ defaultSelectedTab, ref, tabs, ...props }: TTabsProps) => {
   };
 
   const handleTabClick = (key: string) => {
-    setActive(key);}
+    setActive(key);
+  };
 
   return (
-    <div ref={ref} {...stylex.props(styles.tabs)} {...props}>
+    <div
+      ref={ref}
+      {...stylex.props(styles.tabs)}
+      {...props}
+    >
       <div
         {...stylex.props(styles.tabsButtonsWrapper)}
-        aria-orientation="horizontal"
-        role="tablist"
+        aria-orientation='horizontal'
+        role='tablist'
         onKeyDown={handleKeyDown}
       >
         {tabs?.map(({ header, key }) => (
           <TabsItem
             key={key}
-            ref={el => {
-              const tabIdx = tabs.findIndex(tab => tab.key === key);
+            ref={(el) => {
+              const tabIdx = tabs.findIndex((tab) => tab.key === key);
               if (tabIdx !== -1) tabRefs.current[tabIdx] = el;
             }}
             active={active === key}
             aria-controls={`tabpanel-${key}`}
             aria-selected={active === key}
             id={`tab-${key}`}
-            role="tab"
+            role='tab'
             tabIndex={active === key ? 0 : -1}
             onClick={() => handleTabClick(key)}
           >
@@ -71,7 +76,7 @@ const Tabs = ({ defaultSelectedTab, ref, tabs, ...props }: TTabsProps) => {
       <div
         aria-labelledby={`tab-${active}`}
         id={`tabpanel-${active}`}
-        role="tabpanel"
+        role='tabpanel'
         tabIndex={0}
       >
         {activeChildren}
@@ -81,4 +86,3 @@ const Tabs = ({ defaultSelectedTab, ref, tabs, ...props }: TTabsProps) => {
 };
 
 export default Tabs;
-

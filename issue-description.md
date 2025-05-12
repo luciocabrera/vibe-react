@@ -19,4 +19,3 @@ Types are more flexible in TypeScript and can do everything interfaces can do, p
 - All interface declarations are converted to type declarations
 - No functionality changes or regressions
 - Code compiles and passes all tests
-

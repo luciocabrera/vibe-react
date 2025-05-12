@@ -9,14 +9,18 @@ This document provides a comprehensive explanation of the improvements made to t
 ### 1. Explicit Parent Identification Strategy
 
 #### Previous Implementation
+
 - The component used implicit parent detection via DOM traversal:
   ```typescript
-  const accordionItem = containerRef.current?.closest('[data-test-id="accordion-item"]');
+  const accordionItem = containerRef.current?.closest(
+    '[data-test-id="accordion-item"]',
+  );
   ```
 - This approach was tightly coupled to a specific component structure, requiring the parent to have the data attribute `data-test-id="accordion-item"`.
 - The tight coupling made the component less reusable in different contexts.
 
 #### New Implementation
+
 - Introduced a `parentId` prop that explicitly identifies the parent element:
   ```typescript
   const parentElement = document.getElementById(parentId);
@@ -37,9 +41,12 @@ This document provides a comprehensive explanation of the improvements made to t
 ### 2. Instance-Based Identification System
 
 #### Implementation
+
 - Each MultiSelectDropdown instance generates a unique identifier:
   ```typescript
-  const instanceId = useRef<string>(`${Math.random().toString(36).substr(2, 9)}`);
+  const instanceId = useRef<string>(
+    `${Math.random().toString(36).substr(2, 9)}`,
+  );
   ```
 - This ID is applied to all related elements via the `data-instance-id` attribute:
   ```jsx
@@ -53,13 +60,16 @@ This document provides a comprehensive explanation of the improvements made to t
   ```
 - When finding elements (like the trigger button), the component uses this instance ID to ensure it gets its own elements:
   ```typescript
-  const buttonEl = ref.current?.querySelector(`[data-instance-id="${instanceId.current}"]`);
+  const buttonEl = ref.current?.querySelector(
+    `[data-instance-id="${instanceId.current}"]`,
+  );
   ```
 - This prevents conflicts when multiple dropdowns are open simultaneously.
 
 ### 3. Parent-Aware Sizing and Positioning
 
 #### Previous Implementation
+
 - The dropdown sizing and positioning were determined by the accordion's dimensions:
   ```typescript
   if (accordionItem) {
@@ -70,6 +80,7 @@ This document provides a comprehensive explanation of the improvements made to t
   ```
 
 #### New Implementation
+
 - Sizing and positioning now use the explicitly provided parent:
   ```typescript
   if (parentId) {
@@ -92,7 +103,9 @@ This document provides a comprehensive explanation of the improvements made to t
 ### 4. Responsive Dimension Calculation
 
 #### Implementation
+
 - The component now calculates and updates dimensions in multiple scenarios:
+
   1. **On Mount**:
      ```typescript
      useEffect(() => {
@@ -105,18 +118,18 @@ This document provides a comprehensive explanation of the improvements made to t
            }
          }
        };
-       
+
        // Calculate immediately and on resize
        calculateParentWidth();
-       window.addEventListener('resize', calculateParentWidth);
-       
+       window.addEventListener("resize", calculateParentWidth);
+
        return () => {
-         window.removeEventListener('resize', calculateParentWidth);
+         window.removeEventListener("resize", calculateParentWidth);
        };
      }, [parentId]);
      ```
-  
   2. **On Window Resize**:
+
      ```typescript
      useEffect(() => {
        // Window resize handler to reposition dropdown if open
@@ -132,7 +145,7 @@ This document provides a comprehensive explanation of the improvements made to t
        return () => window.removeEventListener("resize", handleResize);
      }, [open]);
      ```
-  
+
   3. **On Scroll**:
      ```typescript
      useEffect(() => {
@@ -144,35 +157,34 @@ This document provides a comprehensive explanation of the improvements made to t
            setTimeout(() => setOpen(true), 0);
          }
        };
-       
+
        // Get all possible scrollable parent elements
        const scrollableParents: HTMLElement[] = [];
        let parent = containerRef.current?.parentElement;
        while (parent) {
          const overflowY = window.getComputedStyle(parent).overflowY;
-         if (overflowY === 'auto' || overflowY === 'scroll') {
+         if (overflowY === "auto" || overflowY === "scroll") {
            scrollableParents.push(parent);
          }
          parent = parent.parentElement;
        }
-       
+
        // Add scroll event listeners to all scrollable parents
-       scrollableParents.forEach(parent => {
-         parent.addEventListener('scroll', handleScroll);
+       scrollableParents.forEach((parent) => {
+         parent.addEventListener("scroll", handleScroll);
        });
-       
+
        // Always listen to window scroll events
        window.addEventListener("scroll", handleScroll);
-       
+
        return () => {
-         scrollableParents.forEach(parent => {
-           parent.removeEventListener('scroll', handleScroll);
+         scrollableParents.forEach((parent) => {
+           parent.removeEventListener("scroll", handleScroll);
          });
          window.removeEventListener("scroll", handleScroll);
        };
      }, [open]);
      ```
-  
   4. **When Dropdown Opens**:
      ```typescript
      useEffect(() => {
@@ -192,22 +204,26 @@ This document provides a comprehensive explanation of the improvements made to t
 ### 5. Event Propagation Control
 
 #### Implementation
+
 - The component prevents event propagation to avoid affecting parent components:
   ```typescript
   const handleDropdownClick = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent event bubbling
     e.preventDefault(); // Prevent any default action
-    
+
     // If we're inside a parent element that might be clickable (like an accordion),
     // prevent the parent's click event
     if (parentId) {
       const parentElement = document.getElementById(parentId);
       const clickTarget = e.target as HTMLElement;
-      if (parentElement && (parentElement.contains(clickTarget) || parentElement === clickTarget)) {
+      if (
+        parentElement &&
+        (parentElement.contains(clickTarget) || parentElement === clickTarget)
+      ) {
         e.nativeEvent.stopImmediatePropagation(); // Stop event completely
       }
     }
-    
+
     setOpen((prev) => !prev); // Toggle dropdown state
   };
   ```
@@ -216,18 +232,23 @@ This document provides a comprehensive explanation of the improvements made to t
 ## Design Patterns Used
 
 ### 1. Dependency Injection
+
 - The component now receives its parent reference through props rather than searching for it, following the principle of dependency injection.
 
 ### 2. Instance Identification Pattern
+
 - Using unique IDs for each component instance to prevent conflicts in a multi-instance environment.
 
 ### 3. React Refs Pattern
+
 - Using `useRef` to maintain references to DOM elements for direct manipulation.
 
 ### 4. Reactive Dimensions Pattern
+
 - Recalculating dimensions in response to various events (mount, resize, scroll, open) to ensure UI consistency.
 
 ### 5. Event Isolation Pattern
+
 - Using event stopPropagation and stopImmediatePropagation to prevent unintended side effects from event bubbling.
 
 ## Benefits of the Improvements
@@ -263,6 +284,7 @@ This document provides a comprehensive explanation of the improvements made to t
 ```
 
 In this example:
+
 1. Each AccordionItem has a unique ID: `accordion-item--${col.key}`
 2. The MultiSelectDropdown receives this ID as its `parentId` prop
 3. This creates an explicit relationship between the parent and child components

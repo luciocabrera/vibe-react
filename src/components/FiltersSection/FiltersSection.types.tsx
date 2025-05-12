@@ -17,4 +17,3 @@ export type FiltersSectionProps = {
   onResetRange: (key: string) => void;
   rangeState: Record<string, [number | '', number | '']>;
 };
-

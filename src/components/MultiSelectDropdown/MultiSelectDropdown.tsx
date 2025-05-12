@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from 'react';
 import * as stylex from '@stylexjs/stylex';
 
 import { getParentElement } from '@/utils/getParentElement';
@@ -6,7 +6,7 @@ import { getPositionRelativeToParent } from '@/utils/getPositionRelativeToParent
 import { getScrollableParents } from '@/utils/getScrollableParents';
 
 import { dynamicStyles, styles } from './MultiSelectDropdown.stylex';
-import type { MultiSelectDropdownProps } from "./MultiSelectDropdown.types";
+import type { MultiSelectDropdownProps } from './MultiSelectDropdown.types';
 const MultiSelectDropdown = ({
   onChange,
   onReset,
@@ -29,7 +29,7 @@ const MultiSelectDropdown = ({
     if (!parentElement) return;
     if (typeof window.ResizeObserver !== 'function') return;
     const observer = new ResizeObserver(() => {
-      setParentResizeTick(tick => tick + 1); // force re-render on parent resize
+      setParentResizeTick((tick) => tick + 1); // force re-render on parent resize
     });
     observer.observe(parentElement);
     return () => observer.disconnect();
@@ -45,8 +45,8 @@ const MultiSelectDropdown = ({
       }
     };
 
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, [open, parentResizeTick]);
 
   useEffect(() => {
@@ -59,7 +59,9 @@ const MultiSelectDropdown = ({
     };
 
     // Explicitly type scrollableParents to avoid implicit 'any' type
-    const scrollableParents: HTMLElement[] = getScrollableParents(containerRef.current);
+    const scrollableParents: HTMLElement[] = getScrollableParents(
+      containerRef.current
+    );
 
     // Add scroll event listeners to all scrollable parents
     scrollableParents.forEach((parent: HTMLElement) => {
@@ -67,13 +69,13 @@ const MultiSelectDropdown = ({
     });
 
     // Always listen to window scroll events
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
 
     return () => {
       scrollableParents.forEach((parent: HTMLElement) => {
         parent.removeEventListener('scroll', handleScroll);
       });
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [open, parentResizeTick]);
 
@@ -95,15 +97,16 @@ const MultiSelectDropdown = ({
 
       // Close if clicked outside both the dropdown content and trigger
       if (
-        (!labelContainerRef.current || !labelContainerRef.current.contains(target)) &&
+        (!labelContainerRef.current ||
+          !labelContainerRef.current.contains(target)) &&
         (!dropdownRef.current || !dropdownRef.current.contains(target))
       ) {
         setOpen(false);
       }
     };
 
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
   }, []);
 
   const handleDropdownClick = (e: React.MouseEvent) => {
@@ -114,7 +117,10 @@ const MultiSelectDropdown = ({
     // prevent the parent's click event
     const parentElement = getParentElement(parentRef);
     const clickTarget = e.target as HTMLElement;
-    if (parentElement && (parentElement.contains(clickTarget) || parentElement === clickTarget)) {
+    if (
+      parentElement &&
+      (parentElement.contains(clickTarget) || parentElement === clickTarget)
+    ) {
       e.nativeEvent.stopImmediatePropagation(); // Stop event completely
     }
 
@@ -160,7 +166,7 @@ const MultiSelectDropdown = ({
     <div
       ref={containerRef}
       data-instance-id={instanceId}
-      data-test-id="multi-select-dropdown"
+      data-test-id='multi-select-dropdown'
       id={instanceId}
       {...stylex.props(styles.container)}
       style={containerDynamicStyles}
@@ -168,27 +174,27 @@ const MultiSelectDropdown = ({
       <div
         ref={labelContainerRef}
         data-instance-id={instanceId}
-        data-test-id="multi-select-label"
+        data-test-id='multi-select-label'
         id={`${instanceId}-multi-select-label`}
         {...stylex.props(styles.label)}
       >
         <button
           ref={triggerButtonRef}
           aria-expanded={open}
-          aria-haspopup="listbox"
+          aria-haspopup='listbox'
           data-instance-id={instanceId}
           {...stylex.props(styles.triggerButton)}
-          type="button"
+          type='button'
           onClick={handleDropdownClick}
         >
           <div
-            data-test-id="selected-items-display"
+            data-test-id='selected-items-display'
             id={`${instanceId}-selected-items-display`}
             {...stylex.props(styles.selectedItemsDisplay)}
           >
             {(() => {
-              if (allSelected) return "All";
-              if (selected.length === 0) return "None";
+              if (allSelected) return 'All';
+              if (selected.length === 0) return 'None';
               if (selected.length === 1) return selected[0];
               return `${selected[0]}, +${selected.length - 1} more`;
             })()}
@@ -197,7 +203,7 @@ const MultiSelectDropdown = ({
         <button
           id={`${instanceId}-selected-items-reset`}
           {...stylex.props(styles.resetButton)}
-          type="button"
+          type='button'
           onClick={handleReset}
         >
           ⟳
@@ -207,7 +213,7 @@ const MultiSelectDropdown = ({
         <div
           ref={dropdownRef}
           data-instance-id={instanceId}
-          data-test-id="multi-select-dropdown-list"
+          data-test-id='multi-select-dropdown-list'
           {...stylex.props(styles.dropdownList)}
           style={dropdownDynamicStyles}
           onMouseDown={handleDropdownMouseDown}
@@ -218,9 +224,9 @@ const MultiSelectDropdown = ({
                 if (el) el.indeterminate = someSelected;
               }}
               checked={allSelected}
-              type="checkbox"
+              type='checkbox'
               onChange={handleSelectAll}
-            />{" "}
+            />{' '}
             Select All
           </label>
           {options.map((opt) => (
@@ -230,9 +236,9 @@ const MultiSelectDropdown = ({
             >
               <input
                 checked={selected.includes(opt)}
-                type="checkbox"
+                type='checkbox'
                 onChange={(e) => handleOptionChange(opt, e.target.checked)}
-              />{" "}
+              />{' '}
               {opt}
             </label>
           ))}

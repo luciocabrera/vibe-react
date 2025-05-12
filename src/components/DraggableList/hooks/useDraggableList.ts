@@ -1,4 +1,4 @@
-import { useEffect,useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import type {
   TDraggableItemType,
@@ -33,8 +33,8 @@ export const useDraggableList = ({
 
     if (!fromId || !toId || fromId === toId) return;
 
-    const fromIndex = list.findIndex(item => item.id === fromId);
-    const toIndex = list.findIndex(item => item.id === toId);
+    const fromIndex = list.findIndex((item) => item.id === fromId);
+    const toIndex = list.findIndex((item) => item.id === toId);
 
     if (fromIndex < 0 || toIndex < 0) return;
 
@@ -60,4 +60,3 @@ export const useDraggableList = ({
     list,
   };
 };
-

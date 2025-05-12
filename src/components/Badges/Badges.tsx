@@ -9,7 +9,12 @@ import type { TBadgesProps } from './Badges.types';
 // Constants
 const MAX_BADGES = 10;
 
-const Badges = ({ options, parentRef, selected = [], ...props }: TBadgesProps) => {
+const Badges = ({
+  options,
+  parentRef,
+  selected = [],
+  ...props
+}: TBadgesProps) => {
   const containerRef = useRef(null);
   const [maxWidth, setMaxWidth] = useState<number | null>(null);
 
@@ -29,15 +34,27 @@ const Badges = ({ options, parentRef, selected = [], ...props }: TBadgesProps) =
   if (selected.length === options.length && options.length > 5) {
     children = <Badge value='All' />;
   } else if (selected.length <= MAX_BADGES) {
-    children = selected.map(val => (
-      <Badge {...props} key={val} value={val} />
+    children = selected.map((val) => (
+      <Badge
+        {...props}
+        key={val}
+        value={val}
+      />
     ));
   } else {
     children = [
-      ...selected.slice(0, MAX_BADGES).map(val => (
-        <Badge key={val} value={val} {...props} />
+      ...selected.slice(0, MAX_BADGES).map((val) => (
+        <Badge
+          key={val}
+          value={val}
+          {...props}
+        />
       )),
-      <Badge key="more-badge" isMore value={`+${selected.length - MAX_BADGES} more`} />
+      <Badge
+        key='more-badge'
+        isMore
+        value={`+${selected.length - MAX_BADGES} more`}
+      />,
     ];
   }
 
@@ -53,4 +70,3 @@ const Badges = ({ options, parentRef, selected = [], ...props }: TBadgesProps) =
 };
 
 export default Badges;
-

@@ -14,4 +14,3 @@ export type TUseDraggableListProps = {
   initialItems: TDraggableItemType[];
   onOrderChange?: (items: TDraggableItemType[]) => void;
 };
-

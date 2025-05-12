@@ -16,7 +16,7 @@ type TGetPositionRelativeToParentArgs = {
   parentWidthOffset?: number;
   ref: React.RefObject<HTMLElement>;
   selector: string;
-}
+};
 
 export const getPositionRelativeToParent = ({
   dropdownHeight = 220,
@@ -46,20 +46,32 @@ export const getPositionRelativeToParent = ({
     parentWidth = parentRect.width;
   }
   const spaceBelow = viewportHeight - rect.bottom;
-  const expectedDropdownHeight = Math.min(dropdownHeight, optionsCount * optionHeight + dropdownPadding);
+  const expectedDropdownHeight = Math.min(
+    dropdownHeight,
+    optionsCount * optionHeight + dropdownPadding
+  );
 
-  if (spaceBelow < expectedDropdownHeight && rect.top > expectedDropdownHeight) {
+  if (
+    spaceBelow < expectedDropdownHeight &&
+    rect.top > expectedDropdownHeight
+  ) {
     // Place dropdown above the button if there's more space above
     return {
-      left: parentElement ? `${parentLeft + parentPadding}px` : `${rect.left}px`,
+      left: parentElement
+        ? `${parentLeft + parentPadding}px`
+        : `${rect.left}px`,
       top: `${rect.top - expectedDropdownHeight - 5}px`,
-      width: parentElement ? `${parentWidth - parentWidthOffset}px` : `${rect.width}px`,
+      width: parentElement
+        ? `${parentWidth - parentWidthOffset}px`
+        : `${rect.width}px`,
     };
   }
   // Default: place dropdown below the button
   return {
     left: parentElement ? `${parentLeft + parentPadding}px` : `${rect.left}px`,
     top: `${Math.max(minTop + 5, rect.bottom + 5)}px`,
-    width: parentElement ? `${parentWidth - parentWidthOffset}px` : `${rect.width}px`,
+    width: parentElement
+      ? `${parentWidth - parentWidthOffset}px`
+      : `${rect.width}px`,
   };
-}
+};

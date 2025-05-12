@@ -8,4 +8,3 @@ export type TColumnOrderSectionProps = {
   setVisibleColumns?: (columns: Set<string>) => void;
   visibleColumns?: Set<string>;
 };
-

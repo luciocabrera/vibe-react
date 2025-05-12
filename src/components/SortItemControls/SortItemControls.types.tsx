@@ -3,4 +3,3 @@ export type TSortItemControlsProps = {
   onDelete: () => void;
   onToggleDirection: () => void;
 };
-

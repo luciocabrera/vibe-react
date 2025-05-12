@@ -134,7 +134,7 @@ export const findOne = (
   haystack: (Record<string, unknown> | string)[],
   array: (Record<string, unknown> | string)[]
 ) => {
-  return array.some(v => haystack.includes(v));
+  return array.some((v) => haystack.includes(v));
 };
 
 /**
@@ -146,7 +146,7 @@ export const fieldSorter =
   (fields: string[]) =>
   (a: Record<string, number | string>, b: Record<string, number | string>) =>
     fields
-      .map(o => {
+      .map((o) => {
         let dir = 1;
         if (o.startsWith('-')) {
           dir = -1;
@@ -168,7 +168,7 @@ export const fieldSorter =
           return valueA < valueB ? -dir : 0;
         }
       })
-      .reduce(p => p, 0);
+      .reduce((p) => p, 0);
 
 /**
  * Converts an array of objects into an object, using a specified key field as the object keys.
@@ -222,7 +222,7 @@ export const arrayRange = (start = 1, stop: number, step = 1) =>
  * @returns An array of options with `label` and `value` properties.
  */
 export const arrayToOptions = <T>(array: readonly T[]) =>
-  array.map(ele => ({ label: ele, value: ele }));
+  array.map((ele) => ({ label: ele, value: ele }));
 
 /**
  * Merges an array of objects with a single object based on a specified key.
@@ -235,5 +235,4 @@ export const mergeArrayWithObject = <TData>(
   arr: TData[],
   obj: TData,
   key: keyof TData
-) => arr.map(t => (t[key] === obj[key] ? obj : t));
-
+) => arr.map((t) => (t[key] === obj[key] ? obj : t));

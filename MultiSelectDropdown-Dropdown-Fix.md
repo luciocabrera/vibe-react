@@ -9,14 +9,17 @@ The dropdown list (data-test-id="multi-select-dropdown-list") is hidden because 
 I've implemented the following changes to fix this issue:
 
 1. **Removed `overflow: "hidden"` from parent containers:**
+
    - Removed it from the main container (data-test-id="multi-select-dropdown")
    - Removed it from the button container (data-test-id="multi-select-label")
 
 2. **Changed dropdown positioning strategy:**
+
    - Changed from `position: "absolute"` to `position: "fixed"`
    - This removes the dropdown from the normal document flow, allowing it to display outside of any overflow constraints
 
 3. **Dynamic position calculation:**
+
    - Added dynamic calculation of the top position based on the button's position
    - Added dynamic width calculation based on the container width
 

@@ -16,8 +16,8 @@ const SortBySection = ({
   const [selected, setSelected] = useState('');
 
   const handleAddColumn = () => {
-    if (selected && !sortState.find(s => s.key === selected)) {
-      const col = allColumns.find(c => c.key === selected);
+    if (selected && !sortState.find((s) => s.key === selected)) {
+      const col = allColumns.find((c) => c.key === selected);
       if (col)
         onChange([
           ...sortState,
@@ -67,10 +67,10 @@ const SortBySection = ({
     const newSortItems: TSortCol[] = [];
 
     // Map each draggable item back to its original sort item
-    items.forEach(item => {
+    items.forEach((item) => {
       const idParts = item.id.toString().split('-');
       const key = idParts[0];
-      const originalItem = sortState.find(s => s.key === key);
+      const originalItem = sortState.find((s) => s.key === key);
       if (originalItem) {
         newSortItems.push(originalItem);
       }
@@ -98,10 +98,14 @@ const SortBySection = ({
         <option value=''>Select column</option>
         {allColumns
           .filter(
-            c => c.sortable !== false && !sortState.find(s => s.key === c.key)
+            (c) =>
+              c.sortable !== false && !sortState.find((s) => s.key === c.key)
           )
-          .map(col => (
-            <option key={col.key} value={col.key}>
+          .map((col) => (
+            <option
+              key={col.key}
+              value={col.key}
+            >
               {col.label}
             </option>
           ))}
@@ -125,4 +129,3 @@ const SortBySection = ({
 };
 
 export default SortBySection;
-

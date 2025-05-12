@@ -15,7 +15,7 @@ export const styles = stylex.create({
     display: 'flex',
     gap: '8px',
   },
-  
+
   closeButton: {
     background: 'transparent',
     border: 'none',
@@ -23,14 +23,14 @@ export const styles = stylex.create({
     fontSize: '1.5em',
     padding: '0 8px',
   },
-  
-content: {
+
+  content: {
     flex: 1,
     overflowY: 'auto',
     padding: '16px',
   },
-  
-drawer: {
+
+  drawer: {
     background: '#fff',
     boxShadow: '-2px 0 12px rgba(0, 0, 0, 0.15)',
     display: 'flex',
@@ -45,52 +45,40 @@ drawer: {
     zIndex: 10001,
   },
   // Pinned drawer styles
-drawerPinned: {
+  drawerPinned: {
     background: '#fff',
-    
-borderLeft: '1px solid #eee',
-    
-// Stay at the top
-bottom: 'unset',
-    
-boxShadow: 'none',
-    
 
-display: 'flex',
-    
+    borderLeft: '1px solid #eee',
 
+    // Stay at the top
+    bottom: 'unset',
 
-flexDirection: 'column', 
-    
+    boxShadow: 'none',
 
+    display: 'flex',
 
-height: '100vh',         
-    
+    flexDirection: 'column',
 
+    height: '100vh',
 
-// Remove bottom alignment
-left: 'unset',           
-    
+    // Remove bottom alignment
+    left: 'unset',
 
+    maxWidth: '370px',
 
-maxWidth: '370px',  
-    
+    minWidth: '370px',
 
-minWidth: '370px',    
-    
+    position: 'fixed',
 
-position: 'fixed',
-    
+    // Ensure it stays fixed
+    right: 0,
 
-// Ensure it stays fixed
-right: 0,
-    
-// Stay on the right
-top: 0,
-    
-transition: 'none',
+    // Stay on the right
+    top: 0,
+
+    transition: 'none',
     // Remove left alignment
-width: '370px',
+    width: '370px',
     zIndex: 10001,
   },
   header: {
@@ -132,4 +120,3 @@ width: '370px',
     fontWeight: 600,
   },
 });
-

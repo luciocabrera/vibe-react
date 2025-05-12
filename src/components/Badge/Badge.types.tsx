@@ -3,4 +3,3 @@ export type TBadgeProps = {
   onRemove?: (val: string) => void;
   value: string;
 };
-

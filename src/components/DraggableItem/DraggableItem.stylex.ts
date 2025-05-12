@@ -32,4 +32,3 @@ export const styles = stylex.create({
     transition: 'background 0.2s, box-shadow 0.2s, opacity 0.2s',
   },
 });
-

@@ -23,18 +23,20 @@ const handleDropdownClick = (e: React.MouseEvent) => {
 useEffect(() => {
   const handler = (e: MouseEvent) => {
     const target = e.target as Node;
-    const triggerButton = document.querySelector('[data-test-id="multi-select-trigger"]');
-    
+    const triggerButton = document.querySelector(
+      '[data-test-id="multi-select-trigger"]',
+    );
+
     // Don't close if clicked on the trigger button (let the onClick handler handle it)
     if (triggerButton && triggerButton.contains(target)) {
       return;
     }
-    
+
     // Close if clicked outside both the dropdown content and trigger
-    const clickedOutside = 
+    const clickedOutside =
       (!ref.current || !ref.current.contains(target)) &&
       (!dropdownRef.current || !dropdownRef.current.contains(target));
-      
+
     if (clickedOutside) {
       setOpen(false);
     }
@@ -59,20 +61,22 @@ useEffect(() => {
 ```
 
 4. **Make sure the button has proper cursor style:**
+
    - Verify `cursor: "pointer"` is in the button style
 
 5. **Debugging tip:**
    If you're still having issues, try adding this temporary code to confirm the click handler is being called:
-   
+
    ```tsx
    const handleDropdownClick = (e: React.MouseEvent) => {
-     console.log('Button clicked!');
+     console.log("Button clicked!");
      e.stopPropagation();
      setOpen((prev) => !prev);
    };
    ```
 
 These changes should fix the issue by:
+
 1. Stopping event propagation to prevent other handlers from interfering
 2. Improving the outside click detection logic
 3. Adding proper ARIA attributes for accessibility

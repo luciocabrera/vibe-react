@@ -1,12 +1,11 @@
+import { ColumnOrderSection } from '../ColumnOrderSection';
+import { Drawer } from '../Drawer';
+import { FiltersSection } from '../FiltersSection';
+import { SortBySection } from '../SortBySection';
+import { Tabs } from '../Tabs';
+import type { TTabsItems } from '../Tabs/Tabs.types';
 
-import { ColumnOrderSection } from "../ColumnOrderSection";
-import { Drawer } from "../Drawer";
-import { FiltersSection } from "../FiltersSection";
-import { SortBySection } from "../SortBySection";
-import { Tabs } from "../Tabs";
-import type { TTabsItems } from "../Tabs/Tabs.types";
-
-import type { TableSettingsDrawerProps } from "./TableSettingsDrawer.types";
+import type { TableSettingsDrawerProps } from './TableSettingsDrawer.types';
 
 const TableSettingsDrawer = ({
   columnOrder,
@@ -36,13 +35,13 @@ const TableSettingsDrawer = ({
   };
   const handleRangeChange = (
     key: string,
-    min: number | "",
-    max: number | ""
+    min: number | '',
+    max: number | ''
   ) => {
     setRangeState((rs) => ({ ...rs, [key]: [min, max] }));
   };
   const handleResetRange = (key: string) => {
-    setRangeState((rs) => ({ ...rs, [key]: ["", ""] }));
+    setRangeState((rs) => ({ ...rs, [key]: ['', ''] }));
   };
   const handleReset = () => {
     const newFilterState: Record<string, string[]> = {};
@@ -55,11 +54,11 @@ const TableSettingsDrawer = ({
         newFilterState[col.key] = opts;
       });
     setFilterState(newFilterState);
-    const newRangeState: Record<string, [number | "", number | ""]> = {};
+    const newRangeState: Record<string, [number | '', number | '']> = {};
     columns
       .filter((col) => col.rangeFilter)
       .forEach((col) => {
-        newRangeState[col.key] = ["", ""];
+        newRangeState[col.key] = ['', ''];
       });
     setRangeState(newRangeState);
   };
@@ -92,7 +91,7 @@ const TableSettingsDrawer = ({
           Filters
         </>
       ),
-      key: "tableFilters",
+      key: 'tableFilters',
     },
     {
       children: (
@@ -108,7 +107,7 @@ const TableSettingsDrawer = ({
           Sorting
         </>
       ),
-      key: "tableSorting",
+      key: 'tableSorting',
     },
     {
       children: (
@@ -126,7 +125,7 @@ const TableSettingsDrawer = ({
           Columns
         </>
       ),
-      key: "columns",
+      key: 'columns',
     },
   ];
 

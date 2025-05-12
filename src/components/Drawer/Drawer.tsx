@@ -1,8 +1,8 @@
-import { useEffect, useRef } from "react";
-import * as stylex from "@stylexjs/stylex";
+import { useEffect, useRef } from 'react';
+import * as stylex from '@stylexjs/stylex';
 
-import { styles } from "./Drawer.stylex";
-import type { TDrawerProps } from "./Drawer.types";
+import { styles } from './Drawer.stylex';
+import type { TDrawerProps } from './Drawer.types';
 
 const Drawer = ({
   children,
@@ -28,7 +28,7 @@ const Drawer = ({
       if (!focusableEls || focusableEls.length === 0) return;
       const firstEl = focusableEls[0];
       const lastEl = focusableEls[focusableEls.length - 1];
-      if (e.key === "Tab") {
+      if (e.key === 'Tab') {
         if (e.shiftKey) {
           if (document.activeElement === firstEl) {
             e.preventDefault();
@@ -40,13 +40,13 @@ const Drawer = ({
             firstEl.focus();
           }
         }
-      } else if (e.key === "Escape") {
+      } else if (e.key === 'Escape') {
         onClose();
       }
     };
-    document.addEventListener("keydown", handleTab);
+    document.addEventListener('keydown', handleTab);
     return () => {
-      document.removeEventListener("keydown", handleTab);
+      document.removeEventListener('keydown', handleTab);
       // Restore focus to the previously focused element
       previouslyFocusedElement.current?.focus();
     };
@@ -58,15 +58,15 @@ const Drawer = ({
 
   const handleClose = () => onClose();
   const handleBackdropKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === "Enter" || e.key === " ") onClose();
+    if (e.key === 'Enter' || e.key === ' ') onClose();
   };
 
   return (
     <>
       {!isPinned && (
         <div
-          aria-label="Close settings panel"
-          role="button"
+          aria-label='Close settings panel'
+          role='button'
           tabIndex={0}
           {...stylex.props(styles.backdrop)}
           onClick={handleClose}
@@ -76,24 +76,29 @@ const Drawer = ({
       <aside
         {...stylex.props(styles.drawer, isPinned && styles.drawerPinned)}
         ref={drawerRef}
-        aria-labelledby="drawer-title"
-        aria-modal="true"
-        role="dialog"
+        aria-labelledby='drawer-title'
+        aria-modal='true'
+        role='dialog'
         tabIndex={-1}
       >
         <header {...stylex.props(styles.header)}>
-          <h2 id="drawer-title" {...stylex.props(styles.title)}>Table Settings</h2>
+          <h2
+            id='drawer-title'
+            {...stylex.props(styles.title)}
+          >
+            Table Settings
+          </h2>
           <div {...stylex.props(styles.buttonContainer)}>
             <button
               {...stylex.props(styles.pinButton)}
-              title={isPinned ? "Unpin drawer" : "Pin drawer"}
+              title={isPinned ? 'Unpin drawer' : 'Pin drawer'}
               onClick={handlePinClick}
             >
-              {isPinned ? "📌" : "📍"}
+              {isPinned ? '📌' : '📍'}
             </button>
             <button
               {...stylex.props(styles.closeButton)}
-              title="Close"
+              title='Close'
               onClick={handleClose}
             >
               ×

@@ -16,7 +16,7 @@ const ColumnOrderSection = ({
   setVisibleColumns = () => {},
 }: TColumnOrderSectionProps) => {
   const orderedColumns = columnOrder
-    .map(key => columns.find(col => col.key === key))
+    .map((key) => columns.find((col) => col.key === key))
     .filter((col): col is (typeof columns)[number] => Boolean(col));
 
   const handleOnToggle = (key: string) => {
@@ -29,7 +29,7 @@ const ColumnOrderSection = ({
     setVisibleColumns(newVisibleColumns);
   };
 
-  const draggableItems = orderedColumns.map(col => ({
+  const draggableItems = orderedColumns.map((col) => ({
     child: (
       <ColumnToggle
         id={col.key}
@@ -42,17 +42,19 @@ const ColumnOrderSection = ({
   }));
 
   const handleOrderChange = (items: TDraggableItemType[]) => {
-    const newOrder = items.map(item => item.id.toString());
+    const newOrder = items.map((item) => item.id.toString());
     setColumnOrder(newOrder);
   };
 
   return (
     <div {...stylex.props(styles.container)}>
       <h3 {...stylex.props(styles.heading)}>Column Order</h3>
-      <DraggableList items={draggableItems} onOrderChange={handleOrderChange} />
+      <DraggableList
+        items={draggableItems}
+        onOrderChange={handleOrderChange}
+      />
     </div>
   );
 };
 
 export default ColumnOrderSection;
-

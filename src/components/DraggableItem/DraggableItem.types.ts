@@ -9,4 +9,3 @@ export type TDraggableItemProps = ComponentProps<'li'> & {
   onDragEnter: (id: number | string) => void;
   onDragStart: (id: number | string) => void;
 };
-

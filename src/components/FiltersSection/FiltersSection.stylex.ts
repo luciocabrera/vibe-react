@@ -12,4 +12,3 @@ export const styles = stylex.create({
     gap: '12px',
   },
 });
-

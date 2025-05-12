@@ -3,4 +3,3 @@ export type TToggleSwitchProps = {
   label?: string;
   onChange: () => void;
 };
-

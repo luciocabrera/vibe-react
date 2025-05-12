@@ -22,7 +22,7 @@ export const ResultsTable: FC<ResultsTableProps> = ({
   // Grouping logic
   const grouped: Record<string, Record<string, any>[]> = {};
   if (groupByUrl || groupByMethod) {
-    data.forEach(row => {
+    data.forEach((row) => {
       let groupKey = '';
       if (groupByUrl) groupKey += `URL: ${row.url} `;
       if (groupByMethod) groupKey += `Method: ${row.method}`;
@@ -39,11 +39,11 @@ export const ResultsTable: FC<ResultsTableProps> = ({
     const highlights: Record<string, { best: number; worst: number }> = {};
     if (!Array.isArray(columns)) return highlights;
     columns
-      .filter?.(col => col.type === 'number')
-      .forEach(col => {
+      .filter?.((col) => col.type === 'number')
+      .forEach((col) => {
         const vals = rows
-          .map(row => Number(row[col.key]))
-          .filter(v => !isNaN(v));
+          .map((row) => Number(row[col.key]))
+          .filter((v) => !isNaN(v));
         if (!vals.length) return;
         highlights[col.key] = {
           best: Math.min(...vals),
@@ -58,7 +58,7 @@ export const ResultsTable: FC<ResultsTableProps> = ({
       <thead>
         <tr>
           {Array.isArray(columns)
-            ? columns.map(col => <th key={col.key}>{col.label}</th>)
+            ? columns.map((col) => <th key={col.key}>{col.label}</th>)
             : null}
         </tr>
       </thead>
@@ -80,7 +80,7 @@ export const ResultsTable: FC<ResultsTableProps> = ({
               {rows.map((row, i) => (
                 <tr key={i + (row.fileName || '')}>
                   {Array.isArray(columns)
-                    ? columns.map(col => {
+                    ? columns.map((col) => {
                         const val = row[col.key];
                         let highlightStyle = null;
                         if (
@@ -94,7 +94,10 @@ export const ResultsTable: FC<ResultsTableProps> = ({
                             highlightStyle = styles.highlightWorst;
                         }
                         return (
-                          <td key={col.key} {...stylex.props(highlightStyle)}>
+                          <td
+                            key={col.key}
+                            {...stylex.props(highlightStyle)}
+                          >
                             {val}
                           </td>
                         );
@@ -109,4 +112,3 @@ export const ResultsTable: FC<ResultsTableProps> = ({
     </table>
   );
 };
-

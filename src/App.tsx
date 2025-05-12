@@ -116,10 +116,10 @@ const App: React.FC = () => {
   useEffect(() => {
     const newFilterState: Record<string, string[]> = {};
     columns
-      .filter(col => col.filterable)
-      .forEach(col => {
+      .filter((col) => col.filterable)
+      .forEach((col) => {
         const opts = Array.from(
-          new Set(data.map(d => d[col.key]).filter(Boolean))
+          new Set(data.map((d) => d[col.key]).filter(Boolean))
         );
         newFilterState[col.key] = opts;
       });
@@ -127,19 +127,19 @@ const App: React.FC = () => {
     // Reset range state for new data
     const newRangeState: Record<string, [number | '', number | '']> = {};
     columns
-      .filter(col => col.rangeFilter)
-      .forEach(col => {
+      .filter((col) => col.rangeFilter)
+      .forEach((col) => {
         newRangeState[col.key] = ['', ''];
       });
     setRangeState(newRangeState);
   }, [data]);
 
   // Filtering logic
-  let filtered = data.filter(row =>
+  let filtered = data.filter((row) =>
     columns
-      .filter(col => col.filterable)
+      .filter((col) => col.filterable)
       .every(
-        col =>
+        (col) =>
           filterState[col.key]?.length === 0 ||
           filterState[col.key]?.includes(row[col.key])
       )
@@ -150,10 +150,10 @@ const App: React.FC = () => {
     if (max !== '' && Number(val) > max) return false;
     return true;
   };
-  filtered = filtered.filter(row =>
+  filtered = filtered.filter((row) =>
     columns
-      .filter(col => col.rangeFilter)
-      .every(col =>
+      .filter((col) => col.rangeFilter)
+      .every((col) =>
         inRange(
           row[col.key],
           rangeState[col.key]?.[0],
@@ -184,8 +184,8 @@ const App: React.FC = () => {
   const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
-    const promises = Array.from(files).map(file =>
-      file.text().then(text => {
+    const promises = Array.from(files).map((file) =>
+      file.text().then((text) => {
         try {
           const data = JSON.parse(text);
           let metadata, results;
@@ -230,22 +230,22 @@ const App: React.FC = () => {
         }
       })
     );
-    Promise.all(promises).then(rows => {
+    Promise.all(promises).then((rows) => {
       setData(rows.filter(Boolean) as Record<string, any>[]);
     });
   };
 
   // Column order state and drag-and-drop logic
-  const [columnOrder, setColumnOrder] = useState(columns.map(col => col.key));
+  const [columnOrder, setColumnOrder] = useState(columns.map((col) => col.key));
   // Column visibility state
   const [visibleColumns, setVisibleColumns] = useState<Set<string>>(
-    new Set(columns.map(col => col.key))
+    new Set(columns.map((col) => col.key))
   );
 
   const orderedColumns = columnOrder
-    .map(key => columns.find(col => col.key === key)!)
+    .map((key) => columns.find((col) => col.key === key)!)
     .filter(Boolean)
-    .filter(col => visibleColumns.has(col.key)); // Filter by visibility
+    .filter((col) => visibleColumns.has(col.key)); // Filter by visibility
 
   return (
     <div
@@ -275,7 +275,7 @@ const App: React.FC = () => {
               <input
                 checked={groupByUrl}
                 type='checkbox'
-                onChange={e => setGroupByUrl(e.target.checked)}
+                onChange={(e) => setGroupByUrl(e.target.checked)}
               />{' '}
               Group by URL
             </label>
@@ -283,7 +283,7 @@ const App: React.FC = () => {
               <input
                 checked={groupByMethod}
                 type='checkbox'
-                onChange={e => setGroupByMethod(e.target.checked)}
+                onChange={(e) => setGroupByMethod(e.target.checked)}
               />{' '}
               Group by Method
             </label>
@@ -328,7 +328,7 @@ const App: React.FC = () => {
               <input
                 checked={groupByUrl}
                 type='checkbox'
-                onChange={e => setGroupByUrl(e.target.checked)}
+                onChange={(e) => setGroupByUrl(e.target.checked)}
               />{' '}
               Group by URL
             </label>
@@ -336,7 +336,7 @@ const App: React.FC = () => {
               <input
                 checked={groupByMethod}
                 type='checkbox'
-                onChange={e => setGroupByMethod(e.target.checked)}
+                onChange={(e) => setGroupByMethod(e.target.checked)}
               />{' '}
               Group by Method
             </label>
@@ -350,18 +350,18 @@ const App: React.FC = () => {
                 filterState={filterState}
                 rangeState={rangeState}
                 onFilterChange={(key, vals) =>
-                  setFilterState(fs => ({ ...fs, [key]: vals }))
+                  setFilterState((fs) => ({ ...fs, [key]: vals }))
                 }
                 onRangeChange={(key, min, max) =>
-                  setRangeState(rs => ({ ...rs, [key]: [min, max] }))
+                  setRangeState((rs) => ({ ...rs, [key]: [min, max] }))
                 }
                 onReset={() => {
                   const newFilterState: Record<string, string[]> = {};
                   columns
-                    .filter(col => col.filterable)
-                    .forEach(col => {
+                    .filter((col) => col.filterable)
+                    .forEach((col) => {
                       const opts = Array.from(
-                        new Set(data.map(d => d[col.key]).filter(Boolean))
+                        new Set(data.map((d) => d[col.key]).filter(Boolean))
                       );
                       newFilterState[col.key] = opts;
                     });
@@ -371,20 +371,20 @@ const App: React.FC = () => {
                     [number | '', number | '']
                   > = {};
                   columns
-                    .filter(col => col.rangeFilter)
-                    .forEach(col => {
+                    .filter((col) => col.rangeFilter)
+                    .forEach((col) => {
                       newRangeState[col.key] = ['', ''];
                     });
                   setRangeState(newRangeState);
                 }}
-                onResetFilter={key => {
+                onResetFilter={(key) => {
                   const opts = Array.from(
-                    new Set(data.map(d => d[key]).filter(Boolean))
+                    new Set(data.map((d) => d[key]).filter(Boolean))
                   );
-                  setFilterState(fs => ({ ...fs, [key]: opts }));
+                  setFilterState((fs) => ({ ...fs, [key]: opts }));
                 }}
-                onResetRange={key =>
-                  setRangeState(rs => ({ ...rs, [key]: ['', ''] }))
+                onResetRange={(key) =>
+                  setRangeState((rs) => ({ ...rs, [key]: ['', ''] }))
                 }
               />
               <SortBySection
@@ -432,4 +432,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-

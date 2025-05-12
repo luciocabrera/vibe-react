@@ -15,4 +15,3 @@ export const styles = stylex.create({
     marginLeft: 4,
   },
 });
-

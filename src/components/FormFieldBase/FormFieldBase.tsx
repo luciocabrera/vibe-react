@@ -35,7 +35,10 @@ const FormFieldBase = <TData extends Record<string, unknown>>({
         )}
       >
         <legend {...stylex.props(styles.legend)}>
-          <label {...stylex.props(styles.label)} htmlFor={id}>
+          <label
+            {...stylex.props(styles.label)}
+            htmlFor={id}
+          >
             {label}
             {required && !isViewing && (
               <FaStar {...stylex.props(styles.legendIcon)} />
@@ -51,8 +54,8 @@ const FormFieldBase = <TData extends Record<string, unknown>>({
       {!isViewing && (
         <span
           {...stylex.props(styles.errorMessage)}
-          aria-live="assertive"
-          role="alert"
+          aria-live='assertive'
+          role='alert'
         >
           {hasErrors && errorMessage}
         </span>
@@ -62,4 +65,3 @@ const FormFieldBase = <TData extends Record<string, unknown>>({
 };
 
 export default FormFieldBase;
-

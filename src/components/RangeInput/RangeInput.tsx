@@ -33,7 +33,11 @@ export const RangeInput = ({
         value={value[1]}
         onChange={handleMaxChange}
       />
-      <button {...stylex.props(styles.resetButton)} type='button' onClick={handleReset}>
+      <button
+        {...stylex.props(styles.resetButton)}
+        type='button'
+        onClick={handleReset}
+      >
         ⟳
       </button>
     </div>
@@ -41,4 +45,3 @@ export const RangeInput = ({
 };
 
 export default RangeInput;
-

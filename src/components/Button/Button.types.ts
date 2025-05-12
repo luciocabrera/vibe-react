@@ -9,4 +9,3 @@ export type TButtonProps = ComponentProps<'button'> & {
   size?: SizeVariants;
   variant?: ColorVariants;
 };
-

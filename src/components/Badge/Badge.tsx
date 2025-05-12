@@ -25,4 +25,3 @@ const Badge = ({ isMore, onRemove, value }: TBadgeProps) => {
 };
 
 export default Badge;
-

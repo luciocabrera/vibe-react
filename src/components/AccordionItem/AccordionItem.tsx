@@ -15,20 +15,18 @@ const AccordionItem = ({ children, title, ...props }: TAccordionItemProps) => {
     <details
       ref={ref}
       {...props}
-      data-test-id="accordion-item"
+      data-test-id='accordion-item'
       {...stylex.props(styles.details)}
     >
       <summary {...stylex.props(styles.summary)}>{title}</summary>
       <div
-        data-test-id="accordion-content"
+        data-test-id='accordion-content'
         {...stylex.props(styles.content)}
       >
         {enhancedChildren}
       </div>
     </details>
   );
-}
-
+};
 
 export default AccordionItem;
-
