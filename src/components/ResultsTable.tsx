@@ -1,6 +1,8 @@
 //@ts-nocheck
 import type { FC } from 'react';
 import { Fragment } from 'react';
+import { styles } from './ResultsTable.stylex';
+import * as stylex from '@stylexjs/stylex';
 
 import type { ColumnDef } from '../App';
 
@@ -52,14 +54,7 @@ export const ResultsTable: FC<ResultsTableProps> = ({
   };
 
   return (
-    <table
-      style={{
-        background: '#fff',
-        borderCollapse: 'collapse',
-        marginTop: 20,
-        width: '100%',
-      }}
-    >
+    <table {...stylex.props(styles.table)}>
       <thead>
         <tr>
           {Array.isArray(columns)
@@ -76,7 +71,7 @@ export const ResultsTable: FC<ResultsTableProps> = ({
                 <tr>
                   <td
                     colSpan={Array.isArray(columns) ? columns.length : 1}
-                    style={{ background: '#ddeeff', fontWeight: 'bold' }}
+                    {...stylex.props(styles.groupRow)}
                   >
                     {group}
                   </td>
@@ -87,19 +82,19 @@ export const ResultsTable: FC<ResultsTableProps> = ({
                   {Array.isArray(columns)
                     ? columns.map(col => {
                         const val = row[col.key];
-                        let className = '';
+                        let highlightStyle = null;
                         if (
                           col.type === 'number' &&
                           val !== '-' &&
                           !isNaN(Number(val))
                         ) {
                           if (Number(val) === highlights[col.key]?.best)
-                            className = 'highlight-best';
+                            highlightStyle = styles.highlightBest;
                           if (Number(val) === highlights[col.key]?.worst)
-                            className = 'highlight-worst';
+                            highlightStyle = styles.highlightWorst;
                         }
                         return (
-                          <td key={col.key} className={className}>
+                          <td key={col.key} {...stylex.props(highlightStyle)}>
                             {val}
                           </td>
                         );

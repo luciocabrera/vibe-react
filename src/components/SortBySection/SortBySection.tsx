@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { DraggableList } from '../DraggableList';
 import type { TDraggableItemType } from '../DraggableList/DraggableList.types';
 import { SortItemControls } from '../SortItemControls';
+import { styles } from './SortBySection.stylex';
+import * as stylex from '@stylexjs/stylex';
 
 import type { TSortBySectionProps, TSortCol } from './SortBySection.types';
 
@@ -83,13 +85,13 @@ const SortBySection = ({
   };
 
   return (
-    <div className='sort-section'>
+    <div {...stylex.props(styles.container)}>
       <label htmlFor='sort-column-select'>
         <b>Sort by:</b>
       </label>
       <select
         id='sort-column-select'
-        style={{ marginLeft: 8, minWidth: 180 }}
+        {...stylex.props(styles.columnSelect)}
         value={selected}
         onChange={handleSelectChange}
       >
@@ -105,7 +107,7 @@ const SortBySection = ({
           ))}
       </select>
       <button
-        style={{ padding: '6px 16px' }}
+        {...stylex.props(styles.addButton)}
         type='button'
         onClick={handleAddColumn}
       >

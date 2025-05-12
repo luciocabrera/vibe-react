@@ -1,3 +1,5 @@
+import { styles } from './ToggleSwitch.stylex';
+import * as stylex from '@stylexjs/stylex';
 import type { TToggleSwitchProps } from './ToggleSwitch.types';
 
 const ToggleSwitch = ({ isActive, label, ...props }: TToggleSwitchProps) => {
@@ -6,50 +8,19 @@ const ToggleSwitch = ({ isActive, label, ...props }: TToggleSwitchProps) => {
   };
 
   return (
-    <label
-      className='toggle-switch'
-      style={{ alignItems: 'center', display: 'inline-flex' }}
-    >
+    <label {...stylex.props(styles.container)}>
       <input
         {...props}
         checked={isActive}
-        style={{
-          height: 0,
-          opacity: 0,
-          position: 'absolute',
-          width: 0,
-        }}
+        {...stylex.props(styles.input)}
         type='checkbox'
         onClick={handleInputClick}
       />
-      <span
-        style={{
-          background: isActive ? '#1976d2' : '#ccc',
-          borderRadius: '10px',
-          cursor: 'pointer',
-          display: 'inline-block',
-          height: '20px',
-          position: 'relative',
-          transition: 'background 0.3s',
-          width: '40px',
-        }}
-      >
-        <span
-          style={{
-            background: 'white',
-            borderRadius: '50%',
-            bottom: '2px',
-            content: '""',
-            height: '16px',
-            left: isActive ? '22px' : '2px',
-            position: 'absolute',
-            transition: 'left 0.3s',
-            width: '16px',
-          }}
-        />
+      <span {...stylex.props(styles.track(isActive))}>
+        <span {...stylex.props(styles.thumb(isActive))} />
       </span>
       {label && (
-        <small style={{ color: '#666', fontSize: '0.8em', marginLeft: '8px' }}>
+        <small {...stylex.props(styles.label)}>
           {label}
         </small>
       )}

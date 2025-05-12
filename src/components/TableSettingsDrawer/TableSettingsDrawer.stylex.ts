@@ -51,8 +51,17 @@ drawerPinned: {
     height: '100vh',
     maxWidth: '370px',
     minWidth: '370px',
-    position: 'relative',
+    position: 'fixed', // Ensure it stays fixed
+    right: 0,         // Stay on the right
+    top: 0,           // Stay at the top
+    bottom: 'unset',  // Remove bottom alignment
+    left: 'unset',    // Remove left alignment
     width: '370px',
+    zIndex: 10001,
+    background: '#fff',
+    display: 'flex',
+    flexDirection: 'column',
+    transition: 'none',
   },
   header: {
     alignItems: 'center',

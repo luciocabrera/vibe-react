@@ -1,6 +1,8 @@
 import { ColumnToggle } from '../ColumnToggle';
 import { DraggableList } from '../DraggableList';
 import type { TDraggableItemType } from '../DraggableList/DraggableList.types';
+import { styles } from './ColumnOrderSection.stylex';
+import * as stylex from '@stylexjs/stylex';
 
 import type { TColumnOrderSectionProps } from './ColumnOrderSection.types';
 
@@ -44,8 +46,8 @@ const ColumnOrderSection = ({
   };
 
   return (
-    <div>
-      <h3 style={{ marginTop: 0 }}>Column Order</h3>
+    <div {...stylex.props(styles.container)}>
+      <h3 {...stylex.props(styles.heading)}>Column Order</h3>
       <DraggableList items={draggableItems} onOrderChange={handleOrderChange} />
     </div>
   );

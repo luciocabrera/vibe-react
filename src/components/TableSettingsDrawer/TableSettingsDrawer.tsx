@@ -1,10 +1,10 @@
 import { ColumnOrderSection } from '../ColumnOrderSection';
 import { FiltersSection } from '../FiltersSection';
 import { SortBySection } from '../SortBySection';
+import { styles } from './TableSettingsDrawer.stylex';
+import * as stylex from '@stylexjs/stylex';
 
 import type { TableSettingsDrawerProps } from './TableSettingsDrawer.types';
-
-import './TableSettingsDrawer.css';
 
 const TableSettingsDrawer = ({
   columnOrder,
@@ -83,28 +83,33 @@ const TableSettingsDrawer = ({
       {!isPinned && (
         <div
           aria-label='Close settings panel'
-          className='drawer-backdrop'
           role='button'
           tabIndex={0}
+          {...stylex.props(styles.backdrop)}
           onClick={handleClose}
           onKeyDown={handleBackdropKeyDown}
         />
       )}
-      <aside className={`drawer${isPinned ? ' pinned' : ''}`}>
-        <div className='drawer-header'>
-          <span style={{ fontSize: '1.2em', fontWeight: 600 }}>
+      <aside
+        {...stylex.props(
+          styles.drawer,
+          isPinned && styles.drawerPinned
+        )}
+      >
+        <div {...stylex.props(styles.header)}>
+          <span {...stylex.props(styles.title)}>
             Table Settings
           </span>
-          <div>
+          <div {...stylex.props(styles.buttonContainer)}>
             <button
-              className='drawer-pin-btn'
+              {...stylex.props(styles.pinButton)}
               title={isPinned ? 'Unpin drawer' : 'Pin drawer'}
               onClick={handlePinClick}
             >
               {isPinned ? '📌' : '📍'}
             </button>
             <button
-              className='drawer-close-btn'
+              {...stylex.props(styles.closeButton)}
               title='Close'
               onClick={handleClose}
             >
@@ -112,31 +117,31 @@ const TableSettingsDrawer = ({
             </button>
           </div>
         </div>
-        <div className='drawer-tabs'>
+        <div {...stylex.props(styles.tabs)}>
           <button
-            className={`drawer-tab${tab === 'filters' ? ' active' : ''}`}
+            {...stylex.props(styles.tab, tab === 'filters' && styles.tabActive)}
             onClick={handleTabFilters}
           >
             Filters
           </button>
           <button
-            className={`drawer-tab${tab === 'sorting' ? ' active' : ''}`}
+            {...stylex.props(styles.tab, tab === 'sorting' && styles.tabActive)}
             onClick={handleTabSorting}
           >
             Sorting
           </button>
           <button
-            className={`drawer-tab${tab === 'columns' ? ' active' : ''}`}
+            {...stylex.props(styles.tab, tab === 'columns' && styles.tabActive)}
             onClick={handleTabColumns}
           >
             Columns
           </button>
         </div>
-        <div className='drawer-content'>
+        <div {...stylex.props(styles.content)}>
           {tab === 'filters' ? (
             <FiltersSection
               columns={columns}
-              data={data} // DataRecord[] expects string|number|boolean|null|undefined, so cast for compatibility
+              data={data}
               filterState={filterState}
               rangeState={rangeState}
               onFilterChange={handleFilterChange}

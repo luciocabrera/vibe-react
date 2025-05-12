@@ -1,4 +1,6 @@
 import type { RangeInputProps } from './RangeInput.types';
+import { styles } from './RangeInput.stylex';
+import * as stylex from '@stylexjs/stylex';
 
 export const RangeInput = ({
   onChange,
@@ -13,11 +15,11 @@ export const RangeInput = ({
   };
 
   return (
-    <div style={{ display: 'inline-block', marginRight: 18 }}>
+    <div {...stylex.props(styles.container)}>
       {/* <label>{label}:</label> */}
       <input
         placeholder='Min'
-        style={{ marginLeft: 6, width: 70 }}
+        {...stylex.props(styles.input, styles.leftInput)}
         type='number'
         value={value[0]}
         onChange={handleMinChange}
@@ -25,12 +27,12 @@ export const RangeInput = ({
       {' - '}
       <input
         placeholder='Max'
-        style={{ width: 70 }}
+        {...stylex.props(styles.input)}
         type='number'
         value={value[1]}
         onChange={handleMaxChange}
       />
-      <button style={{ marginLeft: 4 }} type='button' onClick={handleReset}>
+      <button {...stylex.props(styles.resetButton)} type='button' onClick={handleReset}>
         ⟳
       </button>
     </div>
