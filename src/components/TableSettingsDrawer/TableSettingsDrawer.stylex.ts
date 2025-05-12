@@ -46,22 +46,52 @@ drawer: {
   },
   // Pinned drawer styles
 drawerPinned: {
-    borderLeft: '1px solid #eee',
-    boxShadow: 'none',
-    height: '100vh',
-    maxWidth: '370px',
-    minWidth: '370px',
-    position: 'fixed', // Ensure it stays fixed
-    right: 0,         // Stay on the right
-    top: 0,           // Stay at the top
-    bottom: 'unset',  // Remove bottom alignment
-    left: 'unset',    // Remove left alignment
-    width: '370px',
-    zIndex: 10001,
     background: '#fff',
-    display: 'flex',
-    flexDirection: 'column',
-    transition: 'none',
+    
+borderLeft: '1px solid #eee',
+    
+// Stay at the top
+bottom: 'unset',
+    
+boxShadow: 'none',
+    
+
+display: 'flex',
+    
+
+
+flexDirection: 'column', 
+    
+
+
+height: '100vh',         
+    
+
+
+// Remove bottom alignment
+left: 'unset',           
+    
+
+
+maxWidth: '370px',  
+    
+
+minWidth: '370px',    
+    
+
+position: 'fixed',
+    
+
+// Ensure it stays fixed
+right: 0,
+    
+// Stay on the right
+top: 0,
+    
+transition: 'none',
+    // Remove left alignment
+width: '370px',
+    zIndex: 10001,
   },
   header: {
     alignItems: 'center',

@@ -1,6 +1,7 @@
-import type { RangeInputProps } from './RangeInput.types';
-import { styles } from './RangeInput.stylex';
 import * as stylex from '@stylexjs/stylex';
+
+import { styles } from './RangeInput.stylex';
+import type { RangeInputProps } from './RangeInput.types';
 
 export const RangeInput = ({
   onChange,

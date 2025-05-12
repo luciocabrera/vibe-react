@@ -6,6 +6,18 @@
 // - optionsCount: number (for height estimation)
 // Returns: { left: string, top: string, width: string }
 
+type TGetPositionRelativeToParentArgs = {
+  dropdownHeight?: number;
+  dropdownPadding?: number;
+  optionHeight?: number;
+  optionsCount: number;
+  parentPadding?: number;
+  parentRef?: React.RefObject<HTMLElement | null>;
+  parentWidthOffset?: number;
+  ref: React.RefObject<HTMLElement>;
+  selector: string;
+}
+
 export const getPositionRelativeToParent = ({
   dropdownHeight = 220,
   dropdownPadding = 40,
@@ -16,17 +28,7 @@ export const getPositionRelativeToParent = ({
   parentWidthOffset = 30,
   ref,
   selector,
-}: {
-  dropdownHeight?: number;
-  dropdownPadding?: number;
-  optionHeight?: number;
-  optionsCount: number;
-  parentPadding?: number;
-  parentRef?: React.RefObject<HTMLElement>;
-  parentWidthOffset?: number;
-  ref: React.RefObject<HTMLElement>;
-  selector: string;
-}) => {
+}: TGetPositionRelativeToParentArgs) => {
   const buttonEl = ref.current?.querySelector(selector) as HTMLElement | null;
   if (!buttonEl) return { left: '0', top: '100%', width: '100%' };
 

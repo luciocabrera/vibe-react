@@ -1,12 +1,6 @@
 import * as stylex from '@stylexjs/stylex';
 
 export const styles = stylex.create({
-  table: {
-    background: '#fff',
-    borderCollapse: 'collapse',
-    marginTop: 20,
-    width: '100%',
-  },
   groupRow: {
     background: '#ddeeff',
     fontWeight: 'bold',
@@ -16,5 +10,11 @@ export const styles = stylex.create({
   },
   highlightWorst: {
     background: '#ffe0e0',
+  },
+  table: {
+    background: '#fff',
+    borderCollapse: 'collapse',
+    marginTop: 20,
+    width: '100%',
   },
 });

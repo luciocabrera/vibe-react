@@ -1,5 +1,6 @@
-import { styles } from './ToggleSwitch.stylex';
 import * as stylex from '@stylexjs/stylex';
+
+import { styles } from './ToggleSwitch.stylex';
 import type { TToggleSwitchProps } from './ToggleSwitch.types';
 
 const ToggleSwitch = ({ isActive, label, ...props }: TToggleSwitchProps) => {

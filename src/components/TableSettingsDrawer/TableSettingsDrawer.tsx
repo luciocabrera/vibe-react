@@ -1,9 +1,10 @@
+import * as stylex from '@stylexjs/stylex';
+
 import { ColumnOrderSection } from '../ColumnOrderSection';
 import { FiltersSection } from '../FiltersSection';
 import { SortBySection } from '../SortBySection';
-import { styles } from './TableSettingsDrawer.stylex';
-import * as stylex from '@stylexjs/stylex';
 
+import { styles } from './TableSettingsDrawer.stylex';
 import type { TableSettingsDrawerProps } from './TableSettingsDrawer.types';
 
 const TableSettingsDrawer = ({

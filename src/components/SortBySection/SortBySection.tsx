@@ -1,11 +1,11 @@
 import { useState } from 'react';
+import * as stylex from '@stylexjs/stylex';
 
 import { DraggableList } from '../DraggableList';
 import type { TDraggableItemType } from '../DraggableList/DraggableList.types';
 import { SortItemControls } from '../SortItemControls';
-import { styles } from './SortBySection.stylex';
-import * as stylex from '@stylexjs/stylex';
 
+import { styles } from './SortBySection.stylex';
 import type { TSortBySectionProps, TSortCol } from './SortBySection.types';
 
 const SortBySection = ({

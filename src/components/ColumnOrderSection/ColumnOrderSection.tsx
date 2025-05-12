@@ -1,9 +1,10 @@
+import * as stylex from '@stylexjs/stylex';
+
 import { ColumnToggle } from '../ColumnToggle';
 import { DraggableList } from '../DraggableList';
 import type { TDraggableItemType } from '../DraggableList/DraggableList.types';
-import { styles } from './ColumnOrderSection.stylex';
-import * as stylex from '@stylexjs/stylex';
 
+import { styles } from './ColumnOrderSection.stylex';
 import type { TColumnOrderSectionProps } from './ColumnOrderSection.types';
 
 // TODO: Check implementation after adding the Table component
