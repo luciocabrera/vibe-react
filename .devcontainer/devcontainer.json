@@ -1,0 +1,18 @@
+{
+  "name": "Vibe React Codespace",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "github.codespaces",
+        "github.copilot",
+        "github.copilot-chat",
+        "github.github-vscode-theme",
+        "github.vscode-pull-request-github",
+        "streetsidesoftware.code-spell-checker",
+        "donjayamanne.githistory"
+      ]
+    }
+  }
+}
