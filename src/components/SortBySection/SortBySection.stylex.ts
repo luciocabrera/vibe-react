@@ -9,6 +9,7 @@ export const styles = stylex.create({
     background: '#f7faff',
     border: '1px solid #c7d6f7',
     borderRadius: 6,
+    boxSizing: 'border-box',
     cursor: 'grab',
     display: 'flex',
     fontWeight: 500,
@@ -17,6 +18,7 @@ export const styles = stylex.create({
     marginBottom: 6,
     padding: '8px 14px',
     transition: 'background 0.2s, box-shadow 0.2s, opacity 0.2s',
+    width: '100%', // Ensure each item takes full width
   },
   columnItemContent: {
     alignItems: 'center',
@@ -38,7 +40,10 @@ export const styles = stylex.create({
     minWidth: 180,
   },
   container: {
-    // Container for the entire section
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column',
+    minWidth: 0,
   },
   controlsContainer: {
     alignItems: 'center',

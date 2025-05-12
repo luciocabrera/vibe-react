@@ -132,7 +132,7 @@ const TableSettingsDrawer = ({
   return (
     <Drawer
       isPinned={isPinned}
-      open={false}
+      open={open}
       onClose={handleClose}
       onPinChange={handlePinChange}
     >

@@ -17,4 +17,9 @@ export const styles = stylex.create({
     letterSpacing: '1px',
     padding: 0,
   },
+  tabsContent: {
+    background: 'var(--background-color-1)',
+    color: 'var(--color-text-1)',
+    display: 'flex',
+    padding: '1rem',}
 });

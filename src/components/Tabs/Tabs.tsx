@@ -74,6 +74,7 @@ const Tabs = ({ defaultSelectedTab, ref, tabs, ...props }: TTabsProps) => {
         ))}
       </div>
       <div
+        {...stylex.props(styles.tabsContent)}
         aria-labelledby={`tab-${active}`}
         id={`tabpanel-${active}`}
         role='tabpanel'
