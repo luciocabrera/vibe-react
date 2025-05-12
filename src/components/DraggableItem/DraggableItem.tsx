@@ -14,10 +14,10 @@ const DraggableItem = ({
     {...props}
     {...stylex.props(styles.li, activeId === id && styles.isActive)}
     draggable
-    role="option"
-    tabIndex={0}
     aria-label={typeof label === 'string' ? label : undefined}
     aria-selected={activeId === id}
+    role="option"
+    tabIndex={0}
   >
     <div {...stylex.props(styles.labelContainer)}>
       <span {...stylex.props(styles.dragIcon)}>{'≡'}</span>

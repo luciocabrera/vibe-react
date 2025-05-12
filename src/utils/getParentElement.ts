@@ -5,6 +5,5 @@ import type { RefObject } from 'react';
  * @param parentRef - React ref to the parent element
  */
 export const getParentElement = (parentRef?: RefObject<HTMLElement>): HTMLElement | null => {
-    if (parentRef && parentRef.current) return parentRef.current;
-    return null;
+    return parentRef?.current ?? null;
 }

@@ -4,6 +4,7 @@ import * as stylex from '@stylexjs/stylex';
 import { styles } from './FormFieldBase.stylex';
 import type { TFormFieldBaseProps } from './FormFieldBase.types';
 
+// TODO: Thhink of a different name for this component, maybe FieldSet
 const FormFieldBase = <TData extends Record<string, unknown>>({
   children,
   id,
@@ -50,8 +51,8 @@ const FormFieldBase = <TData extends Record<string, unknown>>({
       {!isViewing && (
         <span
           {...stylex.props(styles.errorMessage)}
-          role="alert"
           aria-live="assertive"
+          role="alert"
         >
           {hasErrors && errorMessage}
         </span>

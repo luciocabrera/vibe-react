@@ -2,34 +2,24 @@ import * as stylex from '@stylexjs/stylex';
 
 export const styles = stylex.create({
 badge: {
-  display: 'inline-flex',
   alignItems: 'center',
   backgroundColor: '#f0f0f0',
   borderRadius: '16px',
   color: '#333',
+  display: 'inline-flex',
+  flexBasis: 'auto',
+  flexShrink: 1,
   fontSize: '12px',
   fontWeight: 500,
   gap: '0.5rem',
-  padding: '4px 1rem',
-  overflow: 'hidden',
+  maxWidth: '100%',
   minWidth: 0,
-  flexShrink: 1,
-  flexBasis: 'auto',
-  width: 'fit-content',
-  maxWidth: '100%',     // ✅ THIS is the key fix
+  overflow: 'hidden',
+  padding: '4px 1rem',
+  width: 'fit-content',     // ✅ THIS is the key fix
 },
 
-value: {
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
-  minWidth: 0,
-  flexGrow: 1,
-  flexShrink: 1,
-  maxWidth: '100%',
-  display: 'block',
-},
-  more: {
+more: {
     backgroundColor: '#e0e0e0',
   },
   removeButton: {
@@ -45,5 +35,15 @@ value: {
     marginLeft: '4px',
     padding: '0 4px',
   },
+  value: {
+  display: 'block',
+  flexGrow: 1,
+  flexShrink: 1,
+  maxWidth: '100%',
+  minWidth: 0,
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+},
 });
 

@@ -20,7 +20,7 @@
     "skipLibCheck": true,
     "rootDirs": [".", "./.react-router/types"],
     "paths": {
-      "@/*": ["./app/*"]
+      "@/*": ["./src/*"]
     },
 
     "verbatimModuleSyntax": true,

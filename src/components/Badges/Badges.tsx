@@ -1,5 +1,5 @@
-import * as stylex from '@stylexjs/stylex';
 import { useEffect, useRef, useState } from 'react';
+import * as stylex from '@stylexjs/stylex';
 
 import { Badge } from '../Badge';
 
@@ -37,7 +37,7 @@ const Badges = ({ options, parentRef, selected = [], ...props }: TBadgesProps) =
       ...selected.slice(0, MAX_BADGES).map(val => (
         <Badge key={val} value={val} {...props} />
       )),
-      <Badge isMore value={`+${selected.length - MAX_BADGES} more`} key="more-badge" />
+      <Badge key="more-badge" isMore value={`+${selected.length - MAX_BADGES} more`} />
     ];
   }
 

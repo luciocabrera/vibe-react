@@ -8,7 +8,7 @@ import { Children, cloneElement, isValidElement, type ReactNode } from "react";
  */
 export const injectPropsToChildren = (
     children: ReactNode,
-    injectedProps: Record<string, any>
+    injectedProps: Record<string, unknown>
 ): ReactNode => {
     return Children.map(children, (child) => {
         if (isValidElement(child)) {

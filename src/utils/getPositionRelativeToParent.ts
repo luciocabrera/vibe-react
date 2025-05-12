@@ -7,25 +7,25 @@
 // Returns: { left: string, top: string, width: string }
 
 export const getPositionRelativeToParent = ({
-  selector,
-  ref,
-  parentRef,
-  optionsCount,
   dropdownHeight = 220,
-  optionHeight = 30,
   dropdownPadding = 40,
+  optionHeight = 30,
+  optionsCount,
   parentPadding = 10,
+  parentRef,
   parentWidthOffset = 30,
+  ref,
+  selector,
 }: {
-  selector: string;
-  ref: React.RefObject<HTMLElement>;
-  parentRef?: React.RefObject<HTMLElement>;
-  optionsCount: number;
   dropdownHeight?: number;
-  optionHeight?: number;
   dropdownPadding?: number;
+  optionHeight?: number;
+  optionsCount: number;
   parentPadding?: number;
+  parentRef?: React.RefObject<HTMLElement>;
   parentWidthOffset?: number;
+  ref: React.RefObject<HTMLElement>;
+  selector: string;
 }) => {
   const buttonEl = ref.current?.querySelector(selector) as HTMLElement | null;
   if (!buttonEl) return { left: '0', top: '100%', width: '100%' };

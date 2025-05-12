@@ -1,10 +1,11 @@
 import { useEffect, useId, useRef, useState } from "react";
-import { styles, dynamicStyles } from './MultiSelectDropdown.stylex';
 import * as stylex from '@stylexjs/stylex';
-import { getParentElement } from '../../utils/getParentElement';
-import { getScrollableParents } from '../../utils/getScrollableParents';
-import { getPositionRelativeToParent } from '../../utils/getPositionRelativeToParent';
 
+import { getParentElement } from '@/utils/getParentElement';
+import { getPositionRelativeToParent } from '@/utils/getPositionRelativeToParent';
+import { getScrollableParents } from '@/utils/getScrollableParents';
+
+import { dynamicStyles, styles } from './MultiSelectDropdown.stylex';
 import type { MultiSelectDropdownProps } from "./MultiSelectDropdown.types";
 const MultiSelectDropdown = ({
   onChange,
@@ -57,11 +58,11 @@ const MultiSelectDropdown = ({
       }
     };
 
-    // Use the new utility to get all possible scrollable parent elements
-    const scrollableParents = getScrollableParents(containerRef.current);
+    // Explicitly type scrollableParents to avoid implicit 'any' type
+    const scrollableParents: HTMLElement[] = getScrollableParents(containerRef.current);
 
     // Add scroll event listeners to all scrollable parents
-    scrollableParents.forEach(parent => {
+    scrollableParents.forEach((parent: HTMLElement) => {
       parent.addEventListener('scroll', handleScroll);
     });
 
@@ -69,7 +70,7 @@ const MultiSelectDropdown = ({
     window.addEventListener("scroll", handleScroll);
 
     return () => {
-      scrollableParents.forEach(parent => {
+      scrollableParents.forEach((parent: HTMLElement) => {
         parent.removeEventListener('scroll', handleScroll);
       });
       window.removeEventListener("scroll", handleScroll);
@@ -130,10 +131,10 @@ const MultiSelectDropdown = ({
 
   // Calculate dropdown dimensions and position when opened
   const dropdownPosition = getPositionRelativeToParent({
-    selector: `[data-instance-id="${instanceId}"]`,
-    ref: labelContainerRef as React.RefObject<HTMLElement>,
-    parentRef: parentRef as React.RefObject<HTMLElement>,
     optionsCount: options.length,
+    parentRef: parentRef as React.RefObject<HTMLElement>,
+    ref: labelContainerRef as React.RefObject<HTMLElement>,
+    selector: `[data-instance-id="${instanceId}"]`,
   });
   const { left, top, width } = dropdownPosition;
 

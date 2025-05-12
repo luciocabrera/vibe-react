@@ -5,6 +5,11 @@ export const styles = stylex.create({
     color: '#1976d2',
     fontSize: '1.2em',
   },
+  isActive: {
+    background: '#ddeeff',
+    boxShadow: '0 2px 8px #1976d244',
+    opacity: 0.7,
+  },
   labelContainer: {
     alignItems: 'center',
     display: 'flex',
@@ -25,11 +30,6 @@ export const styles = stylex.create({
     opacity: 1,
     padding: '8px 14px',
     transition: 'background 0.2s, box-shadow 0.2s, opacity 0.2s',
-  },
-  isActive: {
-    background: '#ddeeff',
-    boxShadow: '0 2px 8px #1976d244',
-    opacity: 0.7,
   },
 });
 

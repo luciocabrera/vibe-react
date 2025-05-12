@@ -1,9 +1,10 @@
+import { useRef } from 'react';
 import * as stylex from '@stylexjs/stylex';
+
+import { injectPropsToChildren } from '../../utils/injectPropsToChildren';
 
 import { styles } from './AccordionItem.stylex';
 import type { TAccordionItemProps } from './AccordionItem.types';
-import { useRef } from 'react';
-import { injectPropsToChildren } from '../../utils/injectPropsToChildren';
 
 const AccordionItem = ({ children, title, ...props }: TAccordionItemProps) => {
   const ref = useRef<HTMLDetailsElement>(null);
