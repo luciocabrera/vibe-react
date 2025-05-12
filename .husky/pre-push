@@ -1,12 +1,12 @@
-echo '🏗️👷 Checking if we can build the app before pushing'
+#!/bin/sh
 
-npm run build ||
-(
-    echo '❌👷🔨❌ Better call Bob... Because your build failed ❌👷🔨❌
-          Build failed: View the errors above to see why.'
-    false;
-)
+# Pre-push hook for Husky v9+
 
+echo 'Checking if we can build the app before pushing'
 
-# If everything passes... Now we can push
-echo '✅✅✅✅ You win this time... I am pushing this now. ✅✅✅✅'
+npm run build || {
+    echo 'Build failed: View the errors above to see why.'
+    exit 1;
+}
+
+echo 'Everything looks good, I am pushing this now.'
