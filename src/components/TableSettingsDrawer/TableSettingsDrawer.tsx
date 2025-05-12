@@ -1,11 +1,11 @@
-import * as stylex from "@stylexjs/stylex";
 
 import { ColumnOrderSection } from "../ColumnOrderSection";
 import { Drawer } from "../Drawer";
 import { FiltersSection } from "../FiltersSection";
 import { SortBySection } from "../SortBySection";
+import { Tabs } from "../Tabs";
+import type { TTabsItems } from "../Tabs/Tabs.types";
 
-import { styles } from "./TableSettingsDrawer.stylex";
 import type { TableSettingsDrawerProps } from "./TableSettingsDrawer.types";
 
 const TableSettingsDrawer = ({
@@ -22,20 +22,14 @@ const TableSettingsDrawer = ({
   setFilterState,
   setRangeState,
   setSortState,
-  setTab,
   setVisibleColumns,
   sortState,
-  tab,
   visibleColumns,
 }: TableSettingsDrawerProps) => {
   if (!open) return null;
 
   const handleClose = () => onClose();
   const handlePinChange = (isPinned: boolean) => onPinChange?.(isPinned);
-
-  const handleTabFilters = () => setTab("filters");
-  const handleTabSorting = () => setTab("sorting");
-  const handleTabColumns = () => setTab("columns");
 
   const handleFilterChange = (key: string, vals: string[]) => {
     setFilterState((fs) => ({ ...fs, [key]: vals }));
@@ -77,6 +71,65 @@ const TableSettingsDrawer = ({
   };
   const handleSortChange = (newSort: typeof sortState) => setSortState(newSort);
 
+  const tabs: TTabsItems = [
+    {
+      children: (
+        <FiltersSection
+          columns={columns}
+          data={data}
+          filterState={filterState}
+          rangeState={rangeState}
+          onFilterChange={handleFilterChange}
+          onRangeChange={handleRangeChange}
+          onReset={handleReset}
+          onResetFilter={handleResetFilter}
+          onResetRange={handleResetRange}
+        />
+      ),
+      header: (
+        <>
+          {/* <FaColumns /> */}
+          Filters
+        </>
+      ),
+      key: "tableFilters",
+    },
+    {
+      children: (
+        <SortBySection
+          allColumns={columns}
+          sortState={sortState}
+          onChange={handleSortChange}
+        />
+      ),
+      header: (
+        <>
+          {/* <SiDatabricks /> */}
+          Sorting
+        </>
+      ),
+      key: "tableSorting",
+    },
+    {
+      children: (
+        <ColumnOrderSection
+          columnOrder={columnOrder}
+          columns={columns}
+          setColumnOrder={setColumnOrder}
+          setVisibleColumns={setVisibleColumns}
+          visibleColumns={visibleColumns}
+        />
+      ),
+      header: (
+        <>
+          {/* <SiDatabricks /> */}
+          Columns
+        </>
+      ),
+      key: "columns",
+    },
+  ];
+
   return (
     <Drawer
       isPinned={isPinned}
@@ -84,55 +137,7 @@ const TableSettingsDrawer = ({
       onClose={handleClose}
       onPinChange={handlePinChange}
     >
-      <div {...stylex.props(styles.tabs)}>
-        <button
-          {...stylex.props(styles.tab, tab === "filters" && styles.tabActive)}
-          onClick={handleTabFilters}
-        >
-          Filters
-        </button>
-        <button
-          {...stylex.props(styles.tab, tab === "sorting" && styles.tabActive)}
-          onClick={handleTabSorting}
-        >
-          Sorting
-        </button>
-        <button
-          {...stylex.props(styles.tab, tab === "columns" && styles.tabActive)}
-          onClick={handleTabColumns}
-        >
-          Columns
-        </button>
-      </div>
-      <div {...stylex.props(styles.content)}>
-        {tab === "filters" ? (
-          <FiltersSection
-            columns={columns}
-            data={data}
-            filterState={filterState}
-            rangeState={rangeState}
-            onFilterChange={handleFilterChange}
-            onRangeChange={handleRangeChange}
-            onReset={handleReset}
-            onResetFilter={handleResetFilter}
-            onResetRange={handleResetRange}
-          />
-        ) : tab === "sorting" ? (
-          <SortBySection
-            allColumns={columns}
-            sortState={sortState}
-            onChange={handleSortChange}
-          />
-        ) : (
-          <ColumnOrderSection
-            columnOrder={columnOrder}
-            columns={columns}
-            setColumnOrder={setColumnOrder}
-            setVisibleColumns={setVisibleColumns}
-            visibleColumns={visibleColumns}
-          />
-        )}
-      </div>
+      <Tabs tabs={tabs} />
     </Drawer>
   );
 };
