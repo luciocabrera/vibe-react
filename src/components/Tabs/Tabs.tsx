@@ -11,7 +11,7 @@ const Tabs = ({ defaultSelectedTab, ref, tabs, ...props }: TTabsProps) => {
   const [active, setActive] = useState(defaultSelectedTab ?? tabs?.[0]?.key);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const activeIndex = tabs?.findIndex((tab) => tab.key === active) ?? 0;
-  const activeChildren = tabs?.find((tab) => tab.key === active)?.children;
+  // const activeChildren = tabs?.find((tab) => tab.key === active)?.children;
 
   // Keyboard navigation handler
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
@@ -52,6 +52,7 @@ const Tabs = ({ defaultSelectedTab, ref, tabs, ...props }: TTabsProps) => {
         {...stylex.props(styles.tabsButtonsWrapper)}
         aria-orientation='horizontal'
         role='tablist'
+        tabIndex={0} // <-- Add this line
         onKeyDown={handleKeyDown}
       >
         {tabs?.map(({ header, key }) => (
@@ -78,9 +79,22 @@ const Tabs = ({ defaultSelectedTab, ref, tabs, ...props }: TTabsProps) => {
         aria-labelledby={`tab-${active}`}
         id={`tabpanel-${active}`}
         role='tabpanel'
-        tabIndex={0}
       >
-        {activeChildren}
+        {tabs?.map(({ children, key }) => (
+          <div
+            key={key}
+            aria-labelledby={`tab-${key}`}
+            hidden={active !== key}
+            id={`tabpanel-${key}`}
+            role='tabpanel'
+            style={{
+              display: active === key ? 'block' : 'none',
+              width: '100%',
+            }}
+          >
+            {children}
+          </div>
+        ))}
       </div>
     </div>
   );
