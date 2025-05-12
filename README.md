@@ -52,3 +52,27 @@ export default tseslint.config({
   },
 });
 ```
+
+# Utility Folder Structure: By Function Type
+
+We group utility functions in `src/utils` by their function type for clarity and maintainability. This structure makes it easier to find, extend, and maintain utility code as the project grows.
+
+**Structure:**
+
+```
+src/utils/
+  element/   # Functions that traverse or manipulate element trees
+  event/     # Functions that handle or detect events
+  data/      # Data structure helpers (e.g., array utilities)
+  react/     # React-specific helpers
+  dom/       # General DOM manipulation utilities
+```
+
+**Reasoning:**
+- **element/**: For utilities that work with DOM element trees, such as finding parent elements or calculating positions.
+- **event/**: For utilities that handle or detect events, like click outside detection.
+- **data/**: For helpers that manipulate data structures, such as arrays.
+- **react/**: For React-specific helpers, like injecting props into children.
+- **dom/**: For general DOM manipulation, such as setting properties on DOM elements.
+
+This approach avoids clutter, improves discoverability, and helps onboard new developers quickly. As the codebase grows, this structure can be further refined or expanded as needed.

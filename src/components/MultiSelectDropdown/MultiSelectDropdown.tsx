@@ -1,9 +1,9 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import * as stylex from '@stylexjs/stylex';
 
-import { getParentElement } from '@/utils/getParentElement';
-import { getPositionRelativeToParent } from '@/utils/getPositionRelativeToParent';
-import { getScrollableParents } from '@/utils/getScrollableParents';
+import { getParentElement } from '@/utils/element/getParentElement';
+import { getPositionRelativeToParent } from '@/utils/element/getPositionRelativeToParent';
+import { getScrollableParents } from '@/utils/element/getScrollableParents';
 
 import { dynamicStyles, styles } from './MultiSelectDropdown.stylex';
 import type { MultiSelectDropdownProps } from './MultiSelectDropdown.types';

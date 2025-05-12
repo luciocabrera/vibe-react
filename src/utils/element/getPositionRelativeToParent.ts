@@ -50,28 +50,13 @@ export const getPositionRelativeToParent = ({
     dropdownHeight,
     optionsCount * optionHeight + dropdownPadding
   );
+  const top = Math.max(minTop, rect.bottom + dropdownPadding);
+  const bottomSpace = viewportHeight - top;
+  const isOverflowing = bottomSpace < expectedDropdownHeight;
 
-  if (
-    spaceBelow < expectedDropdownHeight &&
-    rect.top > expectedDropdownHeight
-  ) {
-    // Place dropdown above the button if there's more space above
-    return {
-      left: parentElement
-        ? `${parentLeft + parentPadding}px`
-        : `${rect.left}px`,
-      top: `${rect.top - expectedDropdownHeight - 5}px`,
-      width: parentElement
-        ? `${parentWidth - parentWidthOffset}px`
-        : `${rect.width}px`,
-    };
-  }
-  // Default: place dropdown below the button
   return {
-    left: parentElement ? `${parentLeft + parentPadding}px` : `${rect.left}px`,
-    top: `${Math.max(minTop + 5, rect.bottom + 5)}px`,
-    width: parentElement
-      ? `${parentWidth - parentWidthOffset}px`
-      : `${rect.width}px`,
+    left: `${parentLeft}px`,
+    top: `${isOverflowing ? Math.max(minTop, rect.top - expectedDropdownHeight - dropdownPadding) : top}px`,
+    width: `${parentWidth}px`,
   };
 };
