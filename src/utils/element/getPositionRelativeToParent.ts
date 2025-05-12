@@ -23,9 +23,7 @@ export const getPositionRelativeToParent = ({
   dropdownPadding = 40,
   optionHeight = 30,
   optionsCount,
-  parentPadding = 10,
   parentRef,
-  parentWidthOffset = 30,
   ref,
   selector,
 }: TGetPositionRelativeToParentArgs) => {
@@ -45,7 +43,7 @@ export const getPositionRelativeToParent = ({
     parentLeft = parentRect.left;
     parentWidth = parentRect.width;
   }
-  const spaceBelow = viewportHeight - rect.bottom;
+
   const expectedDropdownHeight = Math.min(
     dropdownHeight,
     optionsCount * optionHeight + dropdownPadding

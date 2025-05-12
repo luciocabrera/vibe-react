@@ -107,6 +107,7 @@ This document provides a comprehensive explanation of the improvements made to t
 - The component now calculates and updates dimensions in multiple scenarios:
 
   1. **On Mount**:
+
      ```typescript
      useEffect(() => {
        const calculateParentWidth = () => {
@@ -128,6 +129,7 @@ This document provides a comprehensive explanation of the improvements made to t
        };
      }, [parentId]);
      ```
+
   2. **On Window Resize**:
 
      ```typescript
@@ -147,6 +149,7 @@ This document provides a comprehensive explanation of the improvements made to t
      ```
 
   3. **On Scroll**:
+
      ```typescript
      useEffect(() => {
        // Handle scrolling of parent containers to reposition dropdown
@@ -185,6 +188,7 @@ This document provides a comprehensive explanation of the improvements made to t
        };
      }, [open]);
      ```
+
   4. **When Dropdown Opens**:
      ```typescript
      useEffect(() => {
@@ -206,6 +210,7 @@ This document provides a comprehensive explanation of the improvements made to t
 #### Implementation
 
 - The component prevents event propagation to avoid affecting parent components:
+
   ```typescript
   const handleDropdownClick = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent event bubbling
@@ -227,6 +232,7 @@ This document provides a comprehensive explanation of the improvements made to t
     setOpen((prev) => !prev); // Toggle dropdown state
   };
   ```
+
 - This ensures that clicking the dropdown doesn't trigger parent element events (like toggling accordion items).
 
 ## Design Patterns Used

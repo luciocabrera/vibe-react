@@ -69,6 +69,7 @@ src/utils/
 ```
 
 **Reasoning:**
+
 - **element/**: For utilities that work with DOM element trees, such as finding parent elements or calculating positions.
 - **event/**: For utilities that handle or detect events, like click outside detection.
 - **data/**: For helpers that manipulate data structures, such as arrays.
