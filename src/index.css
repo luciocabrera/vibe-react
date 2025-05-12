@@ -15,7 +15,6 @@
   -moz-osx-font-smoothing: grayscale;
 } */
 
-
 :root[data-theme='light'] {
   --background: whitesmoke;
   --foreground: hsl(0 0% 3.9%);
@@ -53,12 +52,12 @@
   --background-md-rgb: var(--background-color-3);
   --background-end-rgb: var(--text-color-1);
 
-  --gradient-background: linear-gradient(229deg,
-      var(--background-start-rgb),
-      var(--background-md-rgb),
-      var(--background-end-rgb)) !important;
-
-
+  --gradient-background: linear-gradient(
+    229deg,
+    var(--background-start-rgb),
+    var(--background-md-rgb),
+    var(--background-end-rgb)
+  ) !important;
 }
 
 :root[data-theme='dark'] {
@@ -98,13 +97,13 @@
   --background-md-rgb: var(--background-color-3);
   --background-end-rgb: var(--text-color-1);
 
-  --gradient-background: linear-gradient(229deg,
-      var(--background-start-rgb),
-      var(--background-md-rgb),
-      var(--background-end-rgb)) !important;
+  --gradient-background: linear-gradient(
+    229deg,
+    var(--background-start-rgb),
+    var(--background-md-rgb),
+    var(--background-end-rgb)
+  ) !important;
 }
-
-
 
 :root {
   --border-radius-sm: 6px;
@@ -121,7 +120,6 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
 }
 
 a {
