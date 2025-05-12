@@ -1,5 +1,7 @@
 import type { ChangeEvent, ReactNode } from 'react';
-import { strArrayToEnum } from 'src/utils/array';
+
+import { strArrayToEnum } from '@/utils/data/array';
+
 
 export const DISPLAY_TO_RENDER_RADIO_TYPE = ['radio'] as const;
 export const DISPLAY_TO_RENDER_OPTION_TYPE = ['select', 'dropdown'] as const;

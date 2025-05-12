@@ -26,7 +26,6 @@ export const styles = stylex.create({
     fontWeight: 500,
     gap: 10,
     justifyContent: 'space-between',
-    marginBottom: 6,
     opacity: 1,
     padding: '8px 14px',
     transition: 'background 0.2s, box-shadow 0.2s, opacity 0.2s',

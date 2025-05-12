@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import * as stylex from '@stylexjs/stylex';
 
-import { injectPropsToChildren } from '../../utils/injectPropsToChildren';
+import { injectPropsToChildren } from '@/utils/react/injectPropsToChildren';
 
 import { styles } from './AccordionItem.stylex';
 import type { TAccordionItemProps } from './AccordionItem.types';
