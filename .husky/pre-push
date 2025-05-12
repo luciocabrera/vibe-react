@@ -1,0 +1,12 @@
+echo '🏗️👷 Checking if we can build the app before pushing'
+
+npm run build ||
+(
+    echo '❌👷🔨❌ Better call Bob... Because your build failed ❌👷🔨❌
+          Build failed: View the errors above to see why.'
+    false;
+)
+
+
+# If everything passes... Now we can push
+echo '✅✅✅✅ You win this time... I am pushing this now. ✅✅✅✅'
