@@ -1,6 +1,6 @@
 @stylex stylesheet;
 
-:root {
+/* :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -13,6 +13,115 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+} */
+
+
+:root[data-theme='light'] {
+  --background: whitesmoke;
+  --foreground: hsl(0 0% 3.9%);
+
+  --background-color-1: #385245;
+  --background-color-2: #03542f;
+  --background-color-3: #03542f2b;
+  --background-color-4: #f4f7edb5;
+  --background-color-5: #698f7e;
+  --background-color-6: #ffffff42;
+
+  --background-color-7: white;
+
+  --background-color-9: #778c82;
+  --background-color-10: #64776e;
+  --background-color-11: #698f7e78;
+
+  --hover-color-1: rgba(161, 132, 58, 0.763);
+  --hover-color-2: #485d53;
+  --hover-color-3: #a8c2b5;
+
+  --text-color-1: #03542f;
+  --text-color-2: white;
+  --text-color-3: #385245;
+
+  --border-color-1: #385245;
+  --border-color-2: #b2b2b47a;
+  --border-color-3: #485d53;
+  --border-color-4: lightgray;
+
+  --shadow-color-1: rgb(3 84 47);
+
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: var(--background-color-4);
+  --background-md-rgb: var(--background-color-3);
+  --background-end-rgb: var(--text-color-1);
+
+  --gradient-background: linear-gradient(229deg,
+      var(--background-start-rgb),
+      var(--background-md-rgb),
+      var(--background-end-rgb)) !important;
+
+
+}
+
+:root[data-theme='dark'] {
+  --background: hsl(0 0% 3.9%);
+  --foreground: hsl(0 0% 98%);
+
+  --background-color-1: #d3d3d3;
+  --background-color-2: #030554;
+  --background-color-3: #0503542b;
+  --background-color-4: #edeef7b5;
+  --background-color-5: rgba(231, 76, 76, 0.259);
+  --background-color-6: #ffffff42;
+  --background-color-7: transparent;
+
+  --background-color-8: white;
+  --background-color-9: #8c93a1;
+  --background-color-10: #3b4b90;
+  --background-color-11: #69778f78;
+
+  --hover-color-1: rgba(161, 132, 58, 0.763);
+  --hover-color-2: #485d53;
+  --hover-color-3: #a8c2b5;
+
+  --text-color-1: white;
+  --text-color-2: var(--background-color-2);
+  --text-color-3: #d3d3d3;
+
+  --border-color-1: #d3d3d3;
+  --border-color-2: #b2b2b47a;
+  --border-color-3: #485d53;
+  --border-color-4: lightgray;
+
+  --shadow-color-1: rgb(3 84 47);
+
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: var(--background-color-4);
+  --background-md-rgb: var(--background-color-3);
+  --background-end-rgb: var(--text-color-1);
+
+  --gradient-background: linear-gradient(229deg,
+      var(--background-start-rgb),
+      var(--background-md-rgb),
+      var(--background-end-rgb)) !important;
+}
+
+
+
+:root {
+  --border-radius-sm: 6px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 10px;
+  --border-radius-xl: 12px;
+
+  color-scheme: light dark;
+
+  font-family: Inter, system-ui, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
 }
 
 a {
@@ -77,7 +186,7 @@ td {
 th {
   background: #eee;
 }
-
+/* 
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -97,7 +206,7 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
+} */
 
 .settings-btn {
   position: fixed;
@@ -135,7 +244,7 @@ button:focus-visible {
   }
 }
 
-@media (prefers-color-scheme: light) {
+/* @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
@@ -148,7 +257,7 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
+} */
 
 @media (max-width: 700px) {
   table,

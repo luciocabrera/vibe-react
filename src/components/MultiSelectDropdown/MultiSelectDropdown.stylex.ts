@@ -42,9 +42,10 @@ export const styles = stylex.create({
     position: 'relative',
     width: '100%',
   },
-  resetButton: {
-    flex: '0 0 auto',
-  },
+  // resetButton: {
+  //   // backgroundColor: 'blue',
+  //   flex: '0 0 auto',
+  // },
   selectedItemsDisplay: {
     maxWidth: '100%',
     overflow: 'hidden',

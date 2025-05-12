@@ -5,6 +5,7 @@ import type { TButtonProps } from './Button.types';
 
 const Button = ({
   children,
+  customStylex,
   isDisabled = false,
   isLoading = false,
   size = 'lg',
@@ -19,7 +20,8 @@ const Button = ({
       colorVariants[variant],
       sizeVariants[size],
       isDisabled && styles.disabled,
-      isLoading && styles.loading
+      isLoading && styles.loading,
+      customStylex // merge custom styles last
     )}
     disabled={isDisabled || isLoading}
     type={type}

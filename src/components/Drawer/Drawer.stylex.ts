@@ -10,16 +10,10 @@ export const styles = stylex.create({
     top: 0,
     zIndex: 10000,
   },
+  button: { minWidth: '35px' },
   buttonContainer: {
     display: 'flex',
     gap: '8px',
-  },
-  closeButton: {
-    background: 'transparent',
-    border: 'none',
-    cursor: 'pointer',
-    fontSize: '1.5em',
-    padding: '0 8px',
   },
   drawer: {
     background: '#fff',
@@ -59,13 +53,6 @@ export const styles = stylex.create({
     display: 'flex',
     justifyContent: 'space-between',
     padding: '14px 16px',
-  },
-  pinButton: {
-    background: 'transparent',
-    border: 'none',
-    cursor: 'pointer',
-    fontSize: '1.2em',
-    padding: '4px 8px',
   },
   title: {
     fontSize: '1.2em',

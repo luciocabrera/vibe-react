@@ -5,6 +5,8 @@ import { getParentElement } from '@/utils/element/getParentElement';
 import { getPositionRelativeToParent } from '@/utils/element/getPositionRelativeToParent';
 import { getScrollableParents } from '@/utils/element/getScrollableParents';
 
+import { Button } from '../Button';
+
 import { dynamicStyles, styles } from './MultiSelectDropdown.stylex';
 import type { MultiSelectDropdownProps } from './MultiSelectDropdown.types';
 const MultiSelectDropdown = ({
@@ -200,14 +202,15 @@ const MultiSelectDropdown = ({
             })()}
           </div>
         </button>
-        <button
-          id={`${instanceId}-selected-items-reset`}
-          {...stylex.props(styles.resetButton)}
-          type='button'
+        <Button
+          // customStylex={styles.resetButton}
+          size='sm'
+          title={'Reset'}
+          variant='ghost'
           onClick={handleReset}
         >
           ⟳
-        </button>
+        </Button>
       </div>
       {open && (
         <div
