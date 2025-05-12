@@ -21,5 +21,6 @@ export const styles = stylex.create({
     background: 'var(--background-color-1)',
     color: 'var(--color-text-1)',
     display: 'flex',
-    padding: '1rem',}
+    padding: '1rem',
+  },
 });
