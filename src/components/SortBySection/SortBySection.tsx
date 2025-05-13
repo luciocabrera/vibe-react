@@ -7,6 +7,7 @@ import { SortItemControls } from '../SortItemControls';
 
 import { styles } from './SortBySection.stylex';
 import type { TSortBySectionProps, TSortCol } from './SortBySection.types';
+import { FormFieldBase } from '../FormFieldBase';
 
 const SortBySection = ({
   allColumns,
@@ -86,30 +87,37 @@ const SortBySection = ({
 
   return (
     <div {...stylex.props(styles.container)}>
-      <label htmlFor='sort-column-select'>
+      {/* <label htmlFor='sort-column-select'>
         <b>Sort by:</b>
-      </label>
-      <select
-        id='sort-column-select'
-        {...stylex.props(styles.columnSelect)}
-        value={selected}
-        onChange={handleSelectChange}
+      </label> */}
+      <FormFieldBase
+        accessor='sort-column-select'
+        htmlFor='sort-column-select'
+        label='Sort by'
       >
-        <option value=''>Select column</option>
-        {allColumns
-          .filter(
-            (c) =>
-              c.sortable !== false && !sortState.find((s) => s.key === c.key)
-          )
-          .map((col) => (
-            <option
-              key={col.key}
-              value={col.key}
-            >
-              {col.label}
-            </option>
-          ))}
-      </select>
+        <select
+          id='sort-column-select'
+          {...stylex.props(styles.columnSelect)}
+          value={selected}
+          onChange={handleSelectChange}
+        >
+          <option value=''>Select column</option>
+          {allColumns
+            .filter(
+              (c) =>
+                c.sortable !== false && !sortState.find((s) => s.key === c.key)
+            )
+            .map((col) => (
+              <option
+                key={col.key}
+                value={col.key}
+              >
+                {col.label}
+              </option>
+            ))}
+        </select>
+      </FormFieldBase>
+
       <button
         {...stylex.props(styles.addButton)}
         type='button'

@@ -117,6 +117,7 @@ export type TFormFieldBaseProps<TData> = Pick<
   children: ReactNode;
   errorMessage?: string;
   hasErrors?: boolean;
+  htmlFor?: string;
   id?: string;
   isViewing?: boolean;
 };

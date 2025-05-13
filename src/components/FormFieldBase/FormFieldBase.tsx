@@ -7,6 +7,7 @@ import type { TFormFieldBaseProps } from './FormFieldBase.types';
 // TODO: Thhink of a different name for this component, maybe FieldSet
 const FormFieldBase = <TData extends Record<string, unknown>>({
   children,
+  htmlFor,
   id,
   isViewing = true,
   label,
@@ -37,7 +38,7 @@ const FormFieldBase = <TData extends Record<string, unknown>>({
         <legend {...stylex.props(styles.legend)}>
           <label
             {...stylex.props(styles.label)}
-            htmlFor={id}
+            htmlFor={htmlFor ?? id}
           >
             {label}
             {required && !isViewing && (
