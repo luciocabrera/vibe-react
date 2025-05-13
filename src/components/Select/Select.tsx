@@ -10,34 +10,32 @@ const Select = ({
   ref,
   showDefaultOption = true,
   ...props
-}: TSelectProps) => {
-  return (
-    <select
-      {...props}
-      {...stylex.props(styles.input)}
-      ref={ref}
-      aria-label={name}
-    >
-      {showDefaultOption && (
-        <option
-          key='default-option'
-          id='default-option'
-          value=''
-        >
-          Choose {label}
-        </option>
-      )}
-      {options?.map((option) => (
-        <option
-          key={option.value}
-          id={option.value}
-          value={option.value}
-        >
-          {option.label}
-        </option>
-      ))}
-    </select>
-  );
-};
+}: TSelectProps) => (
+  <select
+    {...props}
+    {...stylex.props(styles.input)}
+    ref={ref}
+    aria-label={name}
+  >
+    {showDefaultOption && (
+      <option
+        key='default-option'
+        id='default-option'
+        value=''
+      >
+        Choose {label}
+      </option>
+    )}
+    {options?.map((option) => (
+      <option
+        key={option.value}
+        id={option.value}
+        value={option.value}
+      >
+        {option.label}
+      </option>
+    ))}
+  </select>
+);
 
 export default Select;
