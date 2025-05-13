@@ -3,11 +3,11 @@ import * as stylex from '@stylexjs/stylex';
 
 import { DraggableList } from '../DraggableList';
 import type { TDraggableItemType } from '../DraggableList/DraggableList.types';
+import { FormFieldBase } from '../FormFieldBase';
 import { SortItemControls } from '../SortItemControls';
 
 import { styles } from './SortBySection.stylex';
 import type { TSortBySectionProps, TSortCol } from './SortBySection.types';
-import { FormFieldBase } from '../FormFieldBase';
 
 const SortBySection = ({
   allColumns,
