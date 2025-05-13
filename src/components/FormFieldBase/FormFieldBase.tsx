@@ -4,7 +4,7 @@ import * as stylex from '@stylexjs/stylex';
 import { styles } from './FormFieldBase.stylex';
 import type { TFormFieldBaseProps } from './FormFieldBase.types';
 
-// TODO: Thhink of a different name for this component, maybe FieldSet
+// TODO: Think of a different name for this component, maybe FieldSet
 const FormFieldBase = <TData extends Record<string, unknown>>({
   children,
   htmlFor,

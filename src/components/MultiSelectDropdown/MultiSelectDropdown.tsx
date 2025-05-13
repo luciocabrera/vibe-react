@@ -93,18 +93,14 @@ const MultiSelectDropdown = ({
       const triggerButton = triggerButtonRef.current;
 
       // Don't close if clicked on the trigger button (let the onClick handler handle it)
-      if (triggerButton && triggerButton.contains(target)) {
-        return;
-      }
+      if (triggerButton?.contains(target)) return;
 
       // Close if clicked outside both the dropdown content and trigger
       if (
-        (!labelContainerRef.current ||
-          !labelContainerRef.current.contains(target)) &&
-        (!dropdownRef.current || !dropdownRef.current.contains(target))
-      ) {
+        !labelContainerRef.current?.contains(target) &&
+        !dropdownRef.current?.contains(target)
+      )
         setOpen(false);
-      }
     };
 
     document.addEventListener('mousedown', handler);
@@ -132,9 +128,20 @@ const MultiSelectDropdown = ({
   const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.checked ? [...options] : []);
   };
+  const selectOption = (opt: string) => {
+    onChange([...selected, opt]);
+  };
+
+  const deselectOption = (opt: string) => {
+    onChange(selected.filter((v) => v !== opt));
+  };
+
   const handleOptionChange = (opt: string, checked: boolean) => {
-    if (checked) onChange([...selected, opt]);
-    else onChange(selected.filter((v) => v !== opt));
+    if (checked) {
+      selectOption(opt);
+    } else {
+      deselectOption(opt);
+    }
   };
 
   // Calculate dropdown dimensions and position when opened
@@ -157,6 +164,7 @@ const MultiSelectDropdown = ({
   if (parentElement) {
     parentWidth = parentElement.getBoundingClientRect().width;
   }
+
   const containerDynamicStyles = dynamicStyles.container(parentWidth);
   const dropdownDynamicStyles = dynamicStyles.dropdownList(
     left.toString(),
@@ -206,7 +214,7 @@ const MultiSelectDropdown = ({
           // customStylex={styles.resetButton}
           size='sm'
           title={'Reset'}
-          variant='ghost'
+          variant='secondary'
           onClick={handleReset}
         >
           ⟳

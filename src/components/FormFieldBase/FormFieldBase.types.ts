@@ -80,7 +80,7 @@ export type TFormRule<TData> = {
   value: number | string | ((data: TData) => boolean);
 };
 
-export type TFormFieldBase<TData> = {
+export type TFormFieldBase<TData = Record<string, unknown>> = {
   accessor: keyof TData;
   change?: (value?: TFieldValue) => void;
   default?: string | null;
@@ -103,6 +103,7 @@ export type TFormFieldBase<TData> = {
   value?: TFieldValue;
   width?: number;
 };
+
 export type TFormFieldBaseProps<TData> = Pick<
   TFormFieldBase<TData>,
   | 'accessor'

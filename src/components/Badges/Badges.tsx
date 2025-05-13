@@ -15,22 +15,30 @@ const Badges = ({
   selected = [],
   ...props
 }: TBadgesProps) => {
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLSpanElement | null>(null);
   const [maxWidth, setMaxWidth] = useState<number | null>(null);
 
   useEffect(() => {
-    if (!parentRef || !parentRef.current) return;
+    if (!parentRef?.current) return undefined;
+    let observer: ResizeObserver | undefined;
     const updateWidth = () => {
       setMaxWidth(parentRef.current ? parentRef.current.offsetWidth : null);
     };
     updateWidth();
+    if (typeof window.ResizeObserver === 'function') {
+      observer = new ResizeObserver(updateWidth);
+      observer.observe(parentRef.current);
+    }
     window.addEventListener('resize', updateWidth);
-    return () => window.removeEventListener('resize', updateWidth);
+    return () => {
+      window.removeEventListener('resize', updateWidth);
+      if (observer) observer.disconnect();
+    };
   }, [parentRef]);
 
   if (selected.length === 0) return null;
 
-  let children = null;
+  let children: React.ReactNode = null;
   if (selected.length === options.length && options.length > 5) {
     children = <Badge value='All' />;
   } else if (selected.length <= MAX_BADGES) {
@@ -61,8 +69,13 @@ const Badges = ({
   return (
     <span
       ref={containerRef}
+      data-testid='badges-container'
       {...stylex.props(styles.badgesContainer)}
-      style={maxWidth ? { maxWidth, width: '100%' } : {}}
+      style={
+        typeof maxWidth === 'number'
+          ? { maxWidth: `${maxWidth}px`, width: '100%' }
+          : {}
+      }
     >
       {children}
     </span>

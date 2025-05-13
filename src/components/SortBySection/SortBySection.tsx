@@ -4,6 +4,7 @@ import * as stylex from '@stylexjs/stylex';
 import { DraggableList } from '../DraggableList';
 import type { TDraggableItemType } from '../DraggableList/DraggableList.types';
 import { FormFieldBase } from '../FormFieldBase';
+import { Select } from '../Select';
 import { SortItemControls } from '../SortItemControls';
 
 import { styles } from './SortBySection.stylex';
@@ -85,37 +86,26 @@ const SortBySection = ({
     setSelected(value);
   };
 
+  const sortByOptions = allColumns
+    .filter(
+      (c) => c.sortable !== false && !sortState.find((s) => s.key === c.key)
+    )
+    .map(({ key, label }) => ({ label, value: key }));
+
   return (
     <div {...stylex.props(styles.container)}>
-      {/* <label htmlFor='sort-column-select'>
-        <b>Sort by:</b>
-      </label> */}
       <FormFieldBase
         accessor='sort-column-select'
         htmlFor='sort-column-select'
         label='Sort by'
       >
-        <select
+        <Select
           id='sort-column-select'
-          {...stylex.props(styles.columnSelect)}
+          label='Sort by'
+          options={sortByOptions}
           value={selected}
           onChange={handleSelectChange}
-        >
-          <option value=''>Select column</option>
-          {allColumns
-            .filter(
-              (c) =>
-                c.sortable !== false && !sortState.find((s) => s.key === c.key)
-            )
-            .map((col) => (
-              <option
-                key={col.key}
-                value={col.key}
-              >
-                {col.label}
-              </option>
-            ))}
-        </select>
+        />
       </FormFieldBase>
 
       <button

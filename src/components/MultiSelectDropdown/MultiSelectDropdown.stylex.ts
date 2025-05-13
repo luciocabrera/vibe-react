@@ -62,8 +62,7 @@ export const styles = stylex.create({
     cursor: 'pointer',
     display: 'flex',
     flex: '1 1 auto',
-    marginRight: '8px',
-    maxWidth: 'calc(100% - 30px)',
+    // maxWidth: 'calc(100% - 30px)',
     minWidth: 0,
     overflow: 'hidden',
     padding: '6px 10px',
@@ -75,8 +74,8 @@ export const styles = stylex.create({
 
 export const dynamicStyles = {
   container: (accordionWidth: number | null) => ({
-    maxWidth: accordionWidth ? `${accordionWidth - 20}px` : '100%',
-    width: accordionWidth ? `${accordionWidth - 20}px` : '100%',
+    maxWidth: accordionWidth ? `${accordionWidth - 4}px` : '100%',
+    width: accordionWidth ? `${accordionWidth - 4}px` : '100%',
   }),
   dropdownList: (left: string, top: string, width: string) => ({
     left,
