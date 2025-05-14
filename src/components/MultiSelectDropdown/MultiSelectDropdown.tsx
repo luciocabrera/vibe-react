@@ -5,11 +5,12 @@ import { getParentElement } from '@/utils/element/getParentElement';
 
 import { Button } from '../Button';
 
+import { MultiSelectDropdownList } from './components/MultiSelectDropdownList';
 import { styles } from './MultiSelectDropdown.stylex';
 import type { MultiSelectDropdownProps } from './MultiSelectDropdown.types';
 
 const MultiSelectDropdown = ({
-  onChange,
+  onChange: handleChange,
   onReset,
   options = [],
   parentRef,
@@ -25,7 +26,6 @@ const MultiSelectDropdown = ({
 
   // Check if all options are selected
   const allSelected = selected.length === options.length;
-  const someSelected = selected.length > 0 && !allSelected;
 
   // Outside click detection
   useEffect(() => {
@@ -67,29 +67,6 @@ const MultiSelectDropdown = ({
     setOpen((prev) => !prev); // Toggle dropdown state
   };
   const handleReset = () => onReset();
-  const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(e.target.checked ? [...options] : []);
-  };
-  const selectOption = (opt: string) => {
-    onChange([...selected, opt]);
-  };
-
-  const deselectOption = (opt: string) => {
-    onChange(selected.filter((v) => v !== opt));
-  };
-
-  const handleOptionChange = (opt: string, checked: boolean) => {
-    if (checked) {
-      selectOption(opt);
-    } else {
-      deselectOption(opt);
-    }
-  };
-
-  // Handle dropdown list mouse event to prevent propagation
-  const handleDropdownMouseDown = (e: React.MouseEvent) => {
-    e.stopPropagation();
-  };
 
   return (
     <div
@@ -138,38 +115,12 @@ const MultiSelectDropdown = ({
         </Button>
       </div>
       {open && (
-        <div
-          ref={dropdownRef}
-          data-instance-id={instanceId}
-          data-test-id='multi-select-dropdown-list'
-          {...stylex.props(styles.dropdownList)}
-          onMouseDown={handleDropdownMouseDown}
-        >
-          <label {...stylex.props(styles.dropdownLabel)}>
-            <input
-              ref={(el) => {
-                if (el) el.indeterminate = someSelected;
-              }}
-              checked={allSelected}
-              type='checkbox'
-              onChange={handleSelectAll}
-            />{' '}
-            Select All
-          </label>
-          {options.map((opt) => (
-            <label
-              key={opt}
-              {...stylex.props(styles.dropdownOption)}
-            >
-              <input
-                checked={selected.includes(opt)}
-                type='checkbox'
-                onChange={(e) => handleOptionChange(opt, e.target.checked)}
-              />{' '}
-              {opt}
-            </label>
-          ))}
-        </div>
+        <MultiSelectDropdownList
+          options={options}
+          selected={selected}
+          onChange={handleChange}
+        />
+        // </div>
       )}
     </div>
   );

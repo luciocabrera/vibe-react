@@ -1,0 +1,42 @@
+import * as stylex from '@stylexjs/stylex';
+
+export const styles = stylex.create({
+  dropdownItem: {
+    ':hover': {
+      background: 'var(--background-color-4)',
+    },
+    alignItems: 'center',
+    background: 'none',
+    boxSizing: 'border-box',
+    containerName: 'multi-select-list-item',
+    containerType: 'inline-size',
+    cursor: 'pointer',
+    display: 'flex',
+    maxWidth: '100cqw',
+    minHeight: '32px',
+    outline: 0,
+    padding: '0 10px',
+    transition: 'background 0.15s',
+    width: '100%',
+  },
+  dropdownList: {
+    background: '#fff',
+    border: '1px solid #ccc',
+    borderRadius: 4,
+    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.25)',
+    boxSizing: 'border-box',
+    containerName: 'multi-select-list',
+    containerType: 'normal',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 0,
+    maxHeight: 220,
+    maxWidth: '100cqw',
+    overflowX: 'hidden',
+    overflowY: 'auto',
+    padding: '4px 0',
+    position: 'relative',
+    width: '100%',
+    zIndex: 9999,
+  },
+});
