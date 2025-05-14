@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import * as stylex from '@stylexjs/stylex';
 
 import { getParentElement } from '@/utils/element/getParentElement';
@@ -37,29 +37,20 @@ const MultiSelectDropdown = ({
     return () => observer.disconnect();
   }, [parentRef]);
 
-  useEffect(() => {
-    // Window resize handler to reposition dropdown if open
-    const handleResize = () => {
-      if (open) {
-        // Force a re-render to update dropdown position
-        setOpen(false);
-        setTimeout(() => setOpen(true), 0);
-      }
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [open, parentResizeTick]);
+  // Shared handler for resize/scroll events to reposition dropdown if open
+  const handleDropdownReposition = useCallback(() => {
+    if (open) {
+      setOpen(false);
+      setTimeout(() => setOpen(true), 0);
+    }
+  }, [open]);
 
   useEffect(() => {
-    // Handle scrolling of parent containers to reposition dropdown
-    const handleScroll = () => {
-      if (open) {
-        setOpen(false);
-        setTimeout(() => setOpen(true), 0);
-      }
-    };
+    window.addEventListener('resize', handleDropdownReposition);
+    return () => window.removeEventListener('resize', handleDropdownReposition);
+  }, [handleDropdownReposition, open, parentResizeTick]);
 
+  useEffect(() => {
     // Explicitly type scrollableParents to avoid implicit 'any' type
     const scrollableParents: HTMLElement[] = getScrollableParents(
       containerRef.current
@@ -67,19 +58,19 @@ const MultiSelectDropdown = ({
 
     // Add scroll event listeners to all scrollable parents
     scrollableParents.forEach((parent: HTMLElement) => {
-      parent.addEventListener('scroll', handleScroll);
+      parent.addEventListener('scroll', handleDropdownReposition);
     });
 
     // Always listen to window scroll events
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleDropdownReposition);
 
     return () => {
       scrollableParents.forEach((parent: HTMLElement) => {
-        parent.removeEventListener('scroll', handleScroll);
+        parent.removeEventListener('scroll', handleDropdownReposition);
       });
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', handleDropdownReposition);
     };
-  }, [open, parentResizeTick]);
+  }, [handleDropdownReposition, open, parentResizeTick]);
 
   // Check if all options are selected
   const allSelected = selected.length === options.length;
