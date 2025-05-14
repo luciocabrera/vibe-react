@@ -1,4 +1,4 @@
-import {  useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import * as stylex from '@stylexjs/stylex';
 
 import { getParentElement } from '@/utils/element/getParentElement';

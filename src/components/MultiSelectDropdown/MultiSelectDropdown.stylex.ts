@@ -2,6 +2,8 @@ import * as stylex from '@stylexjs/stylex';
 
 export const styles = stylex.create({
   container: {
+    containerName: 'multi-select-container',
+    containerType: 'normal',
     maxWidth: '100cqw',
     overflow: 'visible',
     position: 'relative',
@@ -11,6 +13,7 @@ export const styles = stylex.create({
     display: 'block',
     fontWeight: 'bold',
     marginBottom: 4,
+    maxWidth: '100cqw',
     overflow: 'hidden',
     padding: '4px 10px',
     textOverflow: 'ellipsis',
