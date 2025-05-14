@@ -2,13 +2,12 @@ import { useEffect, useId, useRef, useState } from 'react';
 import * as stylex from '@stylexjs/stylex';
 
 import { getParentElement } from '@/utils/element/getParentElement';
-import { getPositionRelativeToParent } from '@/utils/element/getPositionRelativeToParent';
-import { getScrollableParents } from '@/utils/element/getScrollableParents';
 
 import { Button } from '../Button';
 
-import { dynamicStyles, styles } from './MultiSelectDropdown.stylex';
+import { styles } from './MultiSelectDropdown.stylex';
 import type { MultiSelectDropdownProps } from './MultiSelectDropdown.types';
+
 const MultiSelectDropdown = ({
   onChange,
   onReset,
@@ -21,65 +20,8 @@ const MultiSelectDropdown = ({
   const dropdownRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const triggerButtonRef = useRef<HTMLButtonElement>(null);
-  const [parentResizeTick, setParentResizeTick] = useState(0);
-  // Use an instance variable to identify this specific dropdown
+
   const instanceId = useId();
-
-  // Watch parent element for resize using ResizeObserver
-  useEffect(() => {
-    const parentElement = getParentElement(parentRef);
-    if (!parentElement) return;
-    if (typeof window.ResizeObserver !== 'function') return;
-    const observer = new ResizeObserver(() => {
-      setParentResizeTick((tick) => tick + 1); // force re-render on parent resize
-    });
-    observer.observe(parentElement);
-    return () => observer.disconnect();
-  }, [parentRef]);
-
-  useEffect(() => {
-    // Window resize handler to reposition dropdown if open
-    const handleResize = () => {
-      if (open) {
-        // Force a re-render to update dropdown position
-        setOpen(false);
-        setTimeout(() => setOpen(true), 0);
-      }
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [open, parentResizeTick]);
-
-  useEffect(() => {
-    // Handle scrolling of parent containers to reposition dropdown
-    const handleScroll = () => {
-      if (open) {
-        setOpen(false);
-        setTimeout(() => setOpen(true), 0);
-      }
-    };
-
-    // Explicitly type scrollableParents to avoid implicit 'any' type
-    const scrollableParents: HTMLElement[] = getScrollableParents(
-      containerRef.current
-    );
-
-    // Add scroll event listeners to all scrollable parents
-    scrollableParents.forEach((parent: HTMLElement) => {
-      parent.addEventListener('scroll', handleScroll);
-    });
-
-    // Always listen to window scroll events
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      scrollableParents.forEach((parent: HTMLElement) => {
-        parent.removeEventListener('scroll', handleScroll);
-      });
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [open, parentResizeTick]);
 
   // Check if all options are selected
   const allSelected = selected.length === options.length;
@@ -144,33 +86,10 @@ const MultiSelectDropdown = ({
     }
   };
 
-  // Calculate dropdown dimensions and position when opened
-  const dropdownPosition = getPositionRelativeToParent({
-    optionsCount: options.length,
-    parentRef: parentRef as React.RefObject<HTMLElement>,
-    ref: labelContainerRef as React.RefObject<HTMLElement>,
-    selector: `[data-instance-id="${instanceId}"]`,
-  });
-  const { left, top, width } = dropdownPosition;
-
   // Handle dropdown list mouse event to prevent propagation
   const handleDropdownMouseDown = (e: React.MouseEvent) => {
     e.stopPropagation();
   };
-
-  // Apply static and dynamic styles separately
-  const parentElement = getParentElement(parentRef);
-  let parentWidth = 0;
-  if (parentElement) {
-    parentWidth = parentElement.getBoundingClientRect().width;
-  }
-
-  const containerDynamicStyles = dynamicStyles.container(parentWidth);
-  const dropdownDynamicStyles = dynamicStyles.dropdownList(
-    left.toString(),
-    top.toString(),
-    width.toString()
-  );
 
   return (
     <div
@@ -179,7 +98,6 @@ const MultiSelectDropdown = ({
       data-test-id='multi-select-dropdown'
       id={instanceId}
       {...stylex.props(styles.container)}
-      style={containerDynamicStyles}
     >
       <div
         ref={labelContainerRef}
@@ -211,7 +129,6 @@ const MultiSelectDropdown = ({
           </div>
         </button>
         <Button
-          // customStylex={styles.resetButton}
           size='sm'
           title={'Reset'}
           variant='secondary'
@@ -226,7 +143,6 @@ const MultiSelectDropdown = ({
           data-instance-id={instanceId}
           data-test-id='multi-select-dropdown-list'
           {...stylex.props(styles.dropdownList)}
-          style={dropdownDynamicStyles}
           onMouseDown={handleDropdownMouseDown}
         >
           <label {...stylex.props(styles.dropdownLabel)}>
