@@ -18,6 +18,8 @@ export const styles = stylex.create({
   drawer: {
     background: '#fff',
     boxShadow: '-2px 0 12px rgba(0, 0, 0, 0.15)',
+    containerName: 'drawer-container',
+    containerType: 'inline-size',
     display: 'flex',
     flexDirection: 'column',
     height: '100vh',
