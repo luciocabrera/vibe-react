@@ -14,5 +14,6 @@
         "donjayamanne.githistory"
       ]
     }
-  }
+  },
+  "postCreateCommand": "npx npm-check-updates -u && yarn install"
 }
