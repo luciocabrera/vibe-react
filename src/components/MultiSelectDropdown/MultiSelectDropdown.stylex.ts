@@ -2,6 +2,7 @@ import * as stylex from '@stylexjs/stylex';
 
 export const styles = stylex.create({
   container: {
+    maxWidth: '100cqw',
     overflow: 'visible',
     position: 'relative',
   },
@@ -22,10 +23,12 @@ export const styles = stylex.create({
     boxShadow: '0 4px 12px rgba(0, 0, 0, 0.25)',
     boxSizing: 'border-box',
     maxHeight: 220,
+    maxWidth: '100cqw',
     overflowX: 'hidden',
     overflowY: 'auto',
     padding: '4px 0',
-    position: 'fixed',
+    position: 'relative',
+    width: '100%',
     zIndex: 9999,
   },
   dropdownOption: {
@@ -42,10 +45,6 @@ export const styles = stylex.create({
     position: 'relative',
     width: '100%',
   },
-  // resetButton: {
-  //   // backgroundColor: 'blue',
-  //   flex: '0 0 auto',
-  // },
   selectedItemsDisplay: {
     maxWidth: '100%',
     overflow: 'hidden',
@@ -62,7 +61,7 @@ export const styles = stylex.create({
     cursor: 'pointer',
     display: 'flex',
     flex: '1 1 auto',
-    // maxWidth: 'calc(100% - 30px)',
+
     minWidth: 0,
     overflow: 'hidden',
     padding: '6px 10px',
@@ -71,15 +70,3 @@ export const styles = stylex.create({
     width: '100%',
   },
 });
-
-export const dynamicStyles = {
-  container: (accordionWidth: number | null) => ({
-    maxWidth: accordionWidth ? `${accordionWidth - 4}px` : '100%',
-    width: accordionWidth ? `${accordionWidth - 4}px` : '100%',
-  }),
-  dropdownList: (left: string, top: string, width: string) => ({
-    left,
-    top,
-    width,
-  }),
-};
