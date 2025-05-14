@@ -1,6 +1,6 @@
-import { Badge } from "@/components/Badge";
+import { Badge } from '@/components/Badge';
 
-import type { TBadgesProps } from "../Badges.types";
+import type { TBadgesProps } from '../Badges.types';
 
 const MAX_BADGES = 10;
 
