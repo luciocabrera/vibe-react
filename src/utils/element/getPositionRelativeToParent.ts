@@ -27,7 +27,7 @@ export const getPositionRelativeToParent = ({
   ref,
   selector,
 }: TGetPositionRelativeToParentArgs) => {
-  const buttonEl = ref.current?.querySelector(selector);
+  const buttonEl = ref.current.querySelector(selector);
   if (!buttonEl) return { left: '0', top: '100%', width: '100%' };
 
   const rect = buttonEl.getBoundingClientRect();
