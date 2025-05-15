@@ -1,7 +1,11 @@
 import * as stylex from '@stylexjs/stylex';
 
+import { border, borderRadius, maxWidths, spacing } from '@/styles/tokens.stylex';
+
+
 export const styles = stylex.create({
   dropdownItem: {
+    ':first-child': { borderBottom: border.sm, paddingBottom: spacing.xs },
     ':hover': {
       background: 'var(--background-color-4)',
     },
@@ -12,31 +16,29 @@ export const styles = stylex.create({
     containerType: 'inline-size',
     cursor: 'pointer',
     display: 'flex',
-    maxWidth: '100cqw',
-    minHeight: '32px',
+    maxWidth: maxWidths.fullContainerW,
+    minHeight: spacing.xxl,
     outline: 0,
-    padding: '0 10px',
     transition: 'background 0.15s',
-    width: '100%',
+    width: maxWidths.full,
   },
   dropdownList: {
-    background: '#fff',
-    border: '1px solid #ccc',
-    borderRadius: 4,
+    border: border.sm,
+    borderBottomLeftRadius: borderRadius.xs,
+    borderBottomRightRadius: borderRadius.xs,
     boxShadow: '0 4px 12px rgba(0, 0, 0, 0.25)',
     boxSizing: 'border-box',
     containerName: 'multi-select-list',
     containerType: 'normal',
     display: 'flex',
     flexDirection: 'column',
-    gap: 0,
     maxHeight: 220,
-    maxWidth: '100cqw',
+    maxWidth: maxWidths.fullContainerW,
     overflowX: 'hidden',
     overflowY: 'auto',
-    padding: '4px 0',
+    padding: `${spacing.sm} ${spacing.xs}`,
     position: 'relative',
-    width: '100%',
+    width: maxWidths.full,
     zIndex: 9999,
   },
 });
