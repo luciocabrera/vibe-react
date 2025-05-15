@@ -1,7 +1,5 @@
 import * as stylex from '@stylexjs/stylex';
 
-import { spacing } from '@/styles/tokens.stylex';
-
 export const styles = stylex.create({
   backdrop: {
     background: 'rgba(0, 0, 0, 0.5)',
@@ -11,10 +9,6 @@ export const styles = stylex.create({
     right: 0,
     top: 0,
     zIndex: 10000,
-  },
-  buttonContainer: {
-    display: 'flex',
-    gap: spacing.sm,
   },
   drawer: {
     background: '#fff',
