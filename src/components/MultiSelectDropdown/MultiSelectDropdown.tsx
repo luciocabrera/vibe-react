@@ -120,7 +120,6 @@ const MultiSelectDropdown = ({
           selected={selected}
           onChange={handleChange}
         />
-        // </div>
       )}
     </div>
   );
