@@ -3,7 +3,6 @@ import { useRef, useState } from 'react';
 import * as stylex from '@stylexjs/stylex';
 
 import { TabsItem } from './components/TabsItem';
-
 import { styles } from './Tabs.stylex';
 import type { TTabsProps } from './Tabs.types';
 

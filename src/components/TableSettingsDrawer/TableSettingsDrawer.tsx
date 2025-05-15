@@ -1,5 +1,5 @@
-import { ColumnOrderSection } from '../sections/ColumnOrderSection';
 import { Drawer } from '../Drawer';
+import { ColumnOrderSection } from '../sections/ColumnOrderSection';
 import { FiltersSection } from '../sections/FiltersSection';
 import { SortBySection } from '../sections/SortBySection';
 import { Tabs } from '../Tabs';
