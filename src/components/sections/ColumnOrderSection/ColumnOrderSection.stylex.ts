@@ -1,5 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 
+import { spacing } from '@/styles/tokens.stylex';
+
 export const styles = stylex.create({
   container: {
     display: 'flex',
@@ -8,6 +10,6 @@ export const styles = stylex.create({
     minWidth: 0,
   },
   heading: {
-    marginTop: 0,
+    marginTop: spacing.none,
   },
 });

@@ -1,29 +1,36 @@
 import * as stylex from '@stylexjs/stylex';
 
+import {
+  border,
+  borderRadius,
+  fontSizes,
+  spacing,
+} from '@/styles/tokens.stylex';
+
 export const styles = stylex.create({
   addButton: {
-    padding: '6px 16px',
+    padding: `${spacing.sm} ${spacing.xl}`,
   },
   columnItem: {
     alignItems: 'center',
     background: '#f7faff',
-    border: '1px solid #c7d6f7',
-    borderRadius: 6,
+    border: border.xs,
+    borderRadius: borderRadius.sm,
     boxSizing: 'border-box',
     cursor: 'grab',
     display: 'flex',
     fontWeight: 500,
-    gap: 10,
+    gap: spacing.md,
     justifyContent: 'space-between',
-    marginBottom: 6,
-    padding: '8px 14px',
+    marginBottom: spacing.sm,
+    padding: `${spacing.md} ${spacing.lg}`,
     transition: 'background 0.2s, box-shadow 0.2s, opacity 0.2s',
     width: '100%', // Ensure each item takes full width
   },
   columnItemContent: {
     alignItems: 'center',
     display: 'flex',
-    gap: 10,
+    gap: spacing.md,
   },
   columnItemDragging: {
     background: '#ddeeff',
@@ -36,7 +43,7 @@ export const styles = stylex.create({
     padding: 0,
   },
   columnSelect: {
-    marginLeft: 8,
+    marginLeft: spacing.sm,
     minWidth: 180,
   },
   container: {
@@ -48,15 +55,15 @@ export const styles = stylex.create({
   controlsContainer: {
     alignItems: 'center',
     display: 'flex',
-    gap: 8,
+    gap: spacing.sm,
   },
   directionButton: {
     background: 'transparent',
     border: 'none',
     color: '#1976d2',
     cursor: 'pointer',
-    fontSize: '1.1em',
-    padding: '4px 8px',
+    fontSize: fontSizes.lg,
+    padding: `${spacing.xs} ${spacing.sm}`,
   },
   dragIcon: {
     color: '#1976d2',
@@ -67,9 +74,9 @@ export const styles = stylex.create({
     border: 'none',
     color: '#1976d2',
     cursor: 'pointer',
-    fontSize: '0.9em',
+    fontSize: fontSizes.sm,
     lineHeight: '1',
-    padding: '2px 4px',
+    padding: `2px ${spacing.xs}`,
   },
   moveButtonDisabled: {
     color: '#ccc',
@@ -78,15 +85,15 @@ export const styles = stylex.create({
   moveButtonsContainer: {
     display: 'flex',
     flexDirection: 'column',
-    gap: 2,
+    gap: '2px',
   },
   removeButton: {
     background: 'transparent',
     border: 'none',
     color: '#ff4444',
     cursor: 'pointer',
-    fontSize: '1.1em',
-    marginLeft: 8,
-    padding: '4px 8px',
+    fontSize: fontSizes.lg,
+    marginLeft: spacing.sm,
+    padding: `${spacing.xs} ${spacing.sm}`,
   },
 });

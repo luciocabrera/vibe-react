@@ -1,7 +1,9 @@
 import * as stylex from '@stylexjs/stylex';
 
+import { maxWidths, spacing } from '@/styles/tokens.stylex';
+
 export const styles = stylex.create({
-  active: { background: '#727f793b' },
+  active: { background: 'var(--background-color-11)' },
   button: {
     ':hover': {
       boxShadow:
@@ -17,9 +19,9 @@ export const styles = stylex.create({
     height: '38px',
     inset: 'unset',
     overflow: 'hidden',
-    padding: '0 1rem',
+    padding: `${spacing.none} ${spacing.lg}`,
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
-    width: '100%',
+    width: maxWidths.fullContainerW,
   },
 });

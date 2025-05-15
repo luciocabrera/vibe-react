@@ -1,5 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 
+import { spacing } from '@/styles/tokens.stylex';
+
 export const styles = stylex.create({
   tabs: { display: 'flex', flex: 1, flexDirection: 'column', height: '100%' },
   tabsButtonsWrapper: {
@@ -15,12 +17,12 @@ export const styles = stylex.create({
     fontWeight: '500',
     height: '40px',
     letterSpacing: '1px',
-    padding: 0,
+    padding: spacing.none,
   },
   tabsContent: {
     // background: 'var(--background-color-1)',
     // color: 'var(--color-text-1)',
     display: 'flex',
-    padding: '1rem',
+    padding: spacing.lg,
   },
 });
