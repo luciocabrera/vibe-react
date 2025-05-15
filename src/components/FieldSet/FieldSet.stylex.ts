@@ -1,10 +1,12 @@
 import * as stylex from '@stylexjs/stylex';
 
+import { border, borderRadius, spacing } from '@/styles/tokens.stylex';
+
 export const styles = stylex.create({
   errorMessage: {
     color: '#cf1010',
     display: 'block',
-    marginTop: '0.3rem',
+    marginTop: spacing.sm,
     maxHeight: '18px',
     maxWidth: { '@container fieldBase ': '100%' },
     minHeight: '18px',
@@ -17,20 +19,20 @@ export const styles = stylex.create({
     containerType: 'inline-size',
     flex: 1,
     minWidth: '300px',
-    padding: 0,
+    padding: spacing.none,
   },
   fieldset: {
     alignContent: 'stretch',
-    border: '1px solid',
-    borderRadius: 'var(--border-radius-sm)',
-    color: 'var(--color-2)',
+    border: border.sm,
+    borderRadius: borderRadius.sm,
+    color: 'var(--text-color-1)',
     display: 'flex',
     flexWrap: 'wrap',
-    padding: 0,
+    padding: spacing.none,
   },
-  label: { fontWeight: 'bold', padding: '0 0.5rem' },
-  legend: { marginLeft: '0.5rem' },
-  legendIcon: { fontSize: '11px', paddingLeft: '6px' },
+  label: { fontWeight: 'bold', padding: `${spacing.none} ${spacing.sm}` },
+  legend: { marginLeft: spacing.sm },
+  legendIcon: { fontSize: '11px', paddingLeft: spacing.sm },
   maxWidth: (maxWidth) => ({ maxWidth }),
   minWidth: (minWidth) => ({ minWidth }),
   notReadonly: {

@@ -1,5 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 
+import { borderRadius, fontSizes, spacing } from '@/styles/tokens.stylex';
+
 export const colorVariants = stylex.create({
   ghost: {
     ':hover': {
@@ -22,7 +24,7 @@ export const colorVariants = stylex.create({
     backgroundColor: 'var(--background-color-1)',
     border: 'none',
     borderColor: 'var(--border-color-1)',
-    borderRadius: 'var(--border-radius-sm)',
+    borderRadius: borderRadius.sm,
     borderStyle: 'solid',
     borderWidth: '1px',
     color: 'var(--text-color-2)',
@@ -31,7 +33,7 @@ export const colorVariants = stylex.create({
     backgroundColor: 'var(--background-color-4)',
     border: 'none',
     borderColor: 'var(--border-color-1)',
-    borderRadius: 'var(--border-radius-sm)',
+    borderRadius: borderRadius.sm,
     borderStyle: 'solid',
     borderWidth: '1px',
     color: 'var(--text-color-3)',
@@ -39,10 +41,14 @@ export const colorVariants = stylex.create({
 });
 
 export const sizeVariants = stylex.create({
-  lg: { fontSize: '16px', minWidth: '150px', padding: '0.5rem 1rem' },
-  md: { fontSize: '14px', padding: '6px 12px' },
-  sm: { fontSize: '12px', padding: '4px 8px' },
-  xl: { fontSize: '18px', padding: '10px 20px' },
+  lg: {
+    fontSize: fontSizes.md,
+    minWidth: '150px',
+    padding: `${spacing.sm} ${spacing.md}`,
+  },
+  md: { fontSize: fontSizes.sm, padding: `${spacing.xs} ${spacing.sm}` },
+  sm: { fontSize: fontSizes.xs, padding: `${spacing.xs} ${spacing.sm}` },
+  xl: { fontSize: '1.125rem', padding: `${spacing.md} ${spacing.lg}` },
 });
 
 export type ColorVariants = keyof typeof colorVariants;
@@ -56,7 +62,7 @@ export const styles = stylex.create({
       opacity: 0.9,
     },
     alignItems: 'center',
-    borderRadius: '8px',
+    borderRadius: borderRadius.sm,
     cursor: 'pointer',
     display: 'inline-flex',
     justifyContent: 'center',

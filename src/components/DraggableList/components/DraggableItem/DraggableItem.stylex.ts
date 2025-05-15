@@ -1,5 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 
+import { border, borderRadius, spacing } from '@/styles/tokens.stylex';
+
 export const styles = stylex.create({
   dragIcon: {
     color: 'var(--text-color-3)',
@@ -13,22 +15,22 @@ export const styles = stylex.create({
   labelContainer: {
     alignItems: 'center',
     display: 'flex',
-    gap: 10,
+    gap: spacing.md,
   },
   li: {
     alignItems: 'center',
     background: 'var(--background-color-8)',
-    border: '1px solid var(--text-color-3)',
-    borderRadius: 6,
+    border: border.xs,
+    borderRadius: borderRadius.sm,
     color: 'var(--text-color-3)',
     cursor: 'grab',
     display: 'flex',
     flex: 1,
     fontWeight: 500,
-    gap: 10,
+    gap: spacing.md,
     justifyContent: 'space-between',
     opacity: 1,
-    padding: '8px 14px',
+    padding: `${spacing.sm} ${spacing.lg}`,
     transition: 'background 0.2s, box-shadow 0.2s, opacity 0.2s',
   },
 });
