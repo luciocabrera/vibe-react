@@ -15,5 +15,5 @@
       ]
     }
   },
-  "postCreateCommand": "npx npm-check-updates -u && yarn install"
+  "postCreateCommand": "npx npm-check-updates -u -y && yarn install"
 }
