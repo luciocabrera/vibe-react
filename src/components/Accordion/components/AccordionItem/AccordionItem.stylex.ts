@@ -1,6 +1,11 @@
 import * as stylex from '@stylexjs/stylex';
 
-import { border, borderRadius, spacing } from '@/styles/tokens.stylex';
+import {
+  border,
+  borderRadius,
+  maxWidths,
+  spacing,
+} from '@/styles/tokens.stylex';
 
 export const styles = stylex.create({
   content: {
@@ -9,9 +14,9 @@ export const styles = stylex.create({
     display: 'flex',
     flexDirection: 'column',
     flexWrap: 'wrap',
-    maxWidth: '100cqw',
+    maxWidth: maxWidths.fullContainerW,
     padding: spacing.none,
-    width: '100%',
+    width: maxWidths.full,
   },
   details: {
     border: border.xs,
@@ -21,8 +26,8 @@ export const styles = stylex.create({
     display: 'flex',
     flexDirection: 'column',
     flexWrap: 'wrap',
-    maxWidth: '100cqw',
-    width: '100%',
+    maxWidth: maxWidths.fullContainerW,
+    width: maxWidths.full,
   },
   summary: {
     cursor: 'pointer',

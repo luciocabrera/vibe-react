@@ -1,6 +1,6 @@
 import * as stylex from '@stylexjs/stylex';
 
-import { spacing } from '@/styles/tokens.stylex';
+import { maxWidths, spacing } from '@/styles/tokens.stylex';
 
 export const styles = stylex.create({
   badgesContainer: {
@@ -10,9 +10,8 @@ export const styles = stylex.create({
     display: 'flex',
     flexWrap: 'wrap',
     gap: spacing.sm,
-    // maxWidth: '100%',
-    // minWidth: 0,
-    // overflow: 'hidden',
+    maxWidth: maxWidths.fullContainerW,
+    minWidth: 0,
     padding: spacing.md,
   },
 });
