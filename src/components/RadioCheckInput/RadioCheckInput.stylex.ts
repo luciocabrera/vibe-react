@@ -1,5 +1,12 @@
 import * as stylex from '@stylexjs/stylex';
 
+import {
+  border,
+  borderRadius,
+  maxWidths,
+  spacing,
+} from '@/styles/tokens.stylex';
+
 export const styles = stylex.create({
   customCheck: {
     alignContent: 'flex-start',
@@ -10,26 +17,25 @@ export const styles = stylex.create({
     flex: 1,
     flexDirection: 'column',
     flexWrap: 'wrap',
-    gap: '0.5rem',
-
+    gap: spacing.sm,
     height: '28px',
     justifyContent: 'center',
     margin: 0,
     maxWidth: '100cqw',
     minWidth: 0,
-    padding: 0,
+    padding: spacing.none,
     position: 'relative',
-    width: '100%',
+    width: maxWidths.full,
   },
   input: {
-    margin: 0,
-    padding: 0,
+    margin: spacing.none,
+    padding: spacing.none,
     visibility: 'hidden',
     width: 0,
   },
   labelText: {
-    marginLeft: '0.5em',
-    maxWidth: 'calc(100cqw - 20px - 0.8rem)',
+    marginLeft: spacing.sm,
+    maxWidth: `calc(${maxWidths.fullContainerW} - 20px - 0.8rem)`,
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
@@ -37,8 +43,8 @@ export const styles = stylex.create({
   mark: {
     alignItems: 'center',
     backgroundColor: 'transparent',
-    border: '1px solid var(--border-color-1)',
-    borderRadius: '6px',
+    border: border.sm,
+    borderRadius: borderRadius.sm,
     display: 'flex',
     height: '20px',
     justifyContent: 'center',

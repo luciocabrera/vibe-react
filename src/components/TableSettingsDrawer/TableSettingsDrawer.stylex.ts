@@ -1,5 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 
+import { spacing } from '@/styles/tokens.stylex';
+
 export const styles = stylex.create({
   // Drawer styling
   backdrop: {
@@ -13,23 +15,20 @@ export const styles = stylex.create({
   },
   buttonContainer: {
     display: 'flex',
-    gap: '8px',
+    gap: spacing.sm, // 8px
   },
-
   closeButton: {
     background: 'transparent',
     border: 'none',
     cursor: 'pointer',
     fontSize: '1.5em',
-    padding: '0 8px',
+    padding: `${spacing.none} ${spacing.sm}`,
   },
-
   content: {
     flex: 1,
     overflowY: 'auto',
-    padding: '16px',
+    padding: spacing.md, // 12px
   },
-
   drawer: {
     background: '#fff',
     boxShadow: '-2px 0 12px rgba(0, 0, 0, 0.15)',
@@ -44,40 +43,21 @@ export const styles = stylex.create({
     width: '400px',
     zIndex: 10001,
   },
-  // Pinned drawer styles
   drawerPinned: {
     background: '#fff',
-
     borderLeft: '1px solid #eee',
-
-    // Stay at the top
     bottom: 'unset',
-
     boxShadow: 'none',
-
     display: 'flex',
-
     flexDirection: 'column',
-
     height: '100vh',
-
-    // Remove bottom alignment
     left: 'unset',
-
     maxWidth: '370px',
-
     minWidth: '370px',
-
     position: 'fixed',
-
-    // Ensure it stays fixed
     right: 0,
-
-    // Stay on the right
     top: 0,
-
     transition: 'none',
-    // Remove left alignment
     width: '370px',
     zIndex: 10001,
   },
