@@ -47,7 +47,7 @@ export const sizeVariants = stylex.create({
     padding: `${spacing.sm} ${spacing.md}`,
   },
   md: { fontSize: fontSizes.sm, padding: `${spacing.xs} ${spacing.sm}` },
-  sm: { fontSize: fontSizes.xs, padding: `${spacing.xs} ${spacing.sm}` },
+  sm: { fontSize: fontSizes.xs, minWidth: '30px', padding: `${spacing.xs} ${spacing.sm}` },
   xl: { fontSize: '1.125rem', padding: `${spacing.md} ${spacing.lg}` },
 });
 

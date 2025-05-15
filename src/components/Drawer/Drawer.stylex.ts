@@ -12,7 +12,6 @@ export const styles = stylex.create({
     top: 0,
     zIndex: 10000,
   },
-  button: { minWidth: '35px' },
   buttonContainer: {
     display: 'flex',
     gap: spacing.sm,

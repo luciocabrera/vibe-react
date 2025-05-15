@@ -1,3 +1,8 @@
+import * as stylex from '@stylexjs/stylex';
+
+import { Button } from '@/components/Button';
+
+import { styles } from './SortItemControls.stylex';
 import type { TSortItemControlsProps } from './SortItemControls.types';
 
 const SortItemControls = ({
@@ -5,36 +10,23 @@ const SortItemControls = ({
   onDelete: handleDelete,
   onToggleDirection: handleToggleDirection,
 }: TSortItemControlsProps) => (
-  <div style={{ alignItems: 'center', display: 'flex', gap: 8 }}>
-    <button
-      style={{
-        background: 'transparent',
-        border: 'none',
-        color: '#1976d2',
-        cursor: 'pointer',
-        fontSize: '1.1em',
-        padding: '4px 8px',
-      }}
-      type='button'
+  <div {...stylex.props(styles.container)}>
+    <Button
+      size='sm'
+      title={direction === 'asc' ? 'Ascending' : 'Descending'}
+      variant='inverted'
       onClick={handleToggleDirection}
     >
       {direction === 'asc' ? '▲' : '▼'}
-    </button>
-    <button
-      style={{
-        background: 'transparent',
-        border: 'none',
-        color: '#ff4444',
-        cursor: 'pointer',
-        fontSize: '1.1em',
-        marginLeft: 8,
-        padding: '4px 8px',
-      }}
-      type='button'
+    </Button>
+    <Button
+      size='sm'
+      title='Remove'
+      variant='inverted'
       onClick={handleDelete}
     >
-      ✕
-    </button>
+      X
+    </Button>
   </div>
 );
 export default SortItemControls;
