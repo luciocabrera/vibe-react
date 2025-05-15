@@ -1,5 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 
+import { border, borderRadius, spacing } from '@/styles/tokens.stylex';
+
 export const styles = stylex.create({
   content: {
     containerName: 'accordion-content-container',
@@ -8,12 +10,12 @@ export const styles = stylex.create({
     flexDirection: 'column',
     flexWrap: 'wrap',
     maxWidth: '100cqw',
-    padding: 0,
+    padding: spacing.none,
     width: '100%',
   },
   details: {
-    border: '1px solid lightgrey',
-    borderRadius: '5px',
+    border: border.xs,
+    borderRadius: borderRadius.md,
     containerName: 'details-container',
     containerType: 'normal',
     display: 'flex',
@@ -24,6 +26,6 @@ export const styles = stylex.create({
   },
   summary: {
     cursor: 'pointer',
-    padding: '1rem',
+    padding: spacing.md,
   },
 });

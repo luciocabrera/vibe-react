@@ -166,6 +166,7 @@ export default [
       "**/src/App.tsx",
       "**/src/main.tsx",
       "**/src/components/ResultsTable.tsx",
+      "**/src/styles/tokens.stylex.ts",
       "**/*.d.ts",
       "**/*.test.ts",
       "**/*.test.tsx",
