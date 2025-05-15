@@ -1,4 +1,4 @@
-import type { ColumnDef } from '../../App';
+import type { ColumnDef } from '../../../App';
 
 export type TSortCol = {
   dir: 'asc' | 'desc';

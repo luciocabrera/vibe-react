@@ -1,4 +1,4 @@
-import type { ColumnDef } from '../../App';
+import type { ColumnDef } from '../../../App';
 
 // TODO: Get the ColumnDef type from the library or shared types
 export type TColumnOrderSectionProps = {

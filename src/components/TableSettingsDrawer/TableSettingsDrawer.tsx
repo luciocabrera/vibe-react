@@ -1,7 +1,7 @@
-import { ColumnOrderSection } from '../ColumnOrderSection';
+import { ColumnOrderSection } from '../sections/ColumnOrderSection';
 import { Drawer } from '../Drawer';
-import { FiltersSection } from '../FiltersSection';
-import { SortBySection } from '../SortBySection';
+import { FiltersSection } from '../sections/FiltersSection';
+import { SortBySection } from '../sections/SortBySection';
 import { Tabs } from '../Tabs';
 import type { TTabsItems } from '../Tabs/Tabs.types';
 

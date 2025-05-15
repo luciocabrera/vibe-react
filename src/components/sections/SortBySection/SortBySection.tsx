@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import * as stylex from '@stylexjs/stylex';
 
-import { DraggableList } from '../DraggableList';
-import type { TDraggableItemType } from '../DraggableList/DraggableList.types';
-import { FormFieldBase } from '../FormFieldBase';
-import { Select } from '../Select';
-import { SortItemControls } from '../SortItemControls';
+import { DraggableList } from '../../DraggableList';
+import type { TDraggableItemType } from '../../DraggableList/DraggableList.types';
+import { FieldSet } from '../../FieldSet';
+import { Select } from '../../Select';
 
+import { SortItemControls } from './components/SortItemControls';
 import { styles } from './SortBySection.stylex';
 import type { TSortBySectionProps, TSortCol } from './SortBySection.types';
 
@@ -94,7 +94,7 @@ const SortBySection = ({
 
   return (
     <div {...stylex.props(styles.container)}>
-      <FormFieldBase
+      <FieldSet
         accessor='sort-column-select'
         htmlFor='sort-column-select'
         label='Sort by'
@@ -106,7 +106,7 @@ const SortBySection = ({
           value={selected}
           onChange={handleSelectChange}
         />
-      </FormFieldBase>
+      </FieldSet>
 
       <button
         {...stylex.props(styles.addButton)}

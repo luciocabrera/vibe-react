@@ -1,11 +1,11 @@
 import { FaLock, FaStar } from 'react-icons/fa';
 import * as stylex from '@stylexjs/stylex';
 
-import { styles } from './FormFieldBase.stylex';
-import type { TFormFieldBaseProps } from './FormFieldBase.types';
+import { styles } from './FieldSet.stylex';
+import type { TFormFieldBaseProps } from './FieldSet.types';
 
 // TODO: Think of a different name for this component, maybe FieldSet
-const FormFieldBase = <TData extends Record<string, unknown>>({
+const FieldSet = <TData extends Record<string, unknown>>({
   children,
   htmlFor,
   id,
@@ -65,4 +65,4 @@ const FormFieldBase = <TData extends Record<string, unknown>>({
   );
 };
 
-export default FormFieldBase;
+export default FieldSet;

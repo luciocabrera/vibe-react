@@ -1,12 +1,11 @@
 import * as stylex from '@stylexjs/stylex';
 
-import { Accordion } from '../Accordion';
-import { AccordionItem } from '../AccordionItem';
-import { Badges } from '../Badges';
-import { Button } from '../Button';
-import { FormFieldBase } from '../FormFieldBase';
-import { MultiSelectDropdown } from '../MultiSelectDropdown';
-import { RangeInput } from '../RangeInput';
+import { Accordion, AccordionItem } from '../../Accordion';
+import { Badges } from '../../Badges';
+import { Button } from '../../Button';
+import { FieldSet } from '../../FieldSet';
+import { MultiSelectDropdown } from '../../MultiSelectDropdown';
+import { RangeInput } from '../../RangeInput';
 
 import { styles } from './FiltersSection.stylex';
 import type { FiltersSectionProps } from './FiltersSection.types';
@@ -82,7 +81,7 @@ export const FiltersSection = ({
         {columns
           .filter((col) => col.rangeFilter)
           .map((col) => (
-            <FormFieldBase
+            <FieldSet
               key={col.key}
               accessor={col.key}
               label={col.label}
@@ -93,7 +92,7 @@ export const FiltersSection = ({
                 onChange={(min, max) => handleRangeChange(col.key, min, max)}
                 onReset={() => handleResetRange(col.key)}
               />
-            </FormFieldBase>
+            </FieldSet>
           ))}
       </div>
       <Button
