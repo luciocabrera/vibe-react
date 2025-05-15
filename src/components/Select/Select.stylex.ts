@@ -18,7 +18,7 @@ export const styles = stylex.create({
     paddingLeft: spacing.md,
     paddingRight: spacing.md,
     position: 'relative',
-     top: '1px',
+    top: '1px',
     width: maxWidths.full,
   },
 });
