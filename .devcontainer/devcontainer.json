@@ -15,5 +15,5 @@
       ]
     }
   },
-  "postCreateCommand": "yarn global add npm-check-updates && ncu -u -y && yarn install"
+  "postCreateCommand": "yarn install"
 }
