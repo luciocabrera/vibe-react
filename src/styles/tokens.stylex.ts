@@ -3,20 +3,20 @@ import * as stylex from '@stylexjs/stylex';
 export const spacing = stylex.defineVars({
   none: '0',
   xs: '0.25rem', // 4px
-  sm: '0.5rem',  // 8px
-  md: '1rem',    // 16px
-  lg: '1.5rem',  // 24px
-  xl: '2rem',    // 32px
-  xxl: '3rem',   // 48px
-  xxxl: '4rem',  // 64px
+  sm: '0.5rem', // 8px
+  md: '1rem', // 16px
+  lg: '1.5rem', // 24px
+  xl: '2rem', // 32px
+  xxl: '3rem', // 48px
+  xxxl: '4rem', // 64px
 });
 
 export const borderRadius = stylex.defineVars({
   none: '0',
   xs: '0.25rem', // 4px
-  sm: '0.5rem',  // 8px
-  md: '1rem',    // 16px
-  lg: '1.5rem',  // 24px
+  sm: '0.5rem', // 8px
+  md: '1rem', // 16px
+  lg: '1.5rem', // 24px
   pill: '9999px',
 });
 
