@@ -10,11 +10,6 @@ export const styles = stylex.create({
     top: 0,
     zIndex: 10000,
   },
-  button: { minWidth: '35px' },
-  buttonContainer: {
-    display: 'flex',
-    gap: '8px',
-  },
   drawer: {
     background: '#fff',
     boxShadow: '-2px 0 12px rgba(0, 0, 0, 0.15)',

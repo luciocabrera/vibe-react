@@ -1,6 +1,6 @@
 import type { ColumnDef } from '../../App';
-import type { DataRecord } from '../FiltersSection/FiltersSection.types';
-import type { TSortCol } from '../SortBySection/SortBySection.types';
+import type { DataRecord } from '../sections/FiltersSection/FiltersSection.types';
+import type { TSortCol } from '../sections/SortBySection/SortBySection.types';
 
 export type TableSettingsDrawerProps = {
   columnOrder: string[];

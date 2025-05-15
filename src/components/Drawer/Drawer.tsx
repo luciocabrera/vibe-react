@@ -1,8 +1,7 @@
 import { useEffect, useRef } from 'react';
 import * as stylex from '@stylexjs/stylex';
 
-import { Button } from '../Button';
-
+import { DrawerControls } from './components/DrawerControls';
 import { styles } from './Drawer.stylex';
 import type { TDrawerProps } from './Drawer.types';
 
@@ -90,26 +89,11 @@ const Drawer = ({
           >
             Table Settings
           </h2>
-          <div {...stylex.props(styles.buttonContainer)}>
-            <Button
-              customStylex={styles.button}
-              size='sm'
-              title={isPinned ? 'Unpin drawer' : 'Pin drawer'}
-              variant='inverted'
-              onClick={handlePinClick}
-            >
-              {isPinned ? '📌' : '📍'}
-            </Button>
-            <Button
-              customStylex={styles.button}
-              size='sm'
-              title='Close'
-              variant='inverted'
-              onClick={handleClose}
-            >
-              x
-            </Button>
-          </div>
+          <DrawerControls
+            isPinned={isPinned}
+            onCLose={handleClose}
+            onTogglePin={handlePinClick}
+          />
         </header>
         {children}
       </aside>

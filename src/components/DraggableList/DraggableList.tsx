@@ -1,7 +1,6 @@
 import * as stylex from '@stylexjs/stylex';
 
-import { DraggableItem } from '../DraggableItem';
-
+import { DraggableItem } from './components/DraggableItem';
 import { styles } from './DraggableList.stylex';
 import type { TDraggableListProps } from './DraggableList.types';
 import { useDraggableList } from './hooks';

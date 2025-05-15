@@ -1,5 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 
+import { borderRadius, maxWidths, spacing } from '@/styles/tokens.stylex';
+
 export const styles = stylex.create({
   input: {
     ':focus-visible': {
@@ -8,16 +10,15 @@ export const styles = stylex.create({
     },
     background: 'transparent',
     border: 'none',
-    borderRadius: '10px',
+    borderRadius: borderRadius.md,
     color: 'var(--text-color-1)',
     inset: 'unset',
-    lineHeight: '18px',
     outline: 'none',
-    paddingBottom: '10px',
-    paddingLeft: '10px',
-    paddingRight: '10px',
+    paddingBottom: spacing.md,
+    paddingLeft: spacing.md,
+    paddingRight: spacing.md,
     position: 'relative',
-    top: '-1px',
-    width: '100%',
+    top: '1px',
+    width: maxWidths.full,
   },
 });

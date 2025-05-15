@@ -1,5 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 
+import { fontSizes, spacing } from '@/styles/tokens.stylex';
+
 export const styles = stylex.create({
   container: {
     alignItems: 'center',
@@ -13,8 +15,8 @@ export const styles = stylex.create({
   },
   label: {
     color: '#666',
-    fontSize: '0.8em',
-    marginLeft: '8px',
+    fontSize: fontSizes.xs,
+    marginLeft: spacing.sm,
   },
   thumb: (isActive: boolean) => ({
     background: 'white',
