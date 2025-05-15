@@ -34,6 +34,11 @@ export const fontSizes = stylex.defineVars({
   xl: '24px',
 });
 
+export const maxWidths = stylex.defineVars({
+  fullContainerW: '100cqw',
+  full: '100%',
+});
+
 export const shadows = stylex.defineVars({
   none: 'none',
   sm: '0 1px 2px rgba(0,0,0,0.05)',
