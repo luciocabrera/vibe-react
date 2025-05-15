@@ -1,6 +1,6 @@
 import * as stylex from '@stylexjs/stylex';
 
-import ToggleSwitch from '../ToggleSwitch/ToggleSwitch';
+import { ToggleSwitch } from '../ToggleSwitch';
 
 import { styles } from './ColumnToggle.stylex';
 import type { TColumnToggleProps } from './ColumnToggle.types';
