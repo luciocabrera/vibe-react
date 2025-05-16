@@ -4,7 +4,7 @@ import { spacing } from '@/styles/tokens.stylex';
 
 export const styles = stylex.create({
   button: {
-   minWidth: spacing['4xl']
+    minWidth: spacing['4xl'],
   },
   container: {
     display: 'flex',
