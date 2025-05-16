@@ -2,6 +2,8 @@ import * as stylex from '@stylexjs/stylex';
 
 import { fontSizes, spacing } from '@/styles/tokens.stylex';
 
+// TODO: Add background color to the variables in the css
+
 export const styles = stylex.create({
   container: {
     alignItems: 'center',
@@ -14,29 +16,28 @@ export const styles = stylex.create({
     width: 0,
   },
   label: {
-    color: '#666',
     fontSize: fontSizes.xs,
     marginLeft: spacing.sm,
   },
   thumb: (isActive: boolean) => ({
-    background: 'white',
+    background: 'var(--background-color-7)',
     borderRadius: '50%',
     bottom: '2px',
     content: '""',
-    height: '16px',
+    height: spacing.lg,
     left: isActive ? '22px' : '2px',
     position: 'absolute',
     transition: 'left 0.3s',
-    width: '16px',
+    width: spacing.lg,
   }),
   track: (isActive: boolean) => ({
     background: isActive ? 'var(--background-color-1)' : '#ccc',
     borderRadius: '10px',
     cursor: 'pointer',
     display: 'inline-block',
-    height: '20px',
+    height: spacing.xl,
     position: 'relative',
     transition: 'background 0.3s',
-    width: '40px',
+    width: spacing['5xl'],
   }),
 });

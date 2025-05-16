@@ -1,5 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 
+import { spacing } from '@/styles/tokens.stylex';
+
 export const styles = stylex.create({
   backdrop: {
     background: 'rgba(0, 0, 0, 0.5)',
@@ -49,7 +51,7 @@ export const styles = stylex.create({
     borderBottom: '1px solid #eee',
     display: 'flex',
     justifyContent: 'space-between',
-    padding: '14px 16px',
+    padding: `${spacing.md} ${spacing.lg}`,
   },
   title: {
     fontSize: '1.2em',

@@ -34,7 +34,7 @@ export const styles = stylex.create({
   },
   removeButton: {
     ':hover': {
-      color: 'red',
+      color: 'var(--danger)',
     },
     background: 'transparent',
     border: border.none,

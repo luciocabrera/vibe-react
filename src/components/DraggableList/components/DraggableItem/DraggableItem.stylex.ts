@@ -2,15 +2,18 @@ import * as stylex from '@stylexjs/stylex';
 
 import { border, borderRadius, spacing } from '@/styles/tokens.stylex';
 
+// TODO: Revisit when is active is used, as it seems  is not getting applied
 export const styles = stylex.create({
   dragIcon: {
     color: 'var(--text-color-3)',
-    fontSize: '1.2em',
+    // fontSize: '1.2em',
   },
   isActive: {
-    background: '#ddeeff',
+    // background: '#ddeeff',
+    // boxShadow: '0 2px 8px #1976d244',
+    background: 'red',
     boxShadow: '0 2px 8px #1976d244',
-    opacity: 0.7,
+    // opacity: 0.7,
   },
   labelContainer: {
     alignItems: 'center',

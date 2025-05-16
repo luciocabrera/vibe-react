@@ -1,6 +1,6 @@
 import * as stylex from '@stylexjs/stylex';
 
-import { maxWidths } from '@/styles/tokens.stylex';
+import { border, borderRadius, maxWidths, spacing } from '@/styles/tokens.stylex';
 
 export const styles = stylex.create({
   container: {
@@ -11,6 +11,9 @@ export const styles = stylex.create({
     position: 'relative',
   },
   label: {
+    border: border.xs,
+    borderBottomRightRadius: borderRadius.sm,
+    borderTopRightRadius: borderRadius.sm,
     boxSizing: 'border-box',
     display: 'flex',
     maxWidth: maxWidths.full,
@@ -18,7 +21,6 @@ export const styles = stylex.create({
     width: maxWidths.full,
   },
   selectedItemsDisplay: {
-    // border: border.sm,
     maxWidth: maxWidths.full,
     overflow: 'hidden',
     textOverflow: 'ellipsis',
@@ -27,17 +29,14 @@ export const styles = stylex.create({
   },
   triggerButton: {
     alignItems: 'center',
-    background: '#fff',
-    // border: border.none,
-    border: '1px solid #ccc',
-    // borderRadius: 4,
+    background: 'inherit',
+    border: border.none,
     boxSizing: 'border-box',
     cursor: 'pointer',
     display: 'flex',
-    // flex: '1 1 auto',
     minWidth: 0,
     overflow: 'hidden',
-    padding: '6px 10px',
+    padding: `${spacing.sm} ${spacing.md}`,
     textAlign: 'left',
     userSelect: 'none',
     width: maxWidths.full,

@@ -4,7 +4,7 @@ import { border, borderRadius, spacing } from '@/styles/tokens.stylex';
 
 export const styles = stylex.create({
   errorMessage: {
-    color: '#cf1010',
+    color: 'var(--danger)',
     display: 'block',
     marginTop: spacing.sm,
     maxHeight: '18px',

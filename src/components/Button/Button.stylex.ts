@@ -1,6 +1,6 @@
 import * as stylex from '@stylexjs/stylex';
 
-import { borderRadius, fontSizes, spacing } from '@/styles/tokens.stylex';
+import { border, borderRadius, fontSizes, spacing } from '@/styles/tokens.stylex';
 
 export const colorVariants = stylex.create({
   ghost: {
@@ -9,33 +9,26 @@ export const colorVariants = stylex.create({
     },
     backgroundColor: 'transparent',
     borderColor: 'transparent',
-    borderStyle: 'solid',
-    borderWidth: '1px',
     color: 'var(--text-color-3)',
   },
   inverted: {
     backgroundColor: 'var(--background-color-7)',
+    border: border.xs,
     borderColor: 'var(--border-color-1)',
-    borderStyle: 'solid',
-    borderWidth: '1px',
     color: 'var(--text-color-3)',
   },
   primary: {
     backgroundColor: 'var(--background-color-1)',
-    border: 'none',
+    border: border.xs,
     borderColor: 'var(--border-color-1)',
     borderRadius: borderRadius.sm,
-    borderStyle: 'solid',
-    borderWidth: '1px',
     color: 'var(--text-color-2)',
   },
   secondary: {
     backgroundColor: 'var(--background-color-4)',
-    border: 'none',
+    border: border.xs,
     borderColor: 'var(--border-color-1)',
     borderRadius: borderRadius.sm,
-    borderStyle: 'solid',
-    borderWidth: '1px',
     color: 'var(--text-color-3)',
   },
 });
@@ -49,7 +42,7 @@ export const sizeVariants = stylex.create({
   md: { fontSize: fontSizes.sm, padding: `${spacing.xs} ${spacing.sm}` },
   sm: {
     fontSize: fontSizes.xs,
-    minWidth: '30px',
+    minWidth: spacing['3xl'],
     padding: `${spacing.xs} ${spacing.sm}`,
   },
   xl: { fontSize: '1.125rem', padding: `${spacing.md} ${spacing.lg}` },

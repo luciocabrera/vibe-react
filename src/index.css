@@ -18,6 +18,7 @@
 :root[data-theme='light'] {
   --background: whitesmoke;
   --foreground: hsl(0 0% 3.9%);
+  --danger: #b32a20ce;
 
   --background-color-1: #385245;
   --background-color-2: #03542f;
