@@ -3,7 +3,13 @@ import * as stylex from '@stylexjs/stylex';
 import { spacing } from '@/styles/tokens.stylex';
 
 export const styles = stylex.create({
-  tabs: { display: 'flex', flex: 1, flexDirection: 'column', height: '100%' },
+  tabs: {
+    containerName: 'tabs-container',
+    containerType: 'normal',
+    display: 'flex',
+    flexDirection: 'column',
+    overflow: 'hidden',
+  },
   tabsButtonsWrapper: {
     alignContent: 'center',
     alignItems: 'center',
@@ -20,9 +26,12 @@ export const styles = stylex.create({
     padding: spacing.none,
   },
   tabsContent: {
-    // background: 'var(--background-color-1)',
-    // color: 'var(--color-text-1)',
-    display: 'flex',
+    display: 'block',
+    flex: 1,
+    maxHeight: 'calc(100cqh - 40px)', // 40px is the tab buttons height
+    minHeight: 0,
+    overflow: 'auto',
     padding: spacing.lg,
+    position: 'relative',
   },
 });
