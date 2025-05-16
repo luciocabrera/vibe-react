@@ -1,6 +1,11 @@
 import * as stylex from '@stylexjs/stylex';
 
-import { border, borderRadius, maxWidths, spacing } from '@/styles/tokens.stylex';
+import {
+  border,
+  borderRadius,
+  maxWidths,
+  spacing,
+} from '@/styles/tokens.stylex';
 
 export const styles = stylex.create({
   container: {

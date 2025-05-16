@@ -1,6 +1,11 @@
 import * as stylex from '@stylexjs/stylex';
 
-import { border, borderRadius, fontSizes, spacing } from '@/styles/tokens.stylex';
+import {
+  border,
+  borderRadius,
+  fontSizes,
+  spacing,
+} from '@/styles/tokens.stylex';
 
 export const colorVariants = stylex.create({
   ghost: {

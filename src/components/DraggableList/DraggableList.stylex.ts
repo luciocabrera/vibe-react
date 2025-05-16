@@ -13,6 +13,6 @@ export const styles = stylex.create({
     listStyle: 'none',
     margin: 0,
     padding: spacing.none,
-    width: maxWidths.full,  
+    width: maxWidths.full,
   },
 });
