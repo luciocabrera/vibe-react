@@ -12,6 +12,7 @@ const DrawerControls = ({
 }: TDrawerControlsProps) => (
   <div {...stylex.props(styles.container)}>
     <Button
+      customStylex={styles.button}
       size='sm'
       title={isPinned ? 'Unpin drawer' : 'Pin drawer'}
       variant='inverted'
@@ -20,6 +21,7 @@ const DrawerControls = ({
       {isPinned ? '📌' : '📍'}
     </Button>
     <Button
+      customStylex={styles.button}
       size='sm'
       title='Close'
       variant='inverted'

@@ -20,7 +20,7 @@ export const styles = stylex.create({
   },
   details: {
     border: border.xs,
-    borderRadius: borderRadius.md,
+    borderRadius: borderRadius.sm,
     containerName: 'details-container',
     containerType: 'normal',
     display: 'flex',
