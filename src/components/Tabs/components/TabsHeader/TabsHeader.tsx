@@ -18,7 +18,7 @@ const TabsHeader = ({
       {...stylex.props(styles.tabsButtonsWrapper)}
       aria-orientation='horizontal'
       role='tablist'
-      tabIndex={0} 
+      tabIndex={0}
       onKeyDown={handleKeyDown}
     >
       {tabs.map(({ header, key }) => (
