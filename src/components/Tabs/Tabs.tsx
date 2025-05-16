@@ -2,7 +2,8 @@ import type { KeyboardEvent } from 'react';
 import { useRef, useState } from 'react';
 import * as stylex from '@stylexjs/stylex';
 
-import { TabsItem } from './components/TabsItem';
+import { TabsContent } from './components/TabsContent';
+import { TabsHeader } from './components/TabsHeader';
 import { styles } from './Tabs.stylex';
 import type { TTabsProps } from './Tabs.types';
 
@@ -10,7 +11,6 @@ const Tabs = ({ defaultSelectedTab, ref, tabs, ...props }: TTabsProps) => {
   const [active, setActive] = useState(defaultSelectedTab ?? tabs?.[0]?.key);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const activeIndex = tabs?.findIndex((tab) => tab.key === active) ?? 0;
-  // const activeChildren = tabs?.find((tab) => tab.key === active)?.children;
 
   // Keyboard navigation handler
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
@@ -41,60 +41,24 @@ const Tabs = ({ defaultSelectedTab, ref, tabs, ...props }: TTabsProps) => {
     setActive(key);
   };
 
+  if (!tabs) return null;
+
   return (
     <div
       ref={ref}
       {...stylex.props(styles.tabs)}
       {...props}
     >
-      <div
-        {...stylex.props(styles.tabsButtonsWrapper)}
-        aria-orientation='horizontal'
-        role='tablist'
-        tabIndex={0} // <-- Add this line
+      <TabsHeader
+        active={active}
+        tabs={tabs}
         onKeyDown={handleKeyDown}
-      >
-        {tabs?.map(({ header, key }) => (
-          <TabsItem
-            key={key}
-            ref={(el) => {
-              const tabIdx = tabs.findIndex((tab) => tab.key === key);
-              if (tabIdx !== -1) tabRefs.current[tabIdx] = el;
-            }}
-            active={active === key}
-            aria-controls={`tabpanel-${key}`}
-            aria-selected={active === key}
-            id={`tab-${key}`}
-            role='tab'
-            tabIndex={active === key ? 0 : -1}
-            onClick={() => handleTabClick(key)}
-          >
-            {header}
-          </TabsItem>
-        ))}
-      </div>
-      <div
-        {...stylex.props(styles.tabsContent)}
-        aria-labelledby={`tab-${active}`}
-        id={`tabpanel-${active}`}
-        role='tabpanel'
-      >
-        {tabs?.map(({ children, key }) => (
-          <div
-            key={key}
-            aria-labelledby={`tab-${key}`}
-            hidden={active !== key}
-            id={`tabpanel-${key}`}
-            role='tabpanel'
-            style={{
-              display: active === key ? 'block' : 'none',
-              width: '100%',
-            }}
-          >
-            {children}
-          </div>
-        ))}
-      </div>
+        onTabClick={handleTabClick}
+      />
+      <TabsContent
+        active={active}
+        tabs={tabs}
+      />
     </div>
   );
 };

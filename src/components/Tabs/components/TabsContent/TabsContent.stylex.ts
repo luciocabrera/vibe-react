@@ -1,15 +1,11 @@
 import * as stylex from '@stylexjs/stylex';
 
-import { spacing } from '@/styles/tokens.stylex';
+import { maxWidths, spacing } from '@/styles/tokens.stylex';
 
 export const styles = stylex.create({
-  tabs: {
-    containerName: 'tabs-container',
-    containerType: 'normal',
-    display: 'flex',
-    flexDirection: 'column',
-    overflow: 'hidden',
-  },
+  active: { display: 'block' },
+  inactive: { display: 'none' },
+  tabPanel: { width: maxWidths.full },
   tabsContent: {
     display: 'block',
     flex: 1,

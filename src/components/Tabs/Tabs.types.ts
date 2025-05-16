@@ -1,6 +1,6 @@
 import type { ComponentPropsWithRef } from 'react';
 
-import type { TTabsItem } from './components/TabsItem/TabsItem.types';
+import type { TTabsItem } from './components/TabButton/TabButton.types';
 
 export type TTabsItems = TTabsItem[];
 
