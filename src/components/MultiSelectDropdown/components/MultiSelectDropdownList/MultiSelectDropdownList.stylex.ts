@@ -49,4 +49,11 @@ export const styles = stylex.create({
     width: maxWidths.full,
     zIndex: 9999,
   },
+  dropdownVirtualItem: (start: number) => ({
+    left: 0,
+    position: 'absolute',
+    top: 0,
+    transform: `translateY(${start}px)`,
+    width: maxWidths.full,
+  }),
 });
