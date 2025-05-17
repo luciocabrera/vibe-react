@@ -43,12 +43,18 @@ const MultiSelectDropdownList = ({
   return (
     <ul
       ref={dropdownRef}
+      aria-label='Select options'
       data-instance-id={instanceId}
       data-test-id='multi-select-dropdown-list'
-      {...stylex.props(styles.dropdownList)}
+      role='listbox'
       onMouseDown={handleDropdownMouseDown}
+      {...stylex.props(styles.dropdownList)}
     >
-      <li {...stylex.props(styles.dropdownItem)}>
+      <li
+        aria-selected={allSelected}
+        role='option'
+        {...stylex.props(styles.dropdownItem)}
+      >
         <RadioCheckInput
           ref={(el) => {
             if (el) el.indeterminate = someSelected;
@@ -63,6 +69,8 @@ const MultiSelectDropdownList = ({
         <li
           {...stylex.props(styles.dropdownItem)}
           key={opt}
+          aria-selected={selected.includes(opt)}
+          role='option'
         >
           <RadioCheckInput
             checked={selected.includes(opt)}
