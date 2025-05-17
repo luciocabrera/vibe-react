@@ -20,26 +20,27 @@ const MultiSelectDropdownList = ({
   const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.checked ? [...options] : []);
   };
-  const selectOption = (opt: string) => {
+
+  const handleOptionSelect = (opt: string) => {
     onChange([...selected, opt]);
   };
 
-  const deselectOption = (opt: string) => {
+  const handleOptionDeselect = (opt: string) => {
     onChange(selected.filter((v) => v !== opt));
   };
 
   const handleOptionChange = (opt: string, checked: boolean) => {
     if (checked) {
-      selectOption(opt);
+      handleOptionSelect(opt);
     } else {
-      deselectOption(opt);
+      handleOptionDeselect(opt);
     }
   };
 
-  // Handle dropdown list mouse event to prevent propagation
   const handleDropdownMouseDown = (e: React.MouseEvent) => {
     e.stopPropagation();
   };
+
   return (
     <ul
       ref={dropdownRef}
