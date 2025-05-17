@@ -29,10 +29,10 @@ const MultiSelectDropdownHeader = ({
 
       // Close if clicked outside both the dropdown content and trigger
       if (
-        !labelContainerRef.current?.contains(target)// &&
+        !labelContainerRef.current?.contains(target) // &&
         // !dropdownRef.current?.contains(target)
       )
-      onSetOpen(false);
+        onSetOpen(false);
     };
 
     document.addEventListener('mousedown', handler);

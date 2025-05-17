@@ -1,4 +1,4 @@
-import type { Dispatch, ReactNode, RefObject } from "react";
+import type { Dispatch, ReactNode, RefObject } from 'react';
 
 export type TMultiSelectDropdownHeaderProps = {
   children: ReactNode;
