@@ -7,7 +7,7 @@ import { TabsHeader } from './components/TabsHeader';
 import { styles } from './Tabs.stylex';
 import type { TTabsProps } from './Tabs.types';
 
-const Tabs = ({ defaultSelectedTab, ref, tabs, ...props }: TTabsProps) => {
+const Tabs = ({ defaultSelectedTab, tabs, ...props }: TTabsProps) => {
   const [active, setActive] = useState(defaultSelectedTab ?? tabs?.[0]?.key);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const activeIndex = tabs?.findIndex((tab) => tab.key === active) ?? 0;
@@ -45,7 +45,6 @@ const Tabs = ({ defaultSelectedTab, ref, tabs, ...props }: TTabsProps) => {
 
   return (
     <div
-      ref={ref}
       {...stylex.props(styles.tabs)}
       {...props}
     >

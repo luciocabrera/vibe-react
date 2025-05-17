@@ -7,14 +7,12 @@ const Select = ({
   label,
   name,
   options,
-  ref,
   showDefaultOption = true,
   ...props
 }: TSelectProps) => (
   <select
     {...props}
     {...stylex.props(styles.input)}
-    ref={ref}
     aria-label={name}
   >
     {showDefaultOption && (
