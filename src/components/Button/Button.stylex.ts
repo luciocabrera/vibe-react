@@ -4,6 +4,7 @@ import {
   border,
   borderRadius,
   fontSizes,
+  shadows,
   spacing,
 } from '@/styles/tokens.stylex';
 
@@ -60,7 +61,7 @@ export type SizeVariants = keyof typeof sizeVariants;
 export const styles = stylex.create({
   base: {
     ':hover': {
-      boxShadow: '0px 1px 5px 1px rgba(0,0,0,0.75)',
+      boxShadow: shadows.sm,
       opacity: 0.9,
     },
     alignItems: 'center',

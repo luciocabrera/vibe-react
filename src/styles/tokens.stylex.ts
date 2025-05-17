@@ -52,10 +52,17 @@ export const maxWidths = stylex.defineVars({
 
 export const shadows = stylex.defineVars({
   none: 'none',
-  sm: '0 1px 2px rgba(0,0,0,0.05)',
-  md: '0 2px 8px rgba(0,0,0,0.10)',
+  sm: '0px 1px 2px 1px rgba(0,0,0,0.5)',
+  md: '0px 1px 5px 1px rgba(0,0,0,0.75)',
   lg: '0 4px 16px rgba(0,0,0,0.15)',
 });
+
+// export const shadows = stylex.defineVars({
+//   none: 'none',
+//   sm: '0 1px 2px rgba(0,0,0,0.05)',
+//   md: '0 2px 8px rgba(0,0,0,0.10)',
+//   lg: '0 4px 16px rgba(0,0,0,0.15)',
+// });
 
 export const animations = stylex.defineVars({
   fast: '150ms cubic-bezier(0.4,0,0.2,1)',
