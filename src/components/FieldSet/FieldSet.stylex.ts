@@ -1,6 +1,11 @@
 import * as stylex from '@stylexjs/stylex';
 
-import { border, borderRadius, spacing } from '@/styles/tokens.stylex';
+import {
+  border,
+  borderRadius,
+  fontSizes,
+  spacing,
+} from '@/styles/tokens.stylex';
 
 export const styles = stylex.create({
   errorMessage: {
@@ -32,7 +37,7 @@ export const styles = stylex.create({
   },
   label: { fontWeight: 'bold', padding: `${spacing.none} ${spacing.sm}` },
   legend: { marginLeft: spacing.sm },
-  legendIcon: { fontSize: '11px', paddingLeft: spacing.sm },
+  legendIcon: { fontSize: fontSizes.xs, paddingLeft: spacing.sm },
   maxWidth: (maxWidth) => ({ maxWidth }),
   minWidth: (minWidth) => ({ minWidth }),
   notReadonly: {

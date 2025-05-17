@@ -1,6 +1,6 @@
 import * as stylex from '@stylexjs/stylex';
 
-import { spacing } from '@/styles/tokens.stylex';
+import { fontSizes, spacing } from '@/styles/tokens.stylex';
 
 export const styles = stylex.create({
   header: {
@@ -11,7 +11,7 @@ export const styles = stylex.create({
     padding: `${spacing.md} ${spacing.lg}`,
   },
   title: {
-    fontSize: '1.2em',
+    fontSize: fontSizes.lg,
     fontWeight: 600,
   },
 });

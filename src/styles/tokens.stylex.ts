@@ -45,6 +45,10 @@ export const fontSizes = stylex.defineVars({
   xl: '1.5rem', // 24px
 });
 
+export const fontFamily = stylex.defineVars({
+  base: 'Inter, Arial, sans-serif',
+});
+
 export const maxWidths = stylex.defineVars({
   fullContainerW: '100cqw',
   full: '100%',

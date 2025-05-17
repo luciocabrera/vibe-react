@@ -1,6 +1,6 @@
 import * as stylex from '@stylexjs/stylex';
 
-import { maxWidths, spacing } from '@/styles/tokens.stylex';
+import { fontSizes, maxWidths, spacing } from '@/styles/tokens.stylex';
 
 export const styles = stylex.create({
   active: { background: 'var(--background-color-11)' },
@@ -15,7 +15,7 @@ export const styles = stylex.create({
     border: 'none',
     color: 'var(--background-color-1)',
     cursor: 'pointer',
-    fontSize: '15px',
+    fontSize: fontSizes.md,
     height: '38px',
     inset: 'unset',
     overflow: 'hidden',
