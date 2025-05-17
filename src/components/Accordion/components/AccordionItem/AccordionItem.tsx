@@ -13,8 +13,8 @@ const AccordionItem = ({ children, title, ...props }: TAccordionItemProps) => {
 
   return (
     <details
-      ref={ref}
       {...props}
+      ref={ref}
       data-test-id='accordion-item'
       {...stylex.props(styles.details)}
     >

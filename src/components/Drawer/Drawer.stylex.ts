@@ -1,7 +1,5 @@
 import * as stylex from '@stylexjs/stylex';
 
-import { spacing } from '@/styles/tokens.stylex';
-
 export const styles = stylex.create({
   backdrop: {
     background: 'rgba(0, 0, 0, 0.5)',
@@ -13,7 +11,7 @@ export const styles = stylex.create({
     zIndex: 10000,
   },
   drawer: {
-    background: '#fff',
+    background: 'var(--background-color-7)',
     boxShadow: '-2px 0 12px rgba(0, 0, 0, 0.15)',
     containerName: 'drawer-container',
     containerType: 'inline-size',
@@ -29,7 +27,6 @@ export const styles = stylex.create({
     zIndex: 10001,
   },
   drawerPinned: {
-    background: '#fff',
     borderLeft: '1px solid #eee',
     bottom: 'unset',
     boxShadow: 'none',
@@ -45,16 +42,5 @@ export const styles = stylex.create({
     transition: 'none',
     width: '370px',
     zIndex: 10001,
-  },
-  header: {
-    alignItems: 'center',
-    borderBottom: '1px solid #eee',
-    display: 'flex',
-    justifyContent: 'space-between',
-    padding: `${spacing.md} ${spacing.lg}`,
-  },
-  title: {
-    fontSize: '1.2em',
-    fontWeight: 600,
   },
 });

@@ -21,7 +21,7 @@ const Button = ({
       sizeVariants[size],
       isDisabled && styles.disabled,
       isLoading && styles.loading,
-      customStylex // merge custom styles last
+      customStylex 
     )}
     disabled={isDisabled || isLoading}
     type={type}

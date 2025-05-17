@@ -5,4 +5,5 @@ export type TDrawerProps = ComponentProps<'aside'> & {
   onClose: () => void;
   onPinChange?: (isPinned: boolean) => void;
   open: boolean;
+  title?: string;
 };

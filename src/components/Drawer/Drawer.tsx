@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import * as stylex from '@stylexjs/stylex';
 
-import { DrawerControls } from './components/DrawerControls';
+import { DrawerHeader } from './components/DrawerHeader';
 import { styles } from './Drawer.stylex';
 import type { TDrawerProps } from './Drawer.types';
 
@@ -11,6 +11,7 @@ const Drawer = ({
   onClose,
   onPinChange,
   open,
+  title
 }: TDrawerProps) => {
   const drawerRef = useRef<HTMLDivElement>(null);
   const previouslyFocusedElement = useRef<HTMLElement | null>(null);
@@ -82,19 +83,12 @@ const Drawer = ({
         role='dialog'
         tabIndex={-1}
       >
-        <header {...stylex.props(styles.header)}>
-          <h2
-            id='drawer-title'
-            {...stylex.props(styles.title)}
-          >
-            Table Settings
-          </h2>
-          <DrawerControls
-            isPinned={isPinned}
-            onCLose={handleClose}
-            onTogglePin={handlePinClick}
-          />
-        </header>
+        <DrawerHeader
+          isPinned={isPinned}
+          title={title}
+          onClose={handleClose}
+          onPinChange={handlePinClick}
+        />
         {children}
       </aside>
     </>
