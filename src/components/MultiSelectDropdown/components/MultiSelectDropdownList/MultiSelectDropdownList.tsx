@@ -83,7 +83,7 @@ const MultiSelectDropdownList = ({
         <li
           aria-selected={allSelected}
           role='option'
-          {...stylex.props(styles.row,styles.dropdownItem)}
+          {...stylex.props(styles.row, styles.dropdownItem)}
         >
           <RadioCheckInput
             ref={(el) => {
