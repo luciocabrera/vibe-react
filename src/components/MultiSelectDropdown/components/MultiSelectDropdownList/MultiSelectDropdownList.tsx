@@ -21,20 +21,11 @@ const MultiSelectDropdownList = ({
     onChange(e.target.checked ? [...options] : []);
   };
 
-  const handleOptionSelect = (opt: string) => {
-    onChange([...selected, opt]);
-  };
-
-  const handleOptionDeselect = (opt: string) => {
-    onChange(selected.filter((v) => v !== opt));
-  };
-
   const handleOptionChange = (opt: string, checked: boolean) => {
-    if (checked) {
-      handleOptionSelect(opt);
-    } else {
-      handleOptionDeselect(opt);
-    }
+    const updatedSelected = checked
+      ? [...selected, opt]
+      : selected.filter((v) => v !== opt);
+    onChange(updatedSelected);
   };
 
   const handleDropdownMouseDown = (e: React.MouseEvent) => {
