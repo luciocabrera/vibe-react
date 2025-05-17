@@ -22,6 +22,8 @@ export const styles = stylex.create({
     containerType: 'inline-size',
     cursor: 'pointer',
     display: 'flex',
+    height: spacing['3xl'],
+    maxHeight: spacing['3xl'],
     maxWidth: maxWidths.fullContainerW,
     minHeight: spacing['3xl'],
     outline: spacing.none,

@@ -24,10 +24,11 @@ export const styles = stylex.create({
     fontSize: fontSizes.sm,
     fontWeight: fontWeights.medium,
     gap: spacing.sm,
-    maxHeight: spacing['2xl'],
+    height: spacing['3xl'],
+    maxHeight: spacing['3xl'],
     maxWidth: `calc(${maxWidths.fullContainerW} - ${spacing['7xl']})`,
     overflow: 'hidden',
-    padding: `${spacing.xs} ${spacing.md}`,
+    padding: `${spacing.none} ${spacing.md}`,
     width: 'fit-content',
   },
   more: {
