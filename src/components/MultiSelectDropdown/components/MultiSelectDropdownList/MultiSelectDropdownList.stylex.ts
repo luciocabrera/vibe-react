@@ -29,17 +29,6 @@ export const styles = stylex.create({
     width: maxWidths.full,
   },
   dropdownList: {
-    '::-webkit-scrollbar': {
-      width: 8,
-    },
-    '::-webkit-scrollbar-thumb': {
-      background: 'var(--background-color-9)',
-      borderRadius: borderRadius.sm,
-    },
-    '::-webkit-scrollbar-track': {
-      background: 'transparent',
-      borderRadius: borderRadius.sm,
-    },
     backgroundColor: 'var(--background-color-7)',
     border: border.sm,
     borderBottomLeftRadius: borderRadius.sm,
@@ -57,8 +46,6 @@ export const styles = stylex.create({
     overflowY: 'auto',
     padding: spacing.none,
     position: 'absolute',
-    scrollbarColor: 'var(--background-color-9) transparent',
-    scrollbarWidth: 'thin',
     width: maxWidths.full,
     zIndex: 9999,
   },
