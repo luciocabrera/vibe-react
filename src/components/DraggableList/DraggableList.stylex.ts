@@ -6,7 +6,7 @@ export const styles = stylex.create({
   ul: {
     alignItems: 'stretch',
     display: 'flex',
-     flex: 1,
+    flex: 1,
     flexDirection: 'column',
     flexWrap: 'wrap',
     fontSize: fontSizes.sm,

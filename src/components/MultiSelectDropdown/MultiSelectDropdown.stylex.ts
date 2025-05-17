@@ -6,7 +6,7 @@ export const styles = stylex.create({
   container: {
     containerName: 'multi-select-container',
     containerType: 'normal',
-     fontSize: fontSizes.sm,
+    fontSize: fontSizes.sm,
     maxWidth: maxWidths.fullContainerW,
     overflow: 'visible',
     position: 'relative',
