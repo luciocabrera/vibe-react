@@ -9,12 +9,13 @@ import {
 
 export const styles = stylex.create({
   dropdownItem: {
-    ':first-child': { borderBottom: border.sm, paddingBottom: spacing.xs },
+    ':first-child': { borderBottom: border.sm, paddingBottom: spacing.sm },
     ':hover': {
       background: 'var(--background-color-4)',
     },
     alignItems: 'center',
     background: 'none',
+    borderBottom: border.xs,
     boxSizing: 'border-box',
     containerName: 'multi-select-list-item',
     containerType: 'inline-size',
