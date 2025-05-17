@@ -1,6 +1,6 @@
 import * as stylex from '@stylexjs/stylex';
 
-import { border, borderRadius, spacing } from '@/styles/tokens.stylex';
+import { border, borderRadius, shadows, spacing } from '@/styles/tokens.stylex';
 
 // TODO: Revisit when is active is used, as it seems  is not getting applied
 export const styles = stylex.create({
@@ -21,6 +21,9 @@ export const styles = stylex.create({
     gap: spacing.md,
   },
   li: {
+    ':hover': {
+      boxShadow: shadows.md,
+    },
     alignItems: 'center',
     background: 'var(--background-color-8)',
     border: border.xs,
