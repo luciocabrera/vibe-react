@@ -11,7 +11,7 @@ const MultiSelectDropdownList = ({
   options = [],
   selected = [],
 }: TMultiSelectDropdownListProps) => {
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLUListElement>(null);
   const instanceId = useId();
 
   // Check if all options are selected
@@ -41,14 +41,14 @@ const MultiSelectDropdownList = ({
     e.stopPropagation();
   };
   return (
-    <div
+    <ul
       ref={dropdownRef}
       data-instance-id={instanceId}
       data-test-id='multi-select-dropdown-list'
       {...stylex.props(styles.dropdownList)}
       onMouseDown={handleDropdownMouseDown}
     >
-      <div {...stylex.props(styles.dropdownItem)}>
+      <li {...stylex.props(styles.dropdownItem)}>
         <RadioCheckInput
           ref={(el) => {
             if (el) el.indeterminate = someSelected;
@@ -58,9 +58,9 @@ const MultiSelectDropdownList = ({
           type='checkbox'
           onChange={handleSelectAll}
         />
-      </div>
+      </li>
       {options.map((opt) => (
-        <div
+        <li
           {...stylex.props(styles.dropdownItem)}
           key={opt}
         >
@@ -70,9 +70,9 @@ const MultiSelectDropdownList = ({
             type='checkbox'
             onChange={(e) => handleOptionChange(opt, e.target.checked)}
           />
-        </div>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 };
 
