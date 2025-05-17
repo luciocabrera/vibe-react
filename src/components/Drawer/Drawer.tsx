@@ -11,7 +11,7 @@ const Drawer = ({
   onClose,
   onPinChange,
   open,
-  title
+  title,
 }: TDrawerProps) => {
   const drawerRef = useRef<HTMLDivElement>(null);
   const previouslyFocusedElement = useRef<HTMLElement | null>(null);
