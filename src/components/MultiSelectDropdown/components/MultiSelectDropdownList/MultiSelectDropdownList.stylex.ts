@@ -29,8 +29,8 @@ export const styles = stylex.create({
   dropdownList: {
     backgroundColor: 'var(--background-color-7)',
     border: border.sm,
-    borderBottomLeftRadius: borderRadius.xs,
-    borderBottomRightRadius: borderRadius.xs,
+    borderBottomLeftRadius: borderRadius.sm,
+    borderBottomRightRadius: borderRadius.sm,
     boxShadow: '0 4px 12px rgba(0, 0, 0, 0.25)',
     boxSizing: 'border-box',
     containerName: 'multi-select-list',

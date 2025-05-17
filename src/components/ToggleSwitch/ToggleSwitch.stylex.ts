@@ -1,6 +1,6 @@
 import * as stylex from '@stylexjs/stylex';
 
-import { fontSizes, spacing } from '@/styles/tokens.stylex';
+import { borderRadius, fontSizes, spacing } from '@/styles/tokens.stylex';
 
 // TODO: Add background color to the variables in the css
 
@@ -18,7 +18,7 @@ export const styles = stylex.create({
   label: {
     fontSize: fontSizes.xs,
     marginLeft: spacing.sm,
-  },
+    minWidth: spacing['3xl'],  },
   thumb: (isActive: boolean) => ({
     background: 'var(--background-color-7)',
     borderRadius: '50%',
@@ -32,7 +32,7 @@ export const styles = stylex.create({
   }),
   track: (isActive: boolean) => ({
     background: isActive ? 'var(--background-color-1)' : '#ccc',
-    borderRadius: '10px',
+    borderRadius: borderRadius.lg,
     cursor: 'pointer',
     display: 'inline-block',
     height: spacing.xl,
