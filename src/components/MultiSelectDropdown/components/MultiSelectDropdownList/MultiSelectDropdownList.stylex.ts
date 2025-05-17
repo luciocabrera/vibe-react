@@ -9,10 +9,11 @@ import {
 
 export const styles = stylex.create({
   dropdownItem: {
-    ':first-child': { borderBottom: border.sm, paddingBottom: spacing.sm },
+    ':first-child': { borderBottom: border.sm },
     ':hover': {
       background: 'var(--background-color-4)',
     },
+    ':nth-child(even)': { background: 'var(--background-color-8)' },
     alignItems: 'center',
     background: 'none',
     borderBottom: border.xs,
@@ -23,11 +24,22 @@ export const styles = stylex.create({
     display: 'flex',
     maxWidth: maxWidths.fullContainerW,
     minHeight: spacing['3xl'],
-    outline: 0,
+    outline: spacing.none,
     transition: 'background 0.15s',
     width: maxWidths.full,
   },
   dropdownList: {
+    '::-webkit-scrollbar': {
+      width: 8,
+    },
+    '::-webkit-scrollbar-thumb': {
+      background: 'var(--background-color-9)',
+      borderRadius: borderRadius.sm,
+    },
+    '::-webkit-scrollbar-track': {
+      background: 'transparent',
+      borderRadius: borderRadius.sm,
+    },
     backgroundColor: 'var(--background-color-7)',
     border: border.sm,
     borderBottomLeftRadius: borderRadius.sm,
@@ -38,12 +50,15 @@ export const styles = stylex.create({
     containerType: 'normal',
     display: 'flex',
     flexDirection: 'column',
+    margin: spacing.none,
     maxHeight: 220,
     maxWidth: maxWidths.fullContainerW,
     overflowX: 'hidden',
     overflowY: 'auto',
-    padding: `${spacing.sm} ${spacing.xs}`,
+    padding: spacing.none,
     position: 'absolute',
+    scrollbarColor: 'var(--background-color-9) transparent',
+    scrollbarWidth: 'thin',
     width: maxWidths.full,
     zIndex: 9999,
   },
