@@ -1,4 +1,4 @@
-import { useId, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import * as stylex from '@stylexjs/stylex';
 
 import { MultiSelectDropdownHeader } from './components/MultiSelectDropdownHeader';
@@ -19,6 +19,21 @@ const MultiSelectDropdown = ({
   const allSelected = selected.length === options.length;
 
   const handleSetOpen = setOpen;
+
+  // Click outside logic to close dropdown
+  useEffect(() => {
+    if (!open) return;
+    const handleClick = (event: MouseEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, [open]);
 
   const renderLabel = () => {
     if (allSelected) return 'All';

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import * as stylex from '@stylexjs/stylex';
 
 import { Button } from '@/components/Button';
@@ -17,27 +17,6 @@ const MultiSelectDropdownHeader = ({
 }: TMultiSelectDropdownHeaderProps) => {
   const labelContainerRef = useRef<HTMLDivElement>(null);
   const triggerButtonRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      // Only close if the click is outside both the main component and dropdown
-      const target = e.target as Node;
-      const triggerButton = triggerButtonRef.current;
-
-      // Don't close if clicked on the trigger button (let the onClick handler handle it)
-      if (triggerButton?.contains(target)) return;
-
-      // Close if clicked outside both the dropdown content and trigger
-      if (
-        !labelContainerRef.current?.contains(target) // &&
-        // !dropdownRef.current?.contains(target)
-      )
-        onSetOpen(false);
-    };
-
-    document.addEventListener('mousedown', handler);
-    return () => document.removeEventListener('mousedown', handler);
-  }, [onSetOpen]);
 
   const handleDropdownClick = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent event bubbling
