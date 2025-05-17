@@ -18,7 +18,8 @@ export const styles = stylex.create({
   label: {
     fontSize: fontSizes.xs,
     marginLeft: spacing.sm,
-    minWidth: spacing['3xl'],  },
+    minWidth: spacing['3xl'],
+  },
   thumb: (isActive: boolean) => ({
     background: 'var(--background-color-7)',
     borderRadius: '50%',
