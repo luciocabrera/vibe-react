@@ -1,6 +1,6 @@
 import * as stylex from '@stylexjs/stylex';
 
-import { fontSizes, spacing } from '@/styles/tokens.stylex';
+import { fontSizes, fontWeights, spacing } from '@/styles/tokens.stylex';
 
 export const styles = stylex.create({
   header: {
@@ -12,6 +12,6 @@ export const styles = stylex.create({
   },
   title: {
     fontSize: fontSizes.lg,
-    fontWeight: 600,
+    fontWeight: fontWeights.bold,
   },
 });

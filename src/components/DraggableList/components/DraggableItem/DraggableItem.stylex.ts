@@ -1,6 +1,12 @@
 import * as stylex from '@stylexjs/stylex';
 
-import { border, borderRadius, shadows, spacing } from '@/styles/tokens.stylex';
+import {
+  border,
+  borderRadius,
+  fontWeights,
+  shadows,
+  spacing,
+} from '@/styles/tokens.stylex';
 
 // TODO: Revisit when is active is used, as it seems  is not getting applied
 export const styles = stylex.create({
@@ -32,7 +38,7 @@ export const styles = stylex.create({
     cursor: 'grab',
     display: 'flex',
     flex: 1,
-    fontWeight: 500,
+    fontWeight: fontWeights.medium,
     gap: spacing.md,
     justifyContent: 'space-between',
     opacity: 1,

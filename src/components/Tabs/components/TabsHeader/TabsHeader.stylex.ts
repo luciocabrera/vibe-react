@@ -1,6 +1,6 @@
 import * as stylex from '@stylexjs/stylex';
 
-import { fontSizes, spacing } from '@/styles/tokens.stylex';
+import { fontSizes, fontWeights, spacing } from '@/styles/tokens.stylex';
 
 export const styles = stylex.create({
   tabsButtonsWrapper: {
@@ -13,7 +13,7 @@ export const styles = stylex.create({
     display: 'flex',
     flexWrap: 'nowrap',
     fontSize: fontSizes.md,
-    fontWeight: '500',
+    fontWeight: fontWeights.medium,
     height: spacing['5xl'],
     letterSpacing: '1px',
     padding: spacing.none,

@@ -4,6 +4,7 @@ import {
   border,
   borderRadius,
   fontSizes,
+  fontWeights,
   spacing,
 } from '@/styles/tokens.stylex';
 
@@ -35,7 +36,10 @@ export const styles = stylex.create({
     flexWrap: 'wrap',
     padding: spacing.none,
   },
-  label: { fontWeight: 'bold', padding: `${spacing.none} ${spacing.sm}` },
+  label: {
+    fontWeight: fontWeights.bold,
+    padding: `${spacing.none} ${spacing.sm}`,
+  },
   legend: { marginLeft: spacing.sm },
   legendIcon: { fontSize: fontSizes.xs, paddingLeft: spacing.sm },
   maxWidth: (maxWidth) => ({ maxWidth }),

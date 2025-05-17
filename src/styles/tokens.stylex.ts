@@ -81,3 +81,9 @@ export const animations = stylex.defineVars({
   slow: '600ms cubic-bezier(0.4,0,0.2,1)',
   bounce: 'bounce 1s infinite',
 });
+
+export const fontWeights = stylex.defineVars({
+  regular: 400,
+  medium: 500,
+  bold: 700,
+});

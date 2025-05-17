@@ -1,9 +1,11 @@
 import * as stylex from '@stylexjs/stylex';
 
+import { fontWeights } from '@/styles/tokens.stylex';
+
 export const styles = stylex.create({
   groupRow: {
     background: '#ddeeff',
-    fontWeight: 'bold',
+    fontWeight: fontWeights.bold,
   },
   highlightBest: {
     background: '#e0ffe0',

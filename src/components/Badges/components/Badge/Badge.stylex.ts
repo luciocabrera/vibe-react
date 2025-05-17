@@ -4,6 +4,7 @@ import {
   border,
   borderRadius,
   fontSizes,
+  fontWeights,
   maxWidths,
   spacing,
 } from '@/styles/tokens.stylex';
@@ -20,8 +21,8 @@ export const styles = stylex.create({
     display: 'flex',
     flexGrow: 1,
     flexShrink: 1,
-    fontSize: fontSizes.xs,
-    fontWeight: 500,
+    fontSize: fontSizes.sm,
+    fontWeight: fontWeights.medium,
     gap: spacing.sm,
     maxHeight: spacing['2xl'],
     maxWidth: `calc(${maxWidths.fullContainerW} - ${spacing['7xl']})`,
