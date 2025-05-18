@@ -59,7 +59,6 @@ const MultiSelectDropdown = ({
       >
         {renderLabel()}
       </MultiSelectDropdownHeader>
-
       {open && (
         <MultiSelectDropdownList
           options={options}

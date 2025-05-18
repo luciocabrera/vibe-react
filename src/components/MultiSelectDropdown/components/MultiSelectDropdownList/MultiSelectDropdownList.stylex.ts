@@ -8,11 +8,13 @@ import {
 } from '@/styles/tokens.stylex';
 
 export const styles = stylex.create({
+  bottomBorder: {
+    borderBottom: border.xs,
+  },
   container: {
     backgroundColor: 'var(--background-color-7)',
     border: border.sm,
-    borderBottomLeftRadius: borderRadius.sm,
-    borderBottomRightRadius: borderRadius.sm,
+    borderRadius: borderRadius.sm,  
     boxShadow: '0 4px 12px rgba(0, 0, 0, 0.25)',
     containerName: 'multi-select-container',
     containerType: 'inline-size',
@@ -21,11 +23,26 @@ export const styles = stylex.create({
     width: maxWidths.full,
   },
   dropdownItem: {
-    ':first-child': { borderBottom: border.sm },
     ':hover': {
       background: 'var(--background-color-4)',
     },
+    ':last-child': { borderBottom: border.none },
     ':nth-child(even)': { background: 'var(--background-color-8)' },
+    alignItems: 'center',
+    background: 'none',
+    borderBottom: border.xs,
+    boxSizing: 'border-box',
+    containerName: 'multi-select-list-row',
+    containerType: 'inline-size',
+    cursor: 'pointer',
+    display: 'flex',
+    height: spacing['3xl'],
+    maxHeight: spacing['3xl'],
+    maxWidth: maxWidths.fullContainerW,
+    minHeight: spacing['3xl'],
+    outline: spacing.none,
+    transition: 'background 0.15s',
+    width: maxWidths.full,
   },
   dropdownList: {
     backgroundColor: 'var(--background-color-7)',
@@ -61,12 +78,17 @@ export const styles = stylex.create({
     containerType: 'inline-size',
     cursor: 'pointer',
     display: 'flex',
-    height: spacing['3xl'],
-    maxHeight: spacing['3xl'],
+    height: spacing['7xl'],
+    justifyContent: 'flex-end',
+    maxHeight: spacing['7xl'],
     maxWidth: maxWidths.fullContainerW,
-    minHeight: spacing['3xl'],
+    minHeight: spacing['7xl'],
     outline: spacing.none,
+    padding: `${spacing.none} ${spacing.md}`,
     transition: 'background 0.15s',
     width: maxWidths.full,
+  },
+  topBorder: {
+    borderTop: border.xs,
   },
 });

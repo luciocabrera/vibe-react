@@ -26,6 +26,8 @@ export const styles = stylex.create({
     display: 'flex',
     flexDirection: 'column',
     flexWrap: 'wrap',
+    // fontSize: fontSizes.sm,
+    // fontWeight: fontWeights.medium,
     maxWidth: maxWidths.fullContainerW,
     width: maxWidths.full,
   },

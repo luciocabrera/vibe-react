@@ -35,6 +35,7 @@ const MultiSelectDropdownHeader = ({
 
     onSetOpen((prev) => !prev); // Toggle dropdown state
   };
+
   return (
     <div
       ref={labelContainerRef}

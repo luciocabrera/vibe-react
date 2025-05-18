@@ -10,13 +10,14 @@ import {
 
 export const styles = stylex.create({
   label: {
+    alignItems: 'center',
     border: border.xs,
-    borderBottomRightRadius: borderRadius.sm,
-    borderTopRightRadius: borderRadius.sm,
+    borderRadius: borderRadius.sm,
     boxSizing: 'border-box',
     display: 'flex',
     fontSize: fontSizes.sm,
     maxWidth: maxWidths.full,
+    paddingInlineEnd: spacing.sm,
     position: 'relative',
     width: maxWidths.full,
   },

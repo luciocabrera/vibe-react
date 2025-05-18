@@ -2,6 +2,7 @@ import { useId, useMemo, useRef, useState } from 'react';
 import * as stylex from '@stylexjs/stylex';
 import { useVirtualizer } from '@tanstack/react-virtual';
 
+import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
 import { RadioCheckInput } from '@/components/RadioCheckInput';
 
@@ -62,13 +63,21 @@ const MultiSelectDropdownList = ({
       data-instance-id={instanceId}
       {...stylex.props(styles.container)}
     >
-      <div {...stylex.props(styles.row)}>
+      <div {...stylex.props(styles.row, styles.bottomBorder)}>
         <Input
           placeholder='Search...'
           type='text'
           value={search}
           onChange={handleSearch}
         />
+        <Button
+          size='sm'
+          title={'Reset'}
+          variant='ghost'
+          // onClick={handleReset}
+        >
+          ⟳
+        </Button>
       </div>
 
       <ul
@@ -83,7 +92,7 @@ const MultiSelectDropdownList = ({
         <li
           aria-selected={allSelected}
           role='option'
-          {...stylex.props(styles.row, styles.dropdownItem)}
+          {...stylex.props(styles.dropdownItem)}
         >
           <RadioCheckInput
             ref={(el) => {
@@ -109,7 +118,6 @@ const MultiSelectDropdownList = ({
                 aria-selected={selected.includes(opt)}
                 role='option'
                 {...stylex.props(
-                  styles.row,
                   styles.dropdownItem,
                   styles.dropdownVirtualItem(virtualRow.start)
                 )}
@@ -125,6 +133,23 @@ const MultiSelectDropdownList = ({
           })}
         </div>
       </ul>
+
+      <div {...stylex.props(styles.row, styles.topBorder)}>
+        {/* <Input
+          placeholder='Search...'
+          type='text'
+          value={search}
+          onChange={handleSearch}
+        /> */}
+        <Button
+          size='sm'
+          title={'Close'}
+          variant='secondary'
+          // onClick={handleReset}
+        >
+          x
+        </Button>
+      </div>
     </div>
   );
 };

@@ -48,6 +48,8 @@ export const sizeVariants = stylex.create({
   md: { fontSize: fontSizes.sm, padding: `${spacing.xs} ${spacing.sm}` },
   sm: {
     fontSize: fontSizes.xs,
+    height: spacing['2xl'],
+    minHeight: spacing['2xl'],
     minWidth: spacing['3xl'],
     padding: `${spacing.xs} ${spacing.sm}`,
   },
