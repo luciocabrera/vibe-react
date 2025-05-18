@@ -13,6 +13,7 @@ const ROW_HEIGHT = 32;
 
 const MultiSelectDropdownList = ({
   onChange,
+  onClose,
   options = [],
   selected = [],
 }: TMultiSelectDropdownListProps) => {
@@ -57,6 +58,8 @@ const MultiSelectDropdownList = ({
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
+
+  const handleCloseClick = () => onClose();
 
   return (
     <div
@@ -145,7 +148,7 @@ const MultiSelectDropdownList = ({
           size='sm'
           title={'Close'}
           variant='secondary'
-          // onClick={handleReset}
+          onClick={handleCloseClick}
         >
           x
         </Button>

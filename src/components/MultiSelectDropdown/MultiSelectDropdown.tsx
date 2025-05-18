@@ -42,6 +42,8 @@ const MultiSelectDropdown = ({
     return `${selected[0]}, +${selected.length - 1} more`;
   };
 
+  const handleClose = () => setOpen(false);
+
   return (
     <div
       ref={containerRef}
@@ -64,6 +66,7 @@ const MultiSelectDropdown = ({
           options={options}
           selected={selected}
           onChange={handleChange}
+          onClose={handleClose}
         />
       )}
     </div>
