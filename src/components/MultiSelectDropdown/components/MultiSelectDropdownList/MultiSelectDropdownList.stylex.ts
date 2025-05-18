@@ -20,6 +20,7 @@ export const styles = stylex.create({
     containerType: 'inline-size',
     maxWidth: maxWidths.fullContainerW,
     overflowX: 'hidden',
+    position: 'absolute',
     width: maxWidths.full,
   },
   dropdownItem: {
@@ -76,7 +77,6 @@ export const styles = stylex.create({
     boxSizing: 'border-box',
     containerName: 'multi-select-list-row',
     containerType: 'inline-size',
-    cursor: 'pointer',
     display: 'flex',
     height: spacing['7xl'],
     justifyContent: 'flex-end',
