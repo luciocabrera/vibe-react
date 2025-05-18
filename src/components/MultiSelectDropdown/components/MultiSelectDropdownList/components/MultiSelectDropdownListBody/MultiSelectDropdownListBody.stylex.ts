@@ -1,0 +1,59 @@
+import * as stylex from '@stylexjs/stylex';
+
+import {
+  border,
+  borderRadius,
+  maxWidths,
+  spacing,
+} from '@/styles/tokens.stylex';
+
+export const styles = stylex.create({
+  dropdownItem: {
+    ':hover': {
+      background: 'var(--background-color-4)',
+    },
+    ':last-child': { borderBottom: border.none },
+    ':nth-child(even)': { background: 'var(--background-color-8)' },
+    alignItems: 'center',
+    background: 'none',
+    borderBottom: border.xs,
+    boxSizing: 'border-box',
+    containerName: 'multi-select-list-row',
+    containerType: 'inline-size',
+    cursor: 'pointer',
+    display: 'flex',
+    height: spacing['3xl'],
+    maxHeight: spacing['3xl'],
+    maxWidth: maxWidths.fullContainerW,
+    minHeight: spacing['3xl'],
+    outline: spacing.none,
+    transition: 'background 0.15s',
+    width: maxWidths.full,
+  },
+  dropdownList: {
+    backgroundColor: 'var(--background-color-7)',
+    borderBottomLeftRadius: borderRadius.sm,
+    borderBottomRightRadius: borderRadius.sm,
+    boxSizing: 'border-box',
+    containerName: 'multi-select-list',
+    containerType: 'normal',
+    display: 'flex',
+    flexDirection: 'column',
+    margin: spacing.none,
+    maxHeight: 220,
+    maxWidth: maxWidths.fullContainerW,
+    overflowX: 'hidden',
+    overflowY: 'auto',
+    padding: spacing.none,
+    width: maxWidths.full,
+    // zIndex: 9999,
+  },
+  dropdownVirtualItem: (start: number) => ({
+    left: 0,
+    position: 'absolute',
+    top: 0,
+    transform: `translateY(${start}px)`,
+    width: maxWidths.full,
+  }),
+  virtualizer: (height: number) => ({ height, position: 'relative' }),
+});
