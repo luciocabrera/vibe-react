@@ -43,24 +43,20 @@ const TableSettingsDrawer = ({
   const handleResetRange = (key: string) => {
     setRangeState((rs) => ({ ...rs, [key]: ['', ''] }));
   };
+
   const handleReset = () => {
     const newFilterState: Record<string, string[]> = {};
-    columns
-      .filter((col) => col.filterable)
-      .forEach((col) => {
-        const opts = Array.from(
-          new Set(data.map((d) => d[col.key]).filter(Boolean))
-        ).map(String);
-        newFilterState[col.key] = opts;
-      });
+    for (const col of columns.filter((col) => col.filterable)) {
+      const opts = Array.from(
+        new Set(data.map((d) => d[col.key]).filter(Boolean))
+      ).map(String);
+      newFilterState[col.key] = opts;
+    }
     setFilterState(newFilterState);
     const newRangeState: Record<string, [number | '', number | '']> = {};
-    columns
-      .filter((col) => col.rangeFilter)
-      .forEach((col) => {
-        newRangeState[col.key] = ['', ''];
-      });
-    setRangeState(newRangeState);
+    for (const col of columns.filter((col) => col.rangeFilter)) {
+      newRangeState[col.key] = ['', ''];
+    }
   };
   const handleResetFilter = (key: string) => {
     const opts = Array.from(

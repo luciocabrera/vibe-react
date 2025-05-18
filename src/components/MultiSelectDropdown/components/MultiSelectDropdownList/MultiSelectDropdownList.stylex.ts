@@ -22,6 +22,7 @@ export const styles = stylex.create({
     overflowX: 'hidden',
     position: 'absolute',
     width: maxWidths.full,
+    zIndex: 9999,
   },
   dropdownItem: {
     ':hover': {
@@ -61,7 +62,7 @@ export const styles = stylex.create({
     overflowY: 'auto',
     padding: spacing.none,
     width: maxWidths.full,
-    zIndex: 9999,
+    // zIndex: 9999,
   },
   dropdownVirtualItem: (start: number) => ({
     left: 0,
