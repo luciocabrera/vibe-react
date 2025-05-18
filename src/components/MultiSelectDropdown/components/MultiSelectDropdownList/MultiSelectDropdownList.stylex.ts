@@ -8,9 +8,6 @@ import {
 } from '@/styles/tokens.stylex';
 
 export const styles = stylex.create({
-  bottomBorder: {
-    borderBottom: border.xs,
-  },
   container: {
     backgroundColor: 'var(--background-color-7)',
     border: border.sm,
@@ -71,25 +68,5 @@ export const styles = stylex.create({
     transform: `translateY(${start}px)`,
     width: maxWidths.full,
   }),
-  row: {
-    alignItems: 'center',
-    background: 'none',
-    borderBottom: border.xs,
-    boxSizing: 'border-box',
-    containerName: 'multi-select-list-row',
-    containerType: 'inline-size',
-    display: 'flex',
-    height: spacing['7xl'],
-    justifyContent: 'flex-end',
-    maxHeight: spacing['7xl'],
-    maxWidth: maxWidths.fullContainerW,
-    minHeight: spacing['7xl'],
-    outline: spacing.none,
-    padding: `${spacing.none} ${spacing.md}`,
-    transition: 'background 0.15s',
-    width: maxWidths.full,
-  },
-  topBorder: {
-    borderTop: border.xs,
-  },
+  virtualizer: (height: number) => ({ height, position: 'relative' }),
 });

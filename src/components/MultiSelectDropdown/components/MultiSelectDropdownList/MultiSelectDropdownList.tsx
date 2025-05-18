@@ -2,10 +2,10 @@ import { useId, useMemo, useRef, useState } from 'react';
 import * as stylex from '@stylexjs/stylex';
 import { useVirtualizer } from '@tanstack/react-virtual';
 
-import { Button } from '@/components/Button';
-import { Input } from '@/components/Input';
 import { RadioCheckInput } from '@/components/RadioCheckInput';
 
+import { MultiSelectDropdownListFooter } from './components/MultiSelectDropdownListFooter';
+import { MultiSelectDropdownListHeader } from './components/MultiSelectDropdownListHeader';
 import { styles } from './MultiSelectDropdownList.stylex';
 import type { TMultiSelectDropdownListProps } from './MultiSelectDropdownList.types';
 
@@ -13,7 +13,7 @@ const ROW_HEIGHT = 32;
 
 const MultiSelectDropdownList = ({
   onChange,
-  onClose,
+  onClose: handleClose,
   options = [],
   selected = [],
 }: TMultiSelectDropdownListProps) => {
@@ -59,67 +59,46 @@ const MultiSelectDropdownList = ({
     setSearch(e.target.value);
   };
 
-  const handleCloseClick = () => onClose();
+  const handleReset = () => setSearch('');
 
   return (
     <div
       data-instance-id={instanceId}
       {...stylex.props(styles.container)}
     >
-      <div {...stylex.props(styles.row, styles.bottomBorder)}>
-        <Input
-          placeholder='Search...'
-          type='text'
-          value={search}
-          onChange={handleSearch}
-        />
-        <Button
-          size='sm'
-          title={'Reset'}
-          variant='ghost'
-          // onClick={handleReset}
-        >
-          ⟳
-        </Button>
-      </div>
-
+      <MultiSelectDropdownListHeader
+        search={search}
+        onReset={handleReset}
+        onSearchChange={handleSearch}
+      />
       <ul
         ref={dropdownRef}
         aria-label='Select options'
         data-instance-id={instanceId}
         data-test-id='multi-select-dropdown-list'
-        role='listbox'
         onMouseDown={handleDropdownMouseDown}
         {...stylex.props(styles.dropdownList)}
       >
-        <li
-          aria-selected={allSelected}
-          role='option'
-          {...stylex.props(styles.dropdownItem)}
-        >
-          <RadioCheckInput
-            ref={(el) => {
-              if (el) el.indeterminate = someSelected;
-            }}
-            checked={allSelected}
-            label={'Select All'}
-            type='checkbox'
-            onChange={handleSelectAll}
-          />
-        </li>
-        <div
-          style={{
-            height: virtualizer.getTotalSize(),
-            position: 'relative',
-          }}
-        >
+        {/* Only show Select All if there are at least 2 options */}
+        {filteredOptions.length > 1 && (
+          <li {...stylex.props(styles.dropdownItem)}>
+            <RadioCheckInput
+              ref={(el) => {
+                if (el) el.indeterminate = someSelected;
+              }}
+              checked={allSelected}
+              label={'Select All'}
+              type='checkbox'
+              onChange={handleSelectAll}
+            />
+          </li>
+        )}
+        <div {...stylex.props(styles.virtualizer(virtualizer.getTotalSize()))}>
           {virtualizer.getVirtualItems().map((virtualRow) => {
             const opt = filteredOptions[virtualRow.index];
             return (
               <li
                 key={opt}
-                aria-selected={selected.includes(opt)}
-                role='option'
                 {...stylex.props(
                   styles.dropdownItem,
                   styles.dropdownVirtualItem(virtualRow.start)
@@ -136,23 +115,7 @@ const MultiSelectDropdownList = ({
           })}
         </div>
       </ul>
-
-      <div {...stylex.props(styles.row, styles.topBorder)}>
-        {/* <Input
-          placeholder='Search...'
-          type='text'
-          value={search}
-          onChange={handleSearch}
-        /> */}
-        <Button
-          size='sm'
-          title={'Close'}
-          variant='secondary'
-          onClick={handleCloseClick}
-        >
-          x
-        </Button>
-      </div>
+      <MultiSelectDropdownListFooter onClose={handleClose} />
     </div>
   );
 };
