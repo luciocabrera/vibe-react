@@ -14,7 +14,7 @@ export const styles = stylex.create({
   container: {
     backgroundColor: 'var(--background-color-7)',
     border: border.sm,
-    borderRadius: borderRadius.sm,  
+    borderRadius: borderRadius.sm,
     boxShadow: '0 4px 12px rgba(0, 0, 0, 0.25)',
     containerName: 'multi-select-container',
     containerType: 'inline-size',
