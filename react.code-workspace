@@ -3,6 +3,12 @@
     {
       "path": ".",
     },
+    {
+      "path": "../../control-business-ui-rr7",
+    },
+    {
+      "path": "../../datablender/umd-ui-remix",
+    },
   ],
   "settings": {},
 }
