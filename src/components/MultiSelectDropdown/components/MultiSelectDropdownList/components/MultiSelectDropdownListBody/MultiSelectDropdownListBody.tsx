@@ -33,10 +33,28 @@ const MultiSelectDropdownListBody = ({
     overscan: 5,
   });
 
-  const allSelected = selected.length === options.length;
-  const someSelected = selected.length > 0 && !allSelected;
+  // Calculate if all filtered options are selected
+  const allFilteredSelected =
+    filteredOptions.length > 0 &&
+    filteredOptions.every((opt) => selected.includes(opt));
+  const someFilteredSelected =
+    filteredOptions.some((opt) => selected.includes(opt)) &&
+    !allFilteredSelected;
+
   const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(e.target.checked ? [...options] : []);
+    // Add filtered options to already selected options that are not visible
+    const notVisibleSelected = selected.filter(
+      (opt) => !filteredOptions.includes(opt)
+    );
+    if (e.target.checked) {
+      // Avoid duplicates
+      const newSelected = Array.from(
+        new Set([...notVisibleSelected, ...filteredOptions])
+      );
+      onChange(newSelected);
+    } else {
+      onChange(notVisibleSelected);
+    }
   };
 
   const handleOptionChange = (opt: string, checked: boolean) => {
@@ -63,9 +81,9 @@ const MultiSelectDropdownListBody = ({
         <li {...stylex.props(styles.dropdownItem)}>
           <RadioCheckInput
             ref={(el) => {
-              if (el) el.indeterminate = someSelected;
+              if (el) el.indeterminate = someFilteredSelected;
             }}
-            checked={allSelected}
+            checked={allFilteredSelected}
             label={'Select All'}
             type='checkbox'
             onChange={handleSelectAll}
