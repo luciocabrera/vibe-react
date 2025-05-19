@@ -1,20 +1,5 @@
 @stylex stylesheet;
 
-/* :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-} */
-
 :root[data-theme='light'] {
   --background: whitesmoke;
   --foreground: hsl(0 0% 3.9%);
@@ -25,17 +10,12 @@
   --background-color-3: #03542f2b;
   --background-color-4: #f4f7edb5;
   --background-color-5: #698f7e;
-  /* --background-color-6: #bdbdbd;
-   */
   --background-color-6: #cbdbd4;
-  /* --background-color-6: #b5cec2; */
-  /* --background-color-6: #91ad9f; */
   --background-color-7: white;
   --background-color-8: #38524514;
   --background-color-9: #778c82;
   --background-color-10: #64776e;
   --background-color-11: #727f793b;
-  /* --background-color-11: #698f7e78; */
 
   --hover-color-1: rgba(161, 132, 58, 0.763);
   --hover-color-2: #485d53;
