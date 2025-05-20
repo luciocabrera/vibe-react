@@ -67,6 +67,7 @@ const MultiSelectDropdownListBody = ({
   const handleDropdownMouseDown = (e: React.MouseEvent) => {
     e.stopPropagation();
   };
+
   return (
     <ul
       ref={dropdownRef}

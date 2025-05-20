@@ -39,6 +39,7 @@ export const styles = stylex.create({
     containerType: 'normal',
     display: 'flex',
     flexDirection: 'column',
+    height: 220,
     margin: spacing.none,
     maxHeight: 220,
     maxWidth: maxWidths.fullContainerW,
@@ -46,7 +47,6 @@ export const styles = stylex.create({
     overflowY: 'auto',
     padding: spacing.none,
     width: maxWidths.full,
-    // zIndex: 9999,
   },
   dropdownVirtualItem: (start: number) => ({
     left: 0,
