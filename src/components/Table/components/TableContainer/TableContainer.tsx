@@ -1,7 +1,9 @@
 import { useRef } from 'react';
+import * as stylex from '@stylexjs/stylex';
 import { useVirtualizer } from '@tanstack/react-virtual';
 
 import { TableBody, TableHead } from './components';
+import { styles } from './TableContainer.stylex';
 import type { TTableContainerProps } from './TableContainer.types';
 
 const TableContainer = <TData extends Record<string, unknown>>({
@@ -30,7 +32,7 @@ const TableContainer = <TData extends Record<string, unknown>>({
   let virtualPaddingLeft: number | undefined;
   let virtualPaddingRight: number | undefined;
 
-  if (columnVirtualizer && virtualColumns?.length) {
+  if (virtualColumns.length) {
     virtualPaddingLeft = virtualColumns[0]?.start ?? 0;
     virtualPaddingRight =
       columnVirtualizer.getTotalSize() -
@@ -40,18 +42,10 @@ const TableContainer = <TData extends Record<string, unknown>>({
   return (
     <div
       ref={tableContainerRef}
-      className='container'
-      style={{
-        //needed for sticky header
-        height: '800px',
-
-        overflow: 'auto',
-        //our scrollable table container
-        position: 'relative', //should be a fixed height
-      }}
+      {...stylex.props(styles.container)}
     >
       {/* Even though we're still using sematic table tags, we must use CSS grid and flexbox for dynamic row heights */}
-      <table style={{ display: 'grid' }}>
+      <table {...stylex.props(styles.table)}>
         <TableHead
           columnVirtualizer={columnVirtualizer}
           table={table}

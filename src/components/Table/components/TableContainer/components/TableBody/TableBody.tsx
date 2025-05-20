@@ -1,6 +1,8 @@
+import * as stylex from '@stylexjs/stylex';
 import { useVirtualizer } from '@tanstack/react-virtual';
 
 import { TableBodyRow } from './components/TableBodyRow';
+import { styles } from './TableBody.stylex';
 import type { TTableBodyProps } from './TableBody.types';
 
 const TableBody = <TData extends Record<string, unknown>>({
@@ -29,13 +31,7 @@ const TableBody = <TData extends Record<string, unknown>>({
   const virtualRows = rowVirtualizer.getVirtualItems();
 
   return (
-    <tbody
-      style={{
-        display: 'grid',
-        height: `${rowVirtualizer.getTotalSize()}px`, //tells scrollbar how big the table is
-        position: 'relative', //needed for absolute positioning of rows
-      }}
-    >
+    <tbody {...stylex.props(styles.body(rowVirtualizer.getTotalSize()))}>
       {virtualRows.map((virtualRow) => {
         const row = rows[virtualRow.index];
 

@@ -1,4 +1,7 @@
+import * as stylex from '@stylexjs/stylex';
+
 import { TableHeadRow } from './components/TableHeadRow';
+import { styles } from './TableHead.stylex';
 import type { TTableHeadProps } from './TableHead.types';
 
 const TableHead = <TData extends Record<string, unknown>>({
@@ -8,14 +11,7 @@ const TableHead = <TData extends Record<string, unknown>>({
   virtualPaddingRight,
 }: TTableHeadProps<TData>) => {
   return (
-    <thead
-      style={{
-        display: 'grid',
-        position: 'sticky',
-        top: 0,
-        zIndex: 1,
-      }}
-    >
+    <thead {...stylex.props(styles.head)}>
       {table.getHeaderGroups().map((headerGroup) => (
         <TableHeadRow
           key={headerGroup.id}

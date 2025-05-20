@@ -1,4 +1,7 @@
+import * as stylex from '@stylexjs/stylex';
+
 import { TableBodyCell } from './components/TableBodyCell';
+import { styles } from './TableBodyRow.stylex';
 import type { TTableBodyRowProps } from './TableBodyRow.types';
 
 const TableBodyRow = <TData extends Record<string, unknown>>({
@@ -16,16 +19,11 @@ const TableBodyRow = <TData extends Record<string, unknown>>({
       key={row.id}
       ref={(node) => rowVirtualizer.measureElement(node)} //measure dynamic row height
       data-index={virtualRow.index} //needed for dynamic row height measurement
-      style={{
-        display: 'flex',
-        position: 'absolute',
-        transform: `translateY(${virtualRow.start}px)`, //this should always be a `style` as it changes on scroll
-        width: '100%',
-      }}
+      {...stylex.props(styles.row(virtualRow.start))}
     >
       {virtualPaddingLeft ? (
         //fake empty column to the left for virtualization scroll padding
-        <td style={{ display: 'flex', width: virtualPaddingLeft }} />
+        <td {...stylex.props(styles.paddingCell(virtualPaddingLeft))} />
       ) : null}
       {virtualColumns.map((vc) => {
         const cell = visibleCells[vc.index];
@@ -38,7 +36,7 @@ const TableBodyRow = <TData extends Record<string, unknown>>({
       })}
       {virtualPaddingRight ? (
         //fake empty column to the right for virtualization scroll padding
-        <td style={{ display: 'flex', width: virtualPaddingRight }} />
+        <td {...stylex.props(styles.paddingCell(virtualPaddingRight))} />
       ) : null}
     </tr>
   );

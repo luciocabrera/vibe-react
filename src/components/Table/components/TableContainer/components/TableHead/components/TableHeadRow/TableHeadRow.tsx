@@ -1,4 +1,7 @@
+import * as stylex from '@stylexjs/stylex';
+
 import { TableHeadCell } from './components/TableHeadCell';
+import { styles } from './TableHeadRow.stylex';
 import type { TTableHeadRowProps } from './TableHeadRow.types';
 
 const TableHeadRow = <TData extends Record<string, unknown>>({
@@ -11,11 +14,11 @@ const TableHeadRow = <TData extends Record<string, unknown>>({
   return (
     <tr
       key={headerGroup.id}
-      style={{ display: 'flex', width: '100%' }}
+      {...stylex.props(styles.row)}
     >
       {virtualPaddingLeft ? (
         //fake empty column to the left for virtualization scroll padding
-        <th style={{ display: 'flex', width: virtualPaddingLeft }} />
+        <th {...stylex.props(styles.paddingCell(virtualPaddingLeft))} />
       ) : null}
       {virtualColumns.map((virtualColumn) => {
         const header = headerGroup.headers[virtualColumn.index];
@@ -28,7 +31,7 @@ const TableHeadRow = <TData extends Record<string, unknown>>({
       })}
       {virtualPaddingRight ? (
         //fake empty column to the right for virtualization scroll padding
-        <th style={{ display: 'flex', width: virtualPaddingRight }} />
+        <th {...stylex.props(styles.paddingCell(virtualPaddingRight))} />
       ) : null}
     </tr>
   );

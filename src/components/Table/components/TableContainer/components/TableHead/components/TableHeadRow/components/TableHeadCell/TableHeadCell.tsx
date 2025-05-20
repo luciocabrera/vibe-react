@@ -1,5 +1,7 @@
+import * as stylex from '@stylexjs/stylex';
 import { flexRender } from '@tanstack/react-table';
 
+import { styles } from './TableHeadCell.stylex';
 import type { TTableHeadCellProps } from './TableHeadCell.types';
 
 const TableHeadCell = <TData extends Record<string, unknown>>({
@@ -8,18 +10,13 @@ const TableHeadCell = <TData extends Record<string, unknown>>({
   return (
     <th
       key={header.id}
-      style={{
-        display: 'flex',
-        width: header.getSize(),
-      }}
+      {...stylex.props(styles.th(header.getSize()))}
     >
       <div
         {...{
-          className: header.column.getCanSort()
-            ? 'cursor-pointer select-none'
-            : '',
           onClick: header.column.getToggleSortingHandler(),
         }}
+        {...stylex.props(header.column.getCanSort() && styles.sortable)}
       >
         {flexRender(header.column.columnDef.header, header.getContext())}
         {{
