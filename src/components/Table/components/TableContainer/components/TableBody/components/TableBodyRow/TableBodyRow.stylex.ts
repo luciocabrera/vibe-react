@@ -1,5 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 
+import { maxWidths } from '@/styles/tokens.stylex';
+
 export const styles = stylex.create({
   paddingCell: (width) => ({
     display: 'flex',
@@ -9,6 +11,6 @@ export const styles = stylex.create({
     display: 'flex',
     position: 'absolute',
     transform: `translateY(${translateY}px)`,
-    width: '100%',
+    width: maxWidths.full,
   }),
 });
