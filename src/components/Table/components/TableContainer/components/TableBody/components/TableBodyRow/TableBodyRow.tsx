@@ -1,5 +1,4 @@
-import { TableBodyCell } from '../TableBodyCell';
-
+import { TableBodyCell } from './components/TableBodyCell';
 import type { TTableBodyRowProps } from './TableBodyRow.types';
 
 const TableBodyRow = <TData extends Record<string, unknown>>({

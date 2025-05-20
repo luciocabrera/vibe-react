@@ -1,9 +1,7 @@
 import { useRef } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 
-import { TableBody } from '../TableBody';
-import { TableHead } from '../TableHead';
-
+import { TableBody, TableHead } from './components';
 import type { TTableContainerProps } from './TableContainer.types';
 
 const TableContainer = <TData extends Record<string, unknown>>({

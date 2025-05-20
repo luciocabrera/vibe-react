@@ -1,7 +1,6 @@
 import { useVirtualizer } from '@tanstack/react-virtual';
 
-import { TableBodyRow } from '../TableBodyRow';
-
+import { TableBodyRow } from './components/TableBodyRow';
 import type { TTableBodyProps } from './TableBody.types';
 
 const TableBody = <TData extends Record<string, unknown>>({

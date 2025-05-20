@@ -1,5 +1,4 @@
-import { TableHeadCell } from '../TableHeadCell';
-
+import { TableHeadCell } from './components/TableHeadCell';
 import type { TTableHeadRowProps } from './TableHeadRow.types';
 
 const TableHeadRow = <TData extends Record<string, unknown>>({

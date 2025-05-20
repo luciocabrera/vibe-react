@@ -16,7 +16,10 @@ export const makeData = (
 ) =>
   [...Array(num)].map(() => ({
     ...Object.fromEntries(
-      columns.map((col) => [col.accessorKey, faker.person.firstName()])
+      columns.map((col) => [
+        (col as { accessorKey: string }).accessorKey,
+        faker.person.firstName(),
+      ])
     ),
   }));
 
