@@ -3,6 +3,7 @@ import * as stylex from '@stylexjs/stylex';
 import {
   border,
   borderRadius,
+  fontSizes,
   maxWidths,
   spacing,
 } from '@/styles/tokens.stylex';
@@ -39,7 +40,6 @@ export const styles = stylex.create({
     containerType: 'normal',
     display: 'flex',
     flexDirection: 'column',
-    height: 220,
     margin: spacing.none,
     maxHeight: 220,
     maxWidth: maxWidths.fullContainerW,
@@ -49,11 +49,25 @@ export const styles = stylex.create({
     width: maxWidths.full,
   },
   dropdownVirtualItem: (start: number) => ({
-    left: 0,
+    left: spacing.none,
     position: 'absolute',
-    top: 0,
+    top: spacing.none,
     transform: `translateY(${start}px)`,
     width: maxWidths.full,
   }),
+  noResultsIcon: {
+    display: 'block',
+    fontSize: fontSizes.xl,
+    marginBottom: spacing.sm,
+  },
+  noResultsItem: {
+    color: 'var(--text-color-4)',
+    fontSize: fontSizes.md,
+    opacity: 0.7,
+    padding: `${spacing['3xl']} ${spacing.none}`,
+    textAlign: 'center',
+    transition: 'opacity 0.3s',
+    userSelect: 'none',
+  },
   virtualizer: (height: number) => ({ height, position: 'relative' }),
 });
