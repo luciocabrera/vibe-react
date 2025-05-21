@@ -5,7 +5,7 @@ import {
   getCoreRowModel,
   getSortedRowModel,
   useReactTable,
-  // type VisibilityState,
+  type VisibilityState,
 } from '@tanstack/react-table';
 
 import { MainHeader } from '../MainHeader';
@@ -21,6 +21,7 @@ const Table = <TData extends Record<string, unknown>>({
 }: TTableProps<TData>) => {
   const [columnOrder, setColumnOrder] = useState<ColumnOrderState>([]);
   const [columnPinning, setColumnPinning] = useState({});
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 
   // const visibleColumns = visible.reduce(
   //   (obj, item) => {
@@ -37,11 +38,6 @@ const Table = <TData extends Record<string, unknown>>({
   //   {} as Record<string, boolean>
   // );
 
-  // const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
-  //   ...visibleColumns,
-  //   ...hiddenColumns,
-  // });
-
   const table = useReactTable({
     columnResizeMode: 'onChange',
     columns,
@@ -51,24 +47,19 @@ const Table = <TData extends Record<string, unknown>>({
     getSortedRowModel: getSortedRowModel(),
     onColumnOrderChange: setColumnOrder,
     onColumnPinningChange: setColumnPinning,
-    // onColumnVisibilityChange: setColumnVisibility,
+    onColumnVisibilityChange: setColumnVisibility,
     state: {
       columnOrder,
       columnPinning,
-      // columnVisibility,
+      columnVisibility,
     },
   });
 
-  //All important CSS styles are included as stylex styles
   return (
     <section {...stylex.props(styles.section)}>
       {showHeader && (
         <MainHeader
           inverse
-          // customTitle={customTitle}
-          // icon={icon}
-          // menus={tableActions}
-          // showTopRadius={showTopRadius}
           title={'title'}
         />
       )}
