@@ -2,7 +2,8 @@ import * as stylex from '@stylexjs/stylex';
 
 export const styles = stylex.create({
   container: {
-    height: '600px',
+    flex: 1,
+    maxHeight: '100cqh',
     overflow: 'auto',
     position: 'relative',
   },

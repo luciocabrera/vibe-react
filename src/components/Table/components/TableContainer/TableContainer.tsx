@@ -44,7 +44,6 @@ const TableContainer = <TData extends Record<string, unknown>>({
       ref={tableContainerRef}
       {...stylex.props(styles.container)}
     >
-      {/* Even though we're still using sematic table tags, we must use CSS grid and flexbox for dynamic row heights */}
       <table {...stylex.props(styles.table)}>
         <TableHead
           columnVirtualizer={columnVirtualizer}

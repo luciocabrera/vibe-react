@@ -58,9 +58,20 @@ const Table = <TData extends Record<string, unknown>>({
 
   //All important CSS styles are included as stylex styles
   return (
-    <div {...stylex.props(styles.app)}>
+    <section {...stylex.props(styles.section)}>
+      {/* {showHeader && (
+        <MainHeader
+          inverse
+          customTitle={customTitle}
+          icon={icon}
+          menus={tableActions}
+          showTopRadius={showTopRadius}
+          title={title}
+        />
+      )} */}
+      <div style={{ height: '100px' }}>something here</div>
       <TableContainer table={table} />
-    </div>
+    </section>
   );
 };
 
