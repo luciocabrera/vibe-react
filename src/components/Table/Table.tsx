@@ -8,6 +8,8 @@ import {
   // type VisibilityState,
 } from '@tanstack/react-table';
 
+import { MainHeader } from '../MainHeader';
+
 import { TableContainer } from './components/TableContainer';
 import { styles } from './Table.stylex';
 import type { TTableProps } from './Table.types';
@@ -15,6 +17,7 @@ import type { TTableProps } from './Table.types';
 const Table = <TData extends Record<string, unknown>>({
   columns,
   data,
+  showHeader = true,
 }: TTableProps<TData>) => {
   const [columnOrder, setColumnOrder] = useState<ColumnOrderState>([]);
   const [columnPinning, setColumnPinning] = useState({});
@@ -59,17 +62,16 @@ const Table = <TData extends Record<string, unknown>>({
   //All important CSS styles are included as stylex styles
   return (
     <section {...stylex.props(styles.section)}>
-      {/* {showHeader && (
+      {showHeader && (
         <MainHeader
           inverse
-          customTitle={customTitle}
-          icon={icon}
-          menus={tableActions}
-          showTopRadius={showTopRadius}
-          title={title}
+          // customTitle={customTitle}
+          // icon={icon}
+          // menus={tableActions}
+          // showTopRadius={showTopRadius}
+          title={'title'}
         />
-      )} */}
-      <div style={{ height: '100px' }}>something here</div>
+      )}
       <TableContainer table={table} />
     </section>
   );
