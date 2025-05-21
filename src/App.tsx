@@ -6,7 +6,7 @@ import { FiltersSection } from './components/sections/FiltersSection';
 import { ResultsTable } from './components/ResultsTable';
 import { SortBySection } from './components/sections/SortBySection';
 import { TableSettingsDrawer } from './components/TableSettingsDrawer';
-import { Table } from '@/components/Table';
+import TableFeature from '@/features/Table';
 
 // Dummy data loader (replace with real file input logic as needed)
 const initialData: Record<string, any>[] = [];
@@ -401,7 +401,7 @@ const App: React.FC = () => {
             groupByMethod={groupByMethod}
             groupByUrl={groupByUrl}
           />{' '}
-          <Table />
+          <TableFeature />
         </>
       )}
       <TableSettingsDrawer
