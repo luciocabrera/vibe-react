@@ -145,7 +145,7 @@ h1 {
   margin-top: 20px;
 }
 
-table {
+/* table {
   border-collapse: collapse;
   width: 100%;
   background: #fff;
@@ -160,7 +160,7 @@ td {
 
 th {
   background: #eee;
-}
+} */
 
 .settings-btn {
   position: fixed;
@@ -198,7 +198,7 @@ th {
   }
 }
 
-@media (max-width: 700px) {
+/* @media (max-width: 700px) {
   table,
   th,
   td {
@@ -208,7 +208,7 @@ th {
   .app-container {
     padding: 8px;
   }
-}
+} */
 html {
   scrollbar-color: var(--background-color-9) transparent;
   scrollbar-width: thin;

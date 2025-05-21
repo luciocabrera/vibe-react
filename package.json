@@ -18,7 +18,7 @@
   "dependencies": {
     "@faker-js/faker": "^9.8.0",
     "@tanstack/react-table": "^8.21.3",
-    "@tanstack/react-virtual": "^3.13.8",
+    "@tanstack/react-virtual": "^3.13.9",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-icons": "^5.5.0"
@@ -27,7 +27,7 @@
     "@eslint/js": "^9.27.0",
     "@stylexjs/stylex": "^0.13.0",
     "@tanstack/eslint-plugin-query": "^5.74.7",
-    "@types/node": "^22.15.19",
+    "@types/node": "^22.15.21",
     "@types/react": "^19.1.4",
     "@types/react-dom": "^19.1.5",
     "@vitejs/plugin-react": "^4.4.1",
@@ -42,7 +42,7 @@
     "eslint-plugin-sort-keys-fix": "^1.1.2",
     "globals": "^16.1.0",
     "husky": "^9.1.7",
-    "knip": "^5.56.0",
+    "knip": "^5.57.0",
     "prettier": "^3.5.3",
     "prettier-plugin-stylex-key-sort": "^1.0.1",
     "typescript": "~5.8.3",

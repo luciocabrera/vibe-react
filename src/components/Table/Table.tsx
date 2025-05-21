@@ -21,9 +21,11 @@ const Table = () => {
   }, [columns]);
 
   const table = useReactTable({
+    columnResizeMode: 'onChange',
     columns,
     data,
-    debugTable: true,
+    // debugTable: true,
+    enableColumnResizing: true,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
   });
