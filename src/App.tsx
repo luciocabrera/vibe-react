@@ -3,10 +3,11 @@
 import { useEffect, useState } from 'react';
 
 import { FiltersSection } from './components/sections/FiltersSection';
-import { ResultsTable } from './components/ResultsTable';
 import { SortBySection } from './components/sections/SortBySection';
 import { TableSettingsDrawer } from './components/TableSettingsDrawer';
-import TableFeature from '@/features/Table';
+import { TableWrapper } from './components/TableWrapper';
+import { Table } from './components/Table';
+import { convertToTanStackColumns } from './utils/columnAdapter';
 
 // Dummy data loader (replace with real file input logic as needed)
 const initialData: Record<string, any>[] = [];
@@ -289,7 +290,7 @@ const App: React.FC = () => {
               Group by Method
             </label>
           </div>
-          <ResultsTable
+          <TableWrapper
             columns={orderedColumns}
             data={filtered}
             groupByMethod={groupByMethod}
@@ -395,13 +396,10 @@ const App: React.FC = () => {
               />
             </>
           )}
-          <ResultsTable
-            columns={orderedColumns}
+          <Table
+            columns={convertToTanStackColumns(orderedColumns)}
             data={filtered}
-            groupByMethod={groupByMethod}
-            groupByUrl={groupByUrl}
-          />{' '}
-          <TableFeature />
+          />
         </>
       )}
       <TableSettingsDrawer

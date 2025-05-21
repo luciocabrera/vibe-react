@@ -10,5 +10,7 @@
       "path": "../../datablender/umd-ui-remix",
     },
   ],
-  "settings": {},
+  "settings": {
+    "editor.formatOnSave": true,
+  },
 }

@@ -7,7 +7,15 @@ export const styles = stylex.create({
     display: 'flex',
     width,
   }),
-  row: (translateY) => ({
+  tr: (translateY) => ({
+    ':hover': {
+      backgroundColor: 'var(--background-color-3)',
+      borderBottom: '1px solid var(--border-color-3)',
+      color: 'var(--color-3)',
+      cursor: 'pointer',
+    },
+    ':nth-child(even)': { backgroundColor: 'var(--background-color-7)' },
+    borderBottom: '1px solid var(--border-color-2)',
     display: 'flex',
     position: 'absolute',
     transform: `translateY(${translateY}px)`,

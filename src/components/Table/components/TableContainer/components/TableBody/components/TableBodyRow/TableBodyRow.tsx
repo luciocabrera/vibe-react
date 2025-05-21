@@ -19,7 +19,7 @@ const TableBodyRow = <TData extends Record<string, unknown>>({
       key={row.id}
       ref={(node) => rowVirtualizer.measureElement(node)} //measure dynamic row height
       data-index={virtualRow.index} //needed for dynamic row height measurement
-      {...stylex.props(styles.row(virtualRow.start))}
+      {...stylex.props(styles.tr(virtualRow.start))}
     >
       {virtualPaddingLeft ? (
         //fake empty column to the left for virtualization scroll padding
