@@ -91,27 +91,40 @@ const MultiSelectDropdownListBody = ({
           />
         </li>
       )}
-      <div {...stylex.props(styles.virtualizer(virtualizer.getTotalSize()))}>
-        {virtualizer.getVirtualItems().map((virtualRow) => {
-          const opt = filteredOptions[virtualRow.index];
-          return (
-            <li
-              key={opt}
-              {...stylex.props(
-                styles.dropdownItem,
-                styles.dropdownVirtualItem(virtualRow.start)
-              )}
-            >
-              <RadioCheckInput
-                checked={selected.includes(opt)}
-                label={opt}
-                type='checkbox'
-                onChange={(e) => handleOptionChange(opt, e.target.checked)}
-              />
-            </li>
-          );
-        })}
-      </div>
+      {filteredOptions.length === 0 ? (
+        <li {...stylex.props(styles.noResultsItem)}>
+          <span
+            aria-label='No results'
+            role='img'
+            {...stylex.props(styles.noResultsIcon)}
+          >
+            🔍
+          </span>
+          {'No results found'}
+        </li>
+      ) : (
+        <div {...stylex.props(styles.virtualizer(virtualizer.getTotalSize()))}>
+          {virtualizer.getVirtualItems().map((virtualRow) => {
+            const opt = filteredOptions[virtualRow.index];
+            return (
+              <li
+                key={opt}
+                {...stylex.props(
+                  styles.dropdownItem,
+                  styles.dropdownVirtualItem(virtualRow.start)
+                )}
+              >
+                <RadioCheckInput
+                  checked={selected.includes(opt)}
+                  label={opt}
+                  type='checkbox'
+                  onChange={(e) => handleOptionChange(opt, e.target.checked)}
+                />
+              </li>
+            );
+          })}
+        </div>
+      )}
     </ul>
   );
 };
