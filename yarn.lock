@@ -619,6 +619,11 @@
   resolved "https://registry.yarnpkg.com/@oxc-resolver/binding-win32-x64-msvc/-/binding-win32-x64-msvc-9.0.2.tgz#15dc9cecd2e89bbcad07247477fc04dd8c3ffbbe"
   integrity sha512-Qc40GDkaad9rZksSQr2l/V9UubigIHsW69g94Gswc2sKYB3XfJXfIfyV8WTJ67u6ZMXsZ7BH1msSC6Aen75mCg==
 
+"@rolldown/pluginutils@1.0.0-beta.9":
+  version "1.0.0-beta.9"
+  resolved "https://registry.yarnpkg.com/@rolldown/pluginutils/-/pluginutils-1.0.0-beta.9.tgz#68ef9fff5a9791a642cea0dc4380ce6cb487a84a"
+  integrity sha512-e9MeMtVWo186sgvFFJOPGy7/d2j2mZhLJIdVW0C/xDluuOvymEATqz6zKsP0ZmXGzQtqlyjz5sC1sYQUoJG98w==
+
 "@rollup/rollup-android-arm-eabi@4.40.2":
   version "4.40.2"
   resolved "https://registry.yarnpkg.com/@rollup/rollup-android-arm-eabi/-/rollup-android-arm-eabi-4.40.2.tgz#c228d00a41f0dbd6fb8b7ea819bbfbf1c1157a10"
@@ -755,10 +760,10 @@
     invariant "^2.2.4"
     styleq "0.1.3"
 
-"@stylexjs/stylex@^0.13.0":
-  version "0.13.0"
-  resolved "https://registry.yarnpkg.com/@stylexjs/stylex/-/stylex-0.13.0.tgz#0ec3fb0744b527f0d822f5b1623412a1b7087485"
-  integrity sha512-YHrZfZK2VCl4U/r1M6Yk/UK5wVKaHbWt/a4IOgMG4covESVSTv7MOIs/3QTtHE+vawFub8wrHgpp2MQfTV6fEA==
+"@stylexjs/stylex@^0.13.1":
+  version "0.13.1"
+  resolved "https://registry.yarnpkg.com/@stylexjs/stylex/-/stylex-0.13.1.tgz#297bd06d23ceef147710419815f115086684f84a"
+  integrity sha512-s/aRE+pGaroMSttMDlrSMHf1lTF+uGe4ncWoRMlKZav6pg5g11sWuJojgA640aZy9jFgWvWSWbXzyUzeoDuMUQ==
   dependencies:
     css-mediaquery "^0.1.2"
     invariant "^2.2.4"
@@ -990,14 +995,15 @@
     "@typescript-eslint/types" "8.32.1"
     eslint-visitor-keys "^4.2.0"
 
-"@vitejs/plugin-react@^4.4.1":
-  version "4.4.1"
-  resolved "https://registry.yarnpkg.com/@vitejs/plugin-react/-/plugin-react-4.4.1.tgz#d7d1e9c9616d7536b0953637edfee7c6cbe2fe0f"
-  integrity sha512-IpEm5ZmeXAP/osiBXVVP5KjFMzbWOonMs0NaQQl+xYnUAcq4oHUBsF2+p4MgKWG4YMmFYJU8A6sxRPuowllm6w==
+"@vitejs/plugin-react@^4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@vitejs/plugin-react/-/plugin-react-4.5.0.tgz#ef2bad6be3031af2b2105b7ab2754f710e890a32"
+  integrity sha512-JuLWaEqypaJmOJPLWwO335Ig6jSgC1FTONCWAxnqcQthLTK/Yc9aH6hr9z/87xciejbQcnP3GnA1FWUSWeXaeg==
   dependencies:
     "@babel/core" "^7.26.10"
     "@babel/plugin-transform-react-jsx-self" "^7.25.9"
     "@babel/plugin-transform-react-jsx-source" "^7.25.9"
+    "@rolldown/pluginutils" "1.0.0-beta.9"
     "@types/babel__core" "^7.20.5"
     react-refresh "^0.17.0"
 
@@ -2245,10 +2251,10 @@ keyv@^4.5.4:
   dependencies:
     json-buffer "3.0.1"
 
-knip@^5.57.1:
-  version "5.57.1"
-  resolved "https://registry.yarnpkg.com/knip/-/knip-5.57.1.tgz#6982f82a94748e6cd4dd5c4342be3f2d76e06aa6"
-  integrity sha512-FWdCuoYtaVB9+/9F9iGcKOGX2Orz9xEfbxCENq2UGnCwa6PGRYmlVR8d3MybnoplLmBjTC9yO/+npK5CRLTb2w==
+knip@^5.57.2:
+  version "5.57.2"
+  resolved "https://registry.yarnpkg.com/knip/-/knip-5.57.2.tgz#3cc2d775a492894a5dedb3e5229fcb879ce78343"
+  integrity sha512-6a5h4MLfn71DxfwkLaA447+4SSFtEs/LVX1241yqX/B1ARGiCQTstA1adF949JESIMwUUJP/JLCH9TSn+aRFMg==
   dependencies:
     "@nodelib/fs.walk" "^1.2.3"
     fast-glob "^3.3.3"
