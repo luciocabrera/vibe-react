@@ -42,7 +42,7 @@
     "eslint-plugin-sort-keys-fix": "^1.1.2",
     "globals": "^16.1.0",
     "husky": "^9.1.7",
-    "knip": "^5.57.2",
+    "knip": "^5.58.0",
     "prettier": "^3.5.3",
     "prettier-plugin-stylex-key-sort": "^1.0.1",
     "typescript": "~5.8.3",
