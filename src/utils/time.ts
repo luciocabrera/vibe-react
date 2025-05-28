@@ -1,3 +1,5 @@
+import type { TDateDisplayProps } from '@/components/display/DateDisplay/DateDisplay.types';
+
 type TGetDateAsStringArgs = TDateDisplayProps;
 
 /**

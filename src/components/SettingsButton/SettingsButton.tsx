@@ -9,10 +9,17 @@ type SettingsButtonProps = {
 };
 
 const SettingsButton = ({
-  onClick,
   title = 'Table Settings',
+  ...props
 }: SettingsButtonProps) => {
   const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
 
   return (
     <button
@@ -20,9 +27,9 @@ const SettingsButton = ({
       className='settings-btn'
       {...stylex.props(styles.button, isHovered && styles.buttonHover)}
       title={title}
-      onClick={onClick}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      {...props}
     >
       {/* Settings gear icon SVG */}
       <svg

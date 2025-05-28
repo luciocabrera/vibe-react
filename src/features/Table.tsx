@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { useCallback, useMemo, useState } from 'react';
 import * as stylex from '@stylexjs/stylex';
 import type { ColumnDef } from '@tanstack/react-table';

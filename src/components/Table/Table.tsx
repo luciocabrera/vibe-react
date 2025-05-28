@@ -14,7 +14,7 @@ import { TableContainer } from './components/TableContainer';
 import { styles } from './Table.stylex';
 import type { TTableProps } from './Table.types';
 
-const LOCAL_STORAGE_KEY = 'vibe-table-settings';
+// const LOCAL_STORAGE_KEY = 'vibe-table-settings';
 
 const Table = <TData extends Record<string, unknown>>({
   columns,
@@ -25,7 +25,7 @@ const Table = <TData extends Record<string, unknown>>({
   const [columnOrder, setColumnOrder] = useState<ColumnOrderState>([]);
   const [columnPinning, setColumnPinning] = useState({});
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [, setDrawerOpen] = useState(false);
   // const [drawerTab, setDrawerTab] = useState<'columns' | 'filters' | 'sorting'>(
   //   'filters'
   // );
