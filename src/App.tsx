@@ -1,13 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 //@ts-nocheck
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import { FiltersSection } from './components/sections/FiltersSection';
-import { SortBySection } from './components/sections/SortBySection';
-import { TableSettingsDrawer } from './components/TableSettingsDrawer';
 import { TableWrapper } from './components/TableWrapper';
 import { Table } from './components/Table';
-import { convertToTanStackColumns } from './utils/columnAdapter';
 
 // Dummy data loader (replace with real file input logic as needed)
 const initialData: Record<string, any>[] = [];
@@ -96,91 +92,9 @@ const columns: ColumnDef[] = [
 const App: React.FC = () => {
   // State for all data (replace with file upload logic)
   const [data, setData] = useState<Record<string, any>[]>(initialData);
-  // Dynamic filter and range state
-  const [filterState, setFilterState] = useState<Record<string, string[]>>({});
-  const [rangeState, setRangeState] = useState<
-    Record<string, [number | '', number | '']>
-  >({});
   // Grouping
   const [groupByUrl, setGroupByUrl] = useState(false);
   const [groupByMethod, setGroupByMethod] = useState(false);
-  // Sorting
-  const [sortState, setSortState] = useState<SortCol[]>([]);
-  // Drawer state
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const [drawerTab, setDrawerTab] = useState<'columns' | 'filters' | 'sorting'>(
-    'filters'
-  );
-  // Drawer pin state
-  const [isPinned, setIsPinned] = useState(false);
-
-  // On data load/update, update filter options
-  useEffect(() => {
-    const newFilterState: Record<string, string[]> = {};
-    columns
-      .filter((col) => col.filterable)
-      .forEach((col) => {
-        const opts = Array.from(
-          new Set(data.map((d) => d[col.key]).filter(Boolean))
-        );
-        newFilterState[col.key] = opts;
-      });
-    setFilterState(newFilterState);
-    // Reset range state for new data
-    const newRangeState: Record<string, [number | '', number | '']> = {};
-    columns
-      .filter((col) => col.rangeFilter)
-      .forEach((col) => {
-        newRangeState[col.key] = ['', ''];
-      });
-    setRangeState(newRangeState);
-  }, [data]);
-
-  // Filtering logic
-  let filtered = data.filter((row) =>
-    columns
-      .filter((col) => col.filterable)
-      .every(
-        (col) =>
-          filterState[col.key]?.length === 0 ||
-          filterState[col.key]?.includes(row[col.key])
-      )
-  );
-  const inRange = (val: number | '-', min: number | '', max: number | '') => {
-    if (val === '-' || isNaN(Number(val))) return false;
-    if (min !== '' && Number(val) < min) return false;
-    if (max !== '' && Number(val) > max) return false;
-    return true;
-  };
-  filtered = filtered.filter((row) =>
-    columns
-      .filter((col) => col.rangeFilter)
-      .every((col) =>
-        inRange(
-          row[col.key],
-          rangeState[col.key]?.[0],
-          rangeState[col.key]?.[1]
-        )
-      )
-  );
-
-  // Sorting logic
-  if (sortState.length > 0) {
-    filtered = [...filtered].sort((a, b) => {
-      for (const sortCol of sortState) {
-        const va = a[sortCol.key as keyof Record<string, any>];
-        const vb = b[sortCol.key as keyof Record<string, any>];
-        if (typeof va === 'number' && typeof vb === 'number') {
-          if (va < vb) return sortCol.dir === 'asc' ? -1 : 1;
-          if (va > vb) return sortCol.dir === 'asc' ? 1 : -1;
-        } else {
-          if (String(va) < String(vb)) return sortCol.dir === 'asc' ? -1 : 1;
-          if (String(va) > String(vb)) return sortCol.dir === 'asc' ? 1 : -1;
-        }
-      }
-      return 0;
-    });
-  }
 
   // File upload handler (for demo, not production)
   const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -237,196 +151,55 @@ const App: React.FC = () => {
     });
   };
 
-  // Column order state and drag-and-drop logic
-  const [columnOrder, setColumnOrder] = useState(columns.map((col) => col.key));
-  // Column visibility state
-  const [visibleColumns, setVisibleColumns] = useState<Set<string>>(
-    new Set(columns.map((col) => col.key))
-  );
-
-  const orderedColumns = columnOrder
-    .map((key) => columns.find((col) => col.key === key)!)
-    .filter(Boolean)
-    .filter((col) => visibleColumns.has(col.key)); // Filter by visibility
-
   return (
-    <div
-      className={isPinned ? 'with-pinned-drawer' : ''}
-      style={
-        isPinned ? undefined : { margin: '0 auto', maxWidth: 1200, padding: 24 }
-      }
-    >
-      {isPinned ? (
-        // Main content when drawer is pinned
-        <div className='main-content'>
-          <h1>API Benchmark Multi-Results Viewer (React)</h1>
-          <div style={{ marginBottom: 18 }}>
-            <label>
-              <b>Select multiple results JSON files:</b>
-              <input
-                multiple
-                accept='application/json'
-                style={{ marginLeft: 12 }}
-                type='file'
-                onChange={handleFileInput}
-              />
-            </label>
-          </div>
-          <div style={{ marginBottom: 12 }}>
-            <label>
-              <input
-                checked={groupByUrl}
-                type='checkbox'
-                onChange={(e) => setGroupByUrl(e.target.checked)}
-              />{' '}
-              Group by URL
-            </label>
-            <label style={{ marginLeft: 16 }}>
-              <input
-                checked={groupByMethod}
-                type='checkbox'
-                onChange={(e) => setGroupByMethod(e.target.checked)}
-              />{' '}
-              Group by Method
-            </label>
-          </div>
-          <TableWrapper
-            columns={orderedColumns}
-            data={filtered}
-            groupByMethod={groupByMethod}
-            groupByUrl={groupByUrl}
+    <div style={{ margin: '0 auto', maxWidth: 1200, padding: 24 }}>
+      <h1>API Benchmark Multi-Results Viewer (React)</h1>
+      <div style={{ marginBottom: 18 }}>
+        <label>
+          <b>Select multiple results JSON files:</b>
+          <input
+            multiple
+            accept='application/json'
+            style={{ marginLeft: 12 }}
+            type='file'
+            onChange={handleFileInput}
           />
-        </div>
+        </label>
+      </div>
+
+      <div style={{ marginBottom: 12 }}>
+        <label>
+          <input
+            checked={groupByUrl}
+            type='checkbox'
+            onChange={(e) => setGroupByUrl(e.target.checked)}
+          />{' '}
+          Group by URL
+        </label>
+        <label style={{ marginLeft: 16 }}>
+          <input
+            checked={groupByMethod}
+            type='checkbox'
+            onChange={(e) => setGroupByMethod(e.target.checked)}
+          />{' '}
+          Group by Method
+        </label>
+      </div>
+
+      {/* Use TableWrapper when grouping is enabled, otherwise use enhanced Table */}
+      {groupByUrl || groupByMethod ? (
+        <TableWrapper
+          columns={columns}
+          data={data}
+          groupByMethod={groupByMethod}
+          groupByUrl={groupByUrl}
+        />
       ) : (
-        // Original layout when drawer is not pinned
-        <>
-          <button
-            aria-label='Table Settings'
-            className='settings-btn'
-            title='Table Settings'
-            onClick={() => setDrawerOpen(true)}
-          >
-            <img
-              alt='settings'
-              src='/vite.svg'
-              style={{ height: 28, width: 28 }}
-            />
-          </button>
-          <h1>API Benchmark Multi-Results Viewer (React)</h1>
-          <div style={{ marginBottom: 18 }}>
-            <label>
-              <b>Select multiple results JSON files:</b>
-              <input
-                multiple
-                accept='application/json'
-                style={{ marginLeft: 12 }}
-                type='file'
-                onChange={handleFileInput}
-              />
-            </label>
-          </div>
-          <div style={{ marginBottom: 12 }}>
-            <label>
-              <input
-                checked={groupByUrl}
-                type='checkbox'
-                onChange={(e) => setGroupByUrl(e.target.checked)}
-              />{' '}
-              Group by URL
-            </label>
-            <label style={{ marginLeft: 16 }}>
-              <input
-                checked={groupByMethod}
-                type='checkbox'
-                onChange={(e) => setGroupByMethod(e.target.checked)}
-              />{' '}
-              Group by Method
-            </label>
-          </div>
-          {/* Hide inline filters/sorting when drawer is open */}
-          {!drawerOpen && (
-            <>
-              <FiltersSection
-                columns={columns}
-                data={data}
-                filterState={filterState}
-                rangeState={rangeState}
-                onFilterChange={(key, vals) =>
-                  setFilterState((fs) => ({ ...fs, [key]: vals }))
-                }
-                onRangeChange={(key, min, max) =>
-                  setRangeState((rs) => ({ ...rs, [key]: [min, max] }))
-                }
-                onReset={() => {
-                  const newFilterState: Record<string, string[]> = {};
-                  columns
-                    .filter((col) => col.filterable)
-                    .forEach((col) => {
-                      const opts = Array.from(
-                        new Set(data.map((d) => d[col.key]).filter(Boolean))
-                      );
-                      newFilterState[col.key] = opts;
-                    });
-                  setFilterState(newFilterState);
-                  const newRangeState: Record<
-                    string,
-                    [number | '', number | '']
-                  > = {};
-                  columns
-                    .filter((col) => col.rangeFilter)
-                    .forEach((col) => {
-                      newRangeState[col.key] = ['', ''];
-                    });
-                  setRangeState(newRangeState);
-                }}
-                onResetFilter={(key) => {
-                  const opts = Array.from(
-                    new Set(data.map((d) => d[key]).filter(Boolean))
-                  );
-                  setFilterState((fs) => ({ ...fs, [key]: opts }));
-                }}
-                onResetRange={(key) =>
-                  setRangeState((rs) => ({ ...rs, [key]: ['', ''] }))
-                }
-              />
-              <SortBySection
-                allColumns={columns}
-                sortState={sortState}
-                onChange={setSortState}
-              />
-            </>
-          )}
-          <Table
-            columns={convertToTanStackColumns(orderedColumns)}
-            data={filtered}
-          />
-        </>
+        <Table
+          columns={columns}
+          data={data}
+        />
       )}
-      <TableSettingsDrawer
-        columnOrder={columnOrder}
-        columns={columns}
-        data={data}
-        filterState={filterState}
-        isPinned={isPinned}
-        open={drawerOpen || isPinned}
-        rangeState={rangeState}
-        setColumnOrder={setColumnOrder}
-        setFilterState={setFilterState}
-        setRangeState={setRangeState}
-        setSortState={setSortState}
-        setTab={setDrawerTab}
-        setVisibleColumns={setVisibleColumns}
-        sortState={sortState}
-        tab={drawerTab}
-        visibleColumns={visibleColumns}
-        onClose={() => {
-          setDrawerOpen(false);
-          if (isPinned) {
-            setIsPinned(false);
-          }
-        }}
-        onPinChange={setIsPinned}
-      />
     </div>
   );
 };
