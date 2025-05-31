@@ -1,16 +1,18 @@
-import { useCallback,useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import * as stylex from '@stylexjs/stylex';
 
-import type { TCustomTableHeaderCellProps } from '../../../CustomTable.types';
+import type { TCustomTableHeaderCellProps } from '../../../../CustomTable.types';
 
 import { styles } from './CustomTableHeaderCell.stylex';
 
 const CustomTableHeaderCell = ({
   column,
-  isPinned,
+  leftPinnedWidth: _leftPinnedWidth,
   onColumnPin,
   onColumnResize,
   onSort,
+  position,
+  rightPinnedWidth: _rightPinnedWidth,
   sortState,
 }: TCustomTableHeaderCellProps) => {
   const [isResizing, setIsResizing] = useState(false);
@@ -18,7 +20,9 @@ const CustomTableHeaderCell = ({
   const startX = useRef<number>(0);
 
   // Get current sort state for this column
-  const currentSort = sortState.find((s) => s.key === column.key);
+  const currentSort = sortState.find(
+    (s: { dir: string; key: string }) => s.key === column.key
+  );
   const sortIcon = currentSort ? (currentSort.dir === 'asc' ? ' ↑' : ' ↓') : '';
 
   // Handle column sort
@@ -64,12 +68,22 @@ const CustomTableHeaderCell = ({
     [column.key, onColumnPin]
   );
 
+  // Determine pinning styles
+  const pinnedStyles = column.isLeftPinned
+    ? styles.leftPinned(position || 0)
+    : column.isRightPinned
+      ? styles.rightPinned(position || 0)
+      : null;
+
+  const isPinned = column.isLeftPinned || column.isRightPinned;
+
   return (
     <th
       {...stylex.props(
         styles.headerCell(column.width),
         isResizing && styles.resizing,
-        currentSort && styles.sorted
+        currentSort && styles.sorted,
+        pinnedStyles
       )}
     >
       <div {...stylex.props(styles.headerContent)}>

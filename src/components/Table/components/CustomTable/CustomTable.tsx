@@ -28,7 +28,7 @@ const CustomTable = ({
 
   // Process columns with ordering, visibility, and pinning
   const processedColumns: TProcessedColumn[] = useMemo(() => {
-    return columnOrder
+    const result = columnOrder
       .map((key: string) => columns.find((col: ColumnDef) => col.key === key))
       .filter((col): col is ColumnDef => Boolean(col))
       .filter((col: ColumnDef) => visibleColumns.has(col.key))
@@ -39,25 +39,22 @@ const CustomTable = ({
         isRightPinned: pinnedColumns.right.includes(col.key),
         width: columnWidths[col.key] || (col.type === 'number' ? 120 : 200),
       }));
+
+    return result;
   }, [columns, columnOrder, visibleColumns, pinnedColumns, columnWidths]);
 
-  // Separate columns into pinned and scrollable
-  const leftPinnedColumns = processedColumns.filter((col) => col.isLeftPinned);
-  const rightPinnedColumns = processedColumns.filter(
-    (col) => col.isRightPinned
-  );
-  const scrollableColumns = processedColumns.filter(
-    (col) => !col.isLeftPinned && !col.isRightPinned
-  );
+  // Calculate pinned column widths and positions
+  const leftPinnedWidth = useMemo(() => {
+    return processedColumns
+      .filter((col) => col.isLeftPinned)
+      .reduce((sum, col) => sum + col.width, 0);
+  }, [processedColumns]);
 
-  // Column virtualization for scrollable columns only
-  const columnVirtualizer = useVirtualizer({
-    count: scrollableColumns.length,
-    estimateSize: (index) => scrollableColumns[index]?.width || 200,
-    getScrollElement: () => tableContainerRef.current,
-    horizontal: true,
-    overscan: 3,
-  });
+  const rightPinnedWidth = useMemo(() => {
+    return processedColumns
+      .filter((col) => col.isRightPinned)
+      .reduce((sum, col) => sum + col.width, 0);
+  }, [processedColumns]);
 
   // Row virtualization
   const rowVirtualizer = useVirtualizer<HTMLDivElement, HTMLTableRowElement>({
@@ -117,97 +114,29 @@ const CustomTable = ({
     [columns, sortState, onSort]
   );
 
-  // Calculate total width of pinned columns (for future use)
-  // const leftPinnedWidth = leftPinnedColumns.reduce((sum, col) => sum + col.width, 0);
-  // const rightPinnedWidth = rightPinnedColumns.reduce((sum, col) => sum + col.width, 0);
-
-  const virtualColumns = columnVirtualizer.getVirtualItems();
-
-  // Calculate virtual padding for scrollable columns
-  let virtualPaddingLeft = 0;
-  let virtualPaddingRight = 0;
-
-  if (virtualColumns.length > 0) {
-    virtualPaddingLeft = virtualColumns[0]?.start ?? 0;
-    virtualPaddingRight =
-      columnVirtualizer.getTotalSize() -
-      (virtualColumns[virtualColumns.length - 1]?.end ?? 0);
-  }
-
   return (
     <div
       ref={tableContainerRef}
       {...stylex.props(styles.container)}
     >
-      <div {...stylex.props(styles.tableWrapper)}>
-        {/* Left pinned columns */}
-        {leftPinnedColumns.length > 0 && (
-          <div {...stylex.props(styles.pinnedSection, styles.leftPinned)}>
-            <table {...stylex.props(styles.table)}>
-              <CustomTableHead
-                columns={leftPinnedColumns}
-                isPinned='left'
-                sortState={sortState}
-                onColumnPin={handleColumnPin}
-                onColumnResize={handleColumnResize}
-                onSort={handleSort}
-              />
-              <CustomTableBody
-                columns={leftPinnedColumns}
-                data={data}
-                isPinned='left'
-                rowVirtualizer={rowVirtualizer}
-              />
-            </table>
-          </div>
-        )}
-
-        {/* Scrollable columns */}
-        <div {...stylex.props(styles.scrollableSection)}>
-          <table {...stylex.props(styles.table)}>
-            <CustomTableHead
-              columns={scrollableColumns}
-              sortState={sortState}
-              virtualColumns={virtualColumns}
-              virtualPaddingLeft={virtualPaddingLeft}
-              virtualPaddingRight={virtualPaddingRight}
-              onColumnPin={handleColumnPin}
-              onColumnResize={handleColumnResize}
-              onSort={handleSort}
-            />
-            <CustomTableBody
-              columns={scrollableColumns}
-              data={data}
-              rowVirtualizer={rowVirtualizer}
-              virtualColumns={virtualColumns}
-              virtualPaddingLeft={virtualPaddingLeft}
-              virtualPaddingRight={virtualPaddingRight}
-            />
-          </table>
-        </div>
-
-        {/* Right pinned columns */}
-        {rightPinnedColumns.length > 0 && (
-          <div {...stylex.props(styles.pinnedSection, styles.rightPinned)}>
-            <table {...stylex.props(styles.table)}>
-              <CustomTableHead
-                columns={rightPinnedColumns}
-                isPinned='right'
-                sortState={sortState}
-                onColumnPin={handleColumnPin}
-                onColumnResize={handleColumnResize}
-                onSort={handleSort}
-              />
-              <CustomTableBody
-                columns={rightPinnedColumns}
-                data={data}
-                isPinned='right'
-                rowVirtualizer={rowVirtualizer}
-              />
-            </table>
-          </div>
-        )}
-      </div>
+      <table {...stylex.props(styles.table)}>
+        <CustomTableHead
+          columns={processedColumns}
+          leftPinnedWidth={leftPinnedWidth}
+          rightPinnedWidth={rightPinnedWidth}
+          sortState={sortState}
+          onColumnPin={handleColumnPin}
+          onColumnResize={handleColumnResize}
+          onSort={handleSort}
+        />
+        <CustomTableBody
+          columns={processedColumns}
+          data={data}
+          leftPinnedWidth={leftPinnedWidth}
+          rightPinnedWidth={rightPinnedWidth}
+          rowVirtualizer={rowVirtualizer}
+        />
+      </table>
     </div>
   );
 };

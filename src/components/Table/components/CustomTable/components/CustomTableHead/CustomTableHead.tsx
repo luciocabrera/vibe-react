@@ -7,64 +7,55 @@ import { styles } from './CustomTableHead.stylex';
 
 const CustomTableHead = ({
   columns,
-  isPinned,
+  leftPinnedWidth,
   onColumnPin,
   onColumnResize,
   onSort,
+  rightPinnedWidth,
   sortState,
-  virtualColumns,
-  virtualPaddingLeft = 0,
-  virtualPaddingRight = 0,
 }: TCustomTableHeadProps) => {
   // Create handle functions to satisfy linting rules
   const handleColumnPin = onColumnPin;
   const handleColumnResize = onColumnResize;
   const handleSort = onSort;
 
+  // Calculate column positions for pinning
+  const columnsWithPositions = columns.map((column, index) => {
+    let position = null;
+
+    if (column.isLeftPinned) {
+      // Calculate left position by summing widths of previous left pinned columns
+      position = columns
+        .slice(0, index)
+        .filter((col) => col.isLeftPinned)
+        .reduce((sum, col) => sum + col.width, 0);
+    } else if (column.isRightPinned) {
+      // Calculate right position by summing widths of subsequent right pinned columns
+      position = columns
+        .slice(index + 1)
+        .filter((col) => col.isRightPinned)
+        .reduce((sum, col) => sum + col.width, 0);
+    }
+
+    return { column, position };
+  });
+
   return (
     <thead {...stylex.props(styles.head)}>
       <tr {...stylex.props(styles.row)}>
-        {/* Virtual padding left for scrollable columns */}
-        {virtualPaddingLeft > 0 && (
-          <th {...stylex.props(styles.paddingCell(virtualPaddingLeft))} />
-        )}
-
-        {/* Render visible columns */}
-        {virtualColumns
-          ? // Virtualized columns
-            virtualColumns.map((virtualColumn) => {
-              const column = columns[virtualColumn.index];
-              if (!column) return null;
-
-              return (
-                <CustomTableHeaderCell
-                  key={column.key}
-                  column={column}
-                  isPinned={isPinned}
-                  sortState={sortState}
-                  onColumnPin={handleColumnPin}
-                  onColumnResize={handleColumnResize}
-                  onSort={handleSort}
-                />
-              );
-            })
-          : // Non-virtualized columns (pinned)
-            columns.map((column) => (
-              <CustomTableHeaderCell
-                key={column.key}
-                column={column}
-                isPinned={isPinned}
-                sortState={sortState}
-                onColumnPin={handleColumnPin}
-                onColumnResize={handleColumnResize}
-                onSort={handleSort}
-              />
-            ))}
-
-        {/* Virtual padding right for scrollable columns */}
-        {virtualPaddingRight > 0 && (
-          <th {...stylex.props(styles.paddingCell(virtualPaddingRight))} />
-        )}
+        {columnsWithPositions.map(({ column, position }) => (
+          <CustomTableHeaderCell
+            key={column.key}
+            column={column}
+            leftPinnedWidth={leftPinnedWidth}
+            position={position}
+            rightPinnedWidth={rightPinnedWidth}
+            sortState={sortState}
+            onColumnPin={handleColumnPin}
+            onColumnResize={handleColumnResize}
+            onSort={handleSort}
+          />
+        ))}
       </tr>
     </thead>
   );

@@ -13,6 +13,8 @@ const TableSettingsDrawer = ({
   data,
   filterState,
   isPinned = false,
+  onApply,
+  onCancel,
   onClose,
   onPinChange,
   open,
@@ -23,12 +25,15 @@ const TableSettingsDrawer = ({
   setSortState,
   setVisibleColumns,
   sortState,
+  sqlFilterString = '',
   visibleColumns,
 }: TableSettingsDrawerProps) => {
   if (!open) return null;
 
   const handleClose = () => onClose();
   const handlePinChange = (isPinned: boolean) => onPinChange?.(isPinned);
+  const handleApply = () => onApply?.();
+  const handleCancel = () => onCancel?.();
 
   const handleFilterChange = (key: string, vals: string[]) => {
     setFilterState((fs) => ({ ...fs, [key]: vals }));
@@ -132,7 +137,68 @@ const TableSettingsDrawer = ({
       onClose={handleClose}
       onPinChange={handlePinChange}
     >
-      <Tabs tabs={tabs} />
+      <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+        {/* SQL Filter Preview */}
+        {sqlFilterString && (
+          <div
+            style={{
+              backgroundColor: '#f8f9fa',
+              borderBottom: '1px solid #e9ecef',
+              color: '#495057',
+              fontFamily: 'monospace',
+              fontSize: '12px',
+              padding: '16px',
+            }}
+          >
+            <strong>SQL Preview:</strong>
+            <br />
+            <code>{sqlFilterString}</code>
+          </div>
+        )}
+
+        {/* Tabs Content */}
+        <div style={{ flex: 1, overflow: 'auto' }}>
+          <Tabs tabs={tabs} />
+        </div>
+
+        {/* Apply/Cancel Buttons */}
+        <div
+          style={{
+            borderTop: '1px solid #e9ecef',
+            display: 'flex',
+            gap: '8px',
+            justifyContent: 'flex-end',
+            padding: '16px',
+          }}
+        >
+          <button
+            style={{
+              backgroundColor: '#6c757d',
+              border: 'none',
+              borderRadius: '4px',
+              color: 'white',
+              cursor: 'pointer',
+              padding: '8px 16px',
+            }}
+            onClick={handleCancel}
+          >
+            Cancel
+          </button>
+          <button
+            style={{
+              backgroundColor: '#007bff',
+              border: 'none',
+              borderRadius: '4px',
+              color: 'white',
+              cursor: 'pointer',
+              padding: '8px 16px',
+            }}
+            onClick={handleApply}
+          >
+            Apply
+          </button>
+        </div>
+      </div>
     </Drawer>
   );
 };

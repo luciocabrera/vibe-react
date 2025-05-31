@@ -44,6 +44,26 @@ const Table = ({
   >({});
   const [sortState, setSortState] = useState<TSortCol[]>([]);
 
+  // Pending states (for settings drawer - only applied when user clicks Apply)
+  const [pendingColumnOrder, setPendingColumnOrder] = useState<string[]>(
+    appColumns.map((col) => col.key)
+  );
+  const [pendingPinnedColumns, setPendingPinnedColumns] =
+    useState<TPinnedColumns>({
+      left: [],
+      right: [],
+    });
+  const [pendingVisibleColumns, setPendingVisibleColumns] = useState<
+    Set<string>
+  >(new Set(appColumns.map((col) => col.key)));
+  const [pendingFilterState, setPendingFilterState] = useState<
+    Record<string, string[]>
+  >({});
+  const [pendingRangeState, setPendingRangeState] = useState<
+    Record<string, [number | '', number | '']>
+  >({});
+  const [pendingSortState, setPendingSortState] = useState<TSortCol[]>([]);
+
   // Load settings from localStorage on mount
   useEffect(() => {
     const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -68,10 +88,8 @@ const Table = ({
     appColumns
       .filter((col) => col.filterable)
       .forEach((col) => {
-        const opts = Array.from(
-          new Set(rawData.map((d) => d[col.key]).filter(Boolean))
-        );
-        newFilterState[col.key] = opts;
+        // Initialize with empty array - no filters applied initially
+        newFilterState[col.key] = [];
       });
     setFilterState(newFilterState);
 
@@ -96,32 +114,9 @@ const Table = ({
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(settings));
   }, [columnOrder, pinnedColumns, visibleColumns, isPinned]);
 
-  // Data processing: filtering
-  let filteredData = rawData.filter((row) =>
-    appColumns
-      .filter((col) => col.filterable)
-      .every(
-        (col) =>
-          filterState[col.key].length === 0 ||
-          filterState[col.key].includes(row[col.key])
-      )
-  );
-
-  // Range filtering
-  const inRange = (val: number | '-', min: number | '', max: number | '') => {
-    if (val === '-' || isNaN(Number(val))) return false;
-    if (min !== '' && Number(val) < min) return false;
-    if (max !== '' && Number(val) > max) return false;
-    return true;
-  };
-
-  filteredData = filteredData.filter((row) =>
-    appColumns
-      .filter((col) => col.rangeFilter)
-      .every((col) =>
-        inRange(row[col.key], rangeState[col.key][0], rangeState[col.key][1])
-      )
-  );
+  // Data processing: NO real-time filtering - just show all data
+  // Filtering is now handled via SQL string generation only
+  let filteredData = rawData;
 
   // Data processing: sorting
   if (sortState.length > 0) {
@@ -141,8 +136,68 @@ const Table = ({
     });
   }
 
+  // Apply settings handler - applies all pending changes
+  const handleApplySettings = () => {
+    setColumnOrder(pendingColumnOrder);
+    setPinnedColumns(pendingPinnedColumns);
+    setVisibleColumns(pendingVisibleColumns);
+    setFilterState(pendingFilterState);
+    setRangeState(pendingRangeState);
+    setSortState(pendingSortState);
+    setDrawerOpen(false);
+  };
+
+  // Cancel settings handler - resets pending changes to current values
+  const handleCancelSettings = () => {
+    setPendingColumnOrder(columnOrder);
+    setPendingPinnedColumns(pinnedColumns);
+    setPendingVisibleColumns(visibleColumns);
+    setPendingFilterState(filterState);
+    setPendingRangeState(rangeState);
+    setPendingSortState(sortState);
+    setDrawerOpen(false);
+  };
+
+  // Generate SQL-like filter string
+  const generateSQLFilterString = () => {
+    const conditions: string[] = [];
+
+    // Add string filters
+    Object.entries(pendingFilterState).forEach(([key, values]) => {
+      if (values.length > 0) {
+        if (values.length === 1) {
+          conditions.push(`${key} = '${values[0]}'`);
+        } else {
+          conditions.push(
+            `${key} IN (${values.map((v) => `'${v}'`).join(', ')})`
+          );
+        }
+      }
+    });
+
+    // Add range filters
+    Object.entries(pendingRangeState).forEach(([key, [min, max]]) => {
+      if (min !== '' && max !== '') {
+        conditions.push(`${key} BETWEEN ${min} AND ${max}`);
+      } else if (min !== '') {
+        conditions.push(`${key} >= ${min}`);
+      } else if (max !== '') {
+        conditions.push(`${key} <= ${max}`);
+      }
+    });
+
+    return conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
+  };
+
   // Open drawer handler
   const handleOpenDrawer = () => {
+    // Sync pending states with current states when opening drawer
+    setPendingColumnOrder(columnOrder);
+    setPendingPinnedColumns(pinnedColumns);
+    setPendingVisibleColumns(visibleColumns);
+    setPendingFilterState(filterState);
+    setPendingRangeState(rangeState);
+    setPendingSortState(sortState);
     setDrawerOpen(true);
   };
 
@@ -208,22 +263,25 @@ const Table = ({
       />
 
       <TableSettingsDrawer
-        columnOrder={columnOrder}
+        columnOrder={pendingColumnOrder}
         columns={appColumns}
         data={rawData}
-        filterState={filterState}
+        filterState={pendingFilterState}
         isPinned={isPinned}
         open={drawerOpen || isPinned}
-        rangeState={rangeState}
-        setColumnOrder={setColumnOrder}
-        setFilterState={setFilterState}
-        setRangeState={setRangeState}
-        setSortState={setSortState}
+        rangeState={pendingRangeState}
+        setColumnOrder={setPendingColumnOrder}
+        setFilterState={setPendingFilterState}
+        setRangeState={setPendingRangeState}
+        setSortState={setPendingSortState}
         setTab={setDrawerTab}
-        setVisibleColumns={setVisibleColumns}
-        sortState={sortState}
+        setVisibleColumns={setPendingVisibleColumns}
+        sortState={pendingSortState}
+        sqlFilterString={generateSQLFilterString()}
         tab={drawerTab}
-        visibleColumns={visibleColumns}
+        visibleColumns={pendingVisibleColumns}
+        onApply={handleApplySettings}
+        onCancel={handleCancelSettings}
         onClose={handleCloseDrawer}
         onPinChange={handlePinChange}
       />

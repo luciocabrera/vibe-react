@@ -2,10 +2,43 @@ import { useState } from 'react';
 
 import { TableWrapper } from './components/TableWrapper';
 import { Table } from './components/Table';
-import TableFeature from './features/Table';
 
 // Dummy data loader (replace with real file input logic as needed)
-const initialData: Record<string, any>[] = [];
+const initialData: Record<string, any>[] = [
+  {
+    fileName: 'sample-test-1.json',
+    url: 'https://api.example.com/users',
+    method: 'GET',
+    num_requests: 100,
+    concurrency: 10,
+    avgTime: 250.5,
+    minTime: 120.2,
+    maxTime: 450.8,
+    avgSize: 1024,
+  },
+  {
+    fileName: 'sample-test-2.json',
+    url: 'https://api.example.com/posts',
+    method: 'POST',
+    num_requests: 50,
+    concurrency: 5,
+    avgTime: 180.3,
+    minTime: 95.1,
+    maxTime: 320.7,
+    avgSize: 512,
+  },
+  {
+    fileName: 'sample-test-3.json',
+    url: 'https://api.example.com/comments',
+    method: 'GET',
+    num_requests: 200,
+    concurrency: 20,
+    avgTime: 75.8,
+    minTime: 45.2,
+    maxTime: 150.6,
+    avgSize: 256,
+  },
+];
 
 // Define a dynamic schema for columns
 // TODO: Use the one from tanstack table or a global type, it should moved to a shared file
@@ -199,7 +232,7 @@ const App: React.FC = () => {
           data={data}
         />
       )}
-      <TableFeature />
+      {/* <TableFeature /> */}
     </div>
   );
 };

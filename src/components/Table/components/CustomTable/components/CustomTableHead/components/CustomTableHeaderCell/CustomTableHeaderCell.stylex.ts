@@ -37,6 +37,13 @@ export const styles = stylex.create({
     minWidth: 0,
   },
 
+  leftPinned: (left: number) => ({
+    backgroundColor: '#f8f9fa',
+    left: `${left}px`,
+    position: 'sticky',
+    zIndex: 2,
+  }),
+
   pinButton: {
     ':hover': {
       backgroundColor: '#e5e7eb',
@@ -79,6 +86,13 @@ export const styles = stylex.create({
     backgroundColor: '#e3f2fd',
     userSelect: 'none',
   },
+
+  rightPinned: (right: number) => ({
+    backgroundColor: '#f8f9fa',
+    position: 'sticky',
+    right: `${right}px`,
+    zIndex: 2,
+  }),
 
   sortable: {
     ':hover': {

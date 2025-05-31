@@ -29,7 +29,21 @@ export const styles = stylex.create({
     width: '100%',
   },
 
+  leftPinned: (left: number) => ({
+    backgroundColor: '#fff',
+    left: `${left}px`,
+    position: 'sticky',
+    zIndex: 1,
+  }),
+
   numberCell: {
     textAlign: 'right',
   },
+
+  rightPinned: (right: number) => ({
+    backgroundColor: '#fff',
+    position: 'sticky',
+    right: `${right}px`,
+    zIndex: 1,
+  }),
 });

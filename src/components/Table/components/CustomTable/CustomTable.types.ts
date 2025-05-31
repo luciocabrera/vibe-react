@@ -18,7 +18,7 @@ export type TPinnedColumns = {
 export type TCustomTableProps = {
   columnOrder: string[];
   columns: ColumnDef[];
-  data: Record<string, any>[];
+  data: Record<string, unknown>[];
   onColumnPin?: (
     columnKey: string,
     position: 'left' | 'none' | 'right'
@@ -32,43 +32,54 @@ export type TCustomTableProps = {
 
 export type TCustomTableHeadProps = {
   columns: TProcessedColumn[];
-  isPinned?: 'left' | 'right';
+  leftPinnedWidth: number;
   onColumnPin?: (
     columnKey: string,
     position: 'left' | 'none' | 'right'
   ) => void;
   onColumnResize: (columnKey: string, width: number) => void;
   onSort: (columnKey: string) => void;
+  rightPinnedWidth: number;
   sortState: TSortCol[];
-  virtualColumns?: VirtualItem[];
-  virtualPaddingLeft?: number;
-  virtualPaddingRight?: number;
 };
 
 export type TCustomTableBodyProps = {
   columns: TProcessedColumn[];
-  data: Record<string, any>[];
-  isPinned?: 'left' | 'right';
+  data: Record<string, unknown>[];
+  leftPinnedWidth: number;
+  rightPinnedWidth: number;
   rowVirtualizer: Virtualizer<HTMLDivElement, HTMLTableRowElement>;
-  virtualColumns?: VirtualItem[];
-  virtualPaddingLeft?: number;
-  virtualPaddingRight?: number;
 };
 
 export type TCustomTableHeaderCellProps = {
   column: TProcessedColumn;
-  isPinned?: 'left' | 'right';
+  leftPinnedWidth: number;
   onColumnPin?: (
     columnKey: string,
     position: 'left' | 'none' | 'right'
   ) => void;
   onColumnResize: (columnKey: string, width: number) => void;
   onSort: (columnKey: string) => void;
+  position: number | null;
+  rightPinnedWidth: number;
   sortState: TSortCol[];
 };
 
 export type TCustomTableCellProps = {
   column: TProcessedColumn;
-  rowData: Record<string, any>;
-  value: any;
+  leftPinnedWidth: number;
+  position: number | null;
+  rightPinnedWidth: number;
+  rowData: Record<string, unknown>;
+  value: unknown;
+};
+
+export type TCustomTableRowProps = {
+  columns: TProcessedColumn[];
+  leftPinnedWidth: number;
+  rightPinnedWidth: number;
+  rowData: Record<string, unknown>;
+  rowIndex: number;
+  rowVirtualizer: Virtualizer<HTMLDivElement, HTMLTableRowElement>;
+  virtualRow: VirtualItem;
 };

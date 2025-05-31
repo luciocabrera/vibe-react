@@ -8,6 +8,8 @@ export type TableSettingsDrawerProps = {
   data: DataRecord[];
   filterState: Record<string, string[]>;
   isPinned?: boolean;
+  onApply?: () => void;
+  onCancel?: () => void;
   onClose: () => void;
   onPinChange?: (isPinned: boolean) => void;
   open: boolean;
@@ -23,6 +25,7 @@ export type TableSettingsDrawerProps = {
   setTab: (tab: 'columns' | 'filters' | 'sorting') => void;
   setVisibleColumns?: React.Dispatch<React.SetStateAction<Set<string>>>;
   sortState: TSortCol[];
+  sqlFilterString?: string;
   tab: 'columns' | 'filters' | 'sorting';
   visibleColumns?: Set<string>;
 };
