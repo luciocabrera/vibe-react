@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-//@ts-nocheck
 import { useState } from 'react';
 
 import { TableWrapper } from './components/TableWrapper';
 import { Table } from './components/Table';
+import TableFeature from './features/Table';
 
 // Dummy data loader (replace with real file input logic as needed)
 const initialData: Record<string, any>[] = [];
@@ -200,6 +199,7 @@ const App: React.FC = () => {
           data={data}
         />
       )}
+      <TableFeature />
     </div>
   );
 };

@@ -1,19 +1,13 @@
 import { useEffect, useState } from 'react';
 import * as stylex from '@stylexjs/stylex';
-import type { VisibilityState } from '@tanstack/react-table';
-import {
-  getCoreRowModel,
-  getSortedRowModel,
-  useReactTable,
-} from '@tanstack/react-table';
 
-import { convertToTanStackColumns } from '../../utils/columnAdapter';
 import { MainHeader } from '../MainHeader';
 import type { TSortCol } from '../sections/SortBySection/SortBySection.types';
 import { SettingsButton } from '../SettingsButton';
 import { TableSettingsDrawer } from '../TableSettingsDrawer';
 
-import { TableContainer } from './components/TableContainer';
+import type { TPinnedColumns } from './components/CustomTable';
+import { CustomTable } from './components/CustomTable';
 import { styles } from './Table.stylex';
 import type { TEnhancedTableProps } from './Table.types';
 
@@ -28,8 +22,10 @@ const Table = ({
   const [columnOrder, setColumnOrder] = useState<string[]>(
     appColumns.map((col) => col.key)
   );
-  const [columnPinning, setColumnPinning] = useState({});
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [pinnedColumns, setPinnedColumns] = useState<TPinnedColumns>({
+    left: [],
+    right: [],
+  });
   const [visibleColumns, setVisibleColumns] = useState<Set<string>>(
     new Set(appColumns.map((col) => col.key))
   );
@@ -55,8 +51,7 @@ const Table = ({
       try {
         const parsed = JSON.parse(saved);
         if (parsed.columnOrder) setColumnOrder(parsed.columnOrder);
-        if (parsed.columnVisibility)
-          setColumnVisibility(parsed.columnVisibility);
+        if (parsed.pinnedColumns) setPinnedColumns(parsed.pinnedColumns);
         if (parsed.visibleColumns) {
           setVisibleColumns(new Set(parsed.visibleColumns));
         }
@@ -94,12 +89,12 @@ const Table = ({
   useEffect(() => {
     const settings = {
       columnOrder,
-      columnVisibility,
       isPinned,
+      pinnedColumns,
       visibleColumns: Array.from(visibleColumns),
     };
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(settings));
-  }, [columnOrder, columnVisibility, visibleColumns, isPinned]);
+  }, [columnOrder, pinnedColumns, visibleColumns, isPinned]);
 
   // Data processing: filtering
   let filteredData = rawData.filter((row) =>
@@ -146,15 +141,6 @@ const Table = ({
     });
   }
 
-  // Get ordered and visible columns
-  const orderedColumns = columnOrder
-    .map((key) => appColumns.find((col) => col.key === key))
-    .filter((col): col is NonNullable<typeof col> => Boolean(col))
-    .filter((col) => visibleColumns.has(col.key));
-
-  // Convert to TanStack columns
-  const tanStackColumns = convertToTanStackColumns(orderedColumns);
-
   // Open drawer handler
   const handleOpenDrawer = () => {
     setDrawerOpen(true);
@@ -171,22 +157,33 @@ const Table = ({
     setIsPinned(pinned);
   };
 
-  const table = useReactTable({
-    columnResizeMode: 'onChange',
-    columns: tanStackColumns,
-    data: filteredData,
-    enableColumnResizing: true,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    onColumnOrderChange: setColumnOrder,
-    onColumnPinningChange: setColumnPinning,
-    onColumnVisibilityChange: setColumnVisibility,
-    state: {
-      columnOrder,
-      columnPinning,
-      columnVisibility,
-    },
-  });
+  // Handle column pinning
+  const handleColumnPin = (
+    columnKey: string,
+    position: 'left' | 'none' | 'right'
+  ) => {
+    setPinnedColumns((prev) => {
+      const newPinned = { ...prev };
+
+      // Remove from all positions first
+      newPinned.left = newPinned.left.filter((key) => key !== columnKey);
+      newPinned.right = newPinned.right.filter((key) => key !== columnKey);
+
+      // Add to new position if not 'none'
+      if (position === 'left') {
+        newPinned.left.push(columnKey);
+      } else if (position === 'right') {
+        newPinned.right.push(columnKey);
+      }
+
+      return newPinned;
+    });
+  };
+
+  // Handle sort callback
+  const handleSort = (newSortState: TSortCol[]) => {
+    setSortState(newSortState);
+  };
 
   return (
     <section {...stylex.props(styles.section)}>
@@ -198,7 +195,17 @@ const Table = ({
           <SettingsButton onClick={handleOpenDrawer} />
         </MainHeader>
       )}
-      <TableContainer table={table} />
+
+      <CustomTable
+        columnOrder={columnOrder}
+        columns={appColumns}
+        data={filteredData}
+        pinnedColumns={pinnedColumns}
+        sortState={sortState}
+        visibleColumns={visibleColumns}
+        onColumnPin={handleColumnPin}
+        onSort={handleSort}
+      />
 
       <TableSettingsDrawer
         columnOrder={columnOrder}

@@ -5,13 +5,21 @@ import type { ColumnDef } from '@tanstack/react-table';
 
 import { Table } from '@/components/Table';
 
-import { makeColumns, makeData, type Person } from './makeData';
+import {
+  makeColumns,
+  makeCustomColumns,
+  makeCustomData,
+  type Person,
+} from './makeData';
 import { styles } from './Table.stylex';
 
 const TableFeature = () => {
-  const columns = useMemo<ColumnDef<Person>[]>(() => makeColumns(1_000), []);
+  const columns = useMemo<ColumnDef<Person>[]>(
+    () => makeCustomColumns(1_000),
+    []
+  );
 
-  const [data, setData] = useState(() => makeData(1_000, columns));
+  const [data, setData] = useState(() => makeCustomData(1_000, columns));
 
   const handleRefreshData = useCallback(
     () => setData(makeData(1000, columns)),

@@ -9,6 +9,9 @@
     {
       "path": "../../datablender/umd-ui-remix",
     },
+    {
+      "path": "../my-react-router-app",
+    },
   ],
   "settings": {
     "editor.formatOnSave": true,
