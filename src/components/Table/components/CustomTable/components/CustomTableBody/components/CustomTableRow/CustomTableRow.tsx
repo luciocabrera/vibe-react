@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import * as stylex from '@stylexjs/stylex';
 
 import type {
@@ -15,19 +14,9 @@ const CustomTableRow = ({
   rightPinnedWidth,
   rowData,
   rowIndex,
-  rowVirtualizer,
+  rowVirtualizer: _rowVirtualizer,
   virtualRow,
 }: TCustomTableRowProps) => {
-  // Memoize the ref callback to prevent infinite re-renders
-  const measureElementRef = useCallback(
-    (node: HTMLTableRowElement | null) => {
-      if (node) {
-        rowVirtualizer.measureElement(node);
-      }
-    },
-    [rowVirtualizer]
-  );
-
   // Calculate column positions for pinning (similar to header)
   const columnsWithPositions = columns.map(
     (column: TProcessedColumn, index: number) => {
@@ -53,7 +42,6 @@ const CustomTableRow = ({
 
   return (
     <tr
-      ref={measureElementRef}
       data-index={virtualRow.index}
       {...stylex.props(
         styles.row(virtualRow.start),

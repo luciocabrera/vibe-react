@@ -16,6 +16,7 @@ const CustomTable = ({
   columnOrder,
   columns,
   data,
+  initialColumnWidths = {},
   onColumnPin,
   onColumnResize,
   onSort,
@@ -24,7 +25,8 @@ const CustomTable = ({
   visibleColumns,
 }: TCustomTableProps) => {
   const tableContainerRef = useRef<HTMLDivElement | null>(null);
-  const [columnWidths, setColumnWidths] = useState<Record<string, number>>({});
+  const [columnWidths, setColumnWidths] =
+    useState<Record<string, number>>(initialColumnWidths);
 
   // Process columns with ordering, visibility, and pinning
   const processedColumns: TProcessedColumn[] = useMemo(() => {
@@ -56,11 +58,12 @@ const CustomTable = ({
       .reduce((sum, col) => sum + col.width, 0);
   }, [processedColumns]);
 
-  // Row virtualization
+  // Row virtualization with more stable configuration
   const rowVirtualizer = useVirtualizer<HTMLDivElement, HTMLTableRowElement>({
     count: data.length,
-    estimateSize: () => 40, // Standard row height
+    estimateSize: () => 32, // Compact row height
     getScrollElement: () => tableContainerRef.current,
+    measureElement: undefined, // Disable dynamic measuring to prevent height fluctuations
     overscan: 10,
   });
 

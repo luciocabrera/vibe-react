@@ -4,12 +4,14 @@ export const styles = stylex.create({
   headerCell: (width: number) => ({
     backgroundColor: '#f8f9fa',
     borderRight: '1px solid #e1e5e9',
+    boxSizing: 'border-box',
     color: '#374151',
     fontSize: '14px',
     fontWeight: 600,
-    height: '40px',
+    height: '32px',
     maxWidth: `${width}px`,
     minWidth: `${width}px`,
+    overflow: 'hidden',
     padding: 0,
     position: 'relative',
     width: `${width}px`,
@@ -17,11 +19,15 @@ export const styles = stylex.create({
 
   headerContent: {
     alignItems: 'center',
+    boxSizing: 'border-box',
     display: 'flex',
     height: '100%',
-    paddingLeft: '12px',
-    paddingRight: '24px',
+    maxWidth: '100%',
+    overflow: 'hidden',
+    paddingLeft: '6px',
+    paddingRight: '20px', // Account for resize handle (4px) + pin controls space
     position: 'relative',
+    width: '100%',
   },
 
   label: {
@@ -35,6 +41,7 @@ export const styles = stylex.create({
     display: 'flex',
     flex: 1,
     minWidth: 0,
+    overflow: 'hidden',
   },
 
   leftPinned: (left: number) => ({
@@ -63,8 +70,10 @@ export const styles = stylex.create({
       opacity: 1,
     },
     display: 'flex',
+    flexShrink: 0,
     gap: '2px',
     marginLeft: '4px',
+    maxWidth: '60px', // Limit pin controls width
     opacity: 0,
     transition: 'opacity 0.2s',
   },
@@ -80,6 +89,7 @@ export const styles = stylex.create({
     right: 0,
     top: 0,
     width: '4px',
+    zIndex: 1,
   },
 
   resizing: {

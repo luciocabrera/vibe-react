@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import * as stylex from '@stylexjs/stylex';
 
 import type { TCustomTableBodyProps } from '../../CustomTable.types';
@@ -14,10 +15,17 @@ const CustomTableBody = ({
 }: TCustomTableBodyProps) => {
   const virtualRows = rowVirtualizer.getVirtualItems();
 
+  // Memoize the total size to prevent constant height changes
+  const totalSize = useMemo(() => {
+    const size = rowVirtualizer.getTotalSize();
+    // Ensure minimum height and round to prevent fractional pixel changes
+    return Math.max(Math.round(size), 400);
+  }, [rowVirtualizer]);
+
   // Show "No data" message when there's no data
   if (data.length === 0) {
     return (
-      <tbody {...stylex.props(styles.body(40))}>
+      <tbody {...stylex.props(styles.body(200))}>
         <tr>
           <td
             colSpan={columns.length}
@@ -36,7 +44,7 @@ const CustomTableBody = ({
   }
 
   return (
-    <tbody {...stylex.props(styles.body(rowVirtualizer.getTotalSize()))}>
+    <tbody {...stylex.props(styles.body(totalSize))}>
       {virtualRows.map((virtualRow) => {
         const rowData = data[virtualRow.index];
 

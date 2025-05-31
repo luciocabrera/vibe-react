@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import * as stylex from '@stylexjs/stylex';
 
 import { MainHeader } from '../MainHeader';
+import type { DataRecord } from '../sections/FiltersSection/FiltersSection.types';
 import type { TSortCol } from '../sections/SortBySection/SortBySection.types';
 import { SettingsButton } from '../SettingsButton';
 import { TableSettingsDrawer } from '../TableSettingsDrawer';
@@ -11,13 +12,15 @@ import { CustomTable } from './components/CustomTable';
 import { styles } from './Table.stylex';
 import type { TEnhancedTableProps } from './Table.types';
 
-const LOCAL_STORAGE_KEY = 'vibe-table-settings';
-
 const Table = ({
   columns: appColumns,
   data: rawData,
   showHeader = true,
+  tableId = 'default',
 }: TEnhancedTableProps) => {
+  // Generate unique localStorage key for this table instance
+  const LOCAL_STORAGE_KEY = `vibe-table-settings-${tableId}`;
+
   // Table settings state
   const [columnOrder, setColumnOrder] = useState<string[]>(
     appColumns.map((col) => col.key)
@@ -29,6 +32,7 @@ const Table = ({
   const [visibleColumns, setVisibleColumns] = useState<Set<string>>(
     new Set(appColumns.map((col) => col.key))
   );
+  const [columnWidths, setColumnWidths] = useState<Record<string, number>>({});
 
   // Drawer state
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -75,12 +79,13 @@ const Table = ({
         if (parsed.visibleColumns) {
           setVisibleColumns(new Set(parsed.visibleColumns));
         }
+        if (parsed.columnWidths) setColumnWidths(parsed.columnWidths);
         if (parsed.isPinned !== undefined) setIsPinned(parsed.isPinned);
       } catch {
         // Ignore parse errors
       }
     }
-  }, []);
+  }, [LOCAL_STORAGE_KEY]);
 
   // Initialize filter options when data changes
   useEffect(() => {
@@ -112,7 +117,7 @@ const Table = ({
       visibleColumns: Array.from(visibleColumns),
     };
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(settings));
-  }, [columnOrder, pinnedColumns, visibleColumns, isPinned]);
+  }, [columnOrder, pinnedColumns, visibleColumns, isPinned, LOCAL_STORAGE_KEY]);
 
   // Data processing: NO real-time filtering - just show all data
   // Filtering is now handled via SQL string generation only
@@ -212,7 +217,27 @@ const Table = ({
     setIsPinned(pinned);
   };
 
-  // Handle column pinning
+  // Handle column resizing
+  const handleColumnResize = (columnKey: string, width: number) => {
+    // Update local state
+    setColumnWidths((prev) => ({
+      ...prev,
+      [columnKey]: width,
+    }));
+
+    // Persist column widths to localStorage
+    const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+    const settings = saved ? JSON.parse(saved) : {};
+    const columnWidths = { ...settings.columnWidths, [columnKey]: width };
+
+    localStorage.setItem(
+      LOCAL_STORAGE_KEY,
+      JSON.stringify({
+        ...settings,
+        columnWidths,
+      })
+    );
+  };
   const handleColumnPin = (
     columnKey: string,
     position: 'left' | 'none' | 'right'
@@ -255,17 +280,19 @@ const Table = ({
         columnOrder={columnOrder}
         columns={appColumns}
         data={filteredData}
+        initialColumnWidths={columnWidths}
         pinnedColumns={pinnedColumns}
         sortState={sortState}
         visibleColumns={visibleColumns}
         onColumnPin={handleColumnPin}
+        onColumnResize={handleColumnResize}
         onSort={handleSort}
       />
 
       <TableSettingsDrawer
         columnOrder={pendingColumnOrder}
         columns={appColumns}
-        data={rawData}
+        data={rawData as DataRecord[]}
         filterState={pendingFilterState}
         isPinned={isPinned}
         open={drawerOpen || isPinned}

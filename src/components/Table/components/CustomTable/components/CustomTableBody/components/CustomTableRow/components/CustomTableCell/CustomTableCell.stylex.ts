@@ -4,7 +4,6 @@ export const styles = stylex.create({
   cell: (width: number) => ({
     backgroundColor: 'inherit',
     borderRight: '1px solid #f3f4f6',
-    height: '40px',
     maxWidth: `${width}px`,
     minWidth: `${width}px`,
     padding: 0,
@@ -14,10 +13,10 @@ export const styles = stylex.create({
   cellContent: {
     alignItems: 'center',
     display: 'flex',
-    height: '100%',
+    height: '32px',
     overflow: 'hidden',
-    paddingLeft: '12px',
-    paddingRight: '12px',
+    paddingLeft: '8px',
+    paddingRight: '8px',
   },
 
   cellText: {

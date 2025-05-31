@@ -18,14 +18,14 @@ export const styles = stylex.create({
     width: `${width}px`,
   }),
 
-  row: (_translateY: number) => ({
+  row: (translateY: number) => ({
     borderBottom: '1px solid #f3f4f6',
-    // Temporarily remove virtualization positioning for debugging
-    // display: 'flex',
-    // left: 0,
-    // position: 'absolute',
-    // right: 0,
-    // top: 0,
-    // transform: `translateY(${translateY}px)`,
+    height: '32px',
+    left: 0,
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    transform: `translateY(${translateY}px)`,
+    width: '100%',
   }),
 });

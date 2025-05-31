@@ -19,6 +19,7 @@ export type TCustomTableProps = {
   columnOrder: string[];
   columns: ColumnDef[];
   data: Record<string, unknown>[];
+  initialColumnWidths?: Record<string, number>;
   onColumnPin?: (
     columnKey: string,
     position: 'left' | 'none' | 'right'

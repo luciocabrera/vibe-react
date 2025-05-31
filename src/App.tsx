@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import { TableWrapper } from './components/TableWrapper';
 import { Table } from './components/Table';
+import TableFeature from './features/TableFeature';
 
 // Dummy data loader (replace with real file input logic as needed)
 const initialData: Record<string, any>[] = [
@@ -124,9 +124,6 @@ const columns: ColumnDef[] = [
 const App: React.FC = () => {
   // State for all data (replace with file upload logic)
   const [data, setData] = useState<Record<string, any>[]>(initialData);
-  // Grouping
-  const [groupByUrl, setGroupByUrl] = useState(false);
-  const [groupByMethod, setGroupByMethod] = useState(false);
 
   // File upload handler (for demo, not production)
   const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -199,40 +196,12 @@ const App: React.FC = () => {
         </label>
       </div>
 
-      <div style={{ marginBottom: 12 }}>
-        <label>
-          <input
-            checked={groupByUrl}
-            type='checkbox'
-            onChange={(e) => setGroupByUrl(e.target.checked)}
-          />{' '}
-          Group by URL
-        </label>
-        <label style={{ marginLeft: 16 }}>
-          <input
-            checked={groupByMethod}
-            type='checkbox'
-            onChange={(e) => setGroupByMethod(e.target.checked)}
-          />{' '}
-          Group by Method
-        </label>
-      </div>
-
-      {/* Use TableWrapper when grouping is enabled, otherwise use enhanced Table */}
-      {groupByUrl || groupByMethod ? (
-        <TableWrapper
-          columns={columns}
-          data={data}
-          groupByMethod={groupByMethod}
-          groupByUrl={groupByUrl}
-        />
-      ) : (
-        <Table
-          columns={columns}
-          data={data}
-        />
-      )}
-      {/* <TableFeature /> */}
+      <Table
+        columns={columns}
+        data={data}
+        tableId='main-table'
+      />
+      <TableFeature />
     </div>
   );
 };

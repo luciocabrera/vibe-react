@@ -11,6 +11,7 @@ export type TTableProps<TData> = {
 // New enhanced table props for the refactored component
 export type TEnhancedTableProps = {
   columns: AppColumnDef[];
-  data: Record<string, any>[];
+  data: Record<string, unknown>[];
   showHeader?: boolean;
+  tableId?: string; // Optional unique identifier for localStorage
 };
