@@ -6,6 +6,9 @@ export const styles = stylex.create({
     borderRight: '1px solid #e1e5e9',
     boxSizing: 'border-box',
     color: '#374151',
+    containerName: 'header-cell',
+    containerType: 'normal',
+
     fontSize: '14px',
     fontWeight: 600,
     height: '32px',
